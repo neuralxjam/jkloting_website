@@ -135,8 +135,7 @@ a:not([href]):not([tabindex]):hover {
   color: #fff;
 }
 
-.btn-common {
-  border: 1px solid #333;
+.btn-common {`
   background: #ffffff;
   position: relative;
   color: #000000;
