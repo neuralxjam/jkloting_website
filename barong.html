@@ -240,7 +240,9 @@
           <!-- Order Form -->
           <div class="col-lg-8 col-md-12 wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.3s">
             <div class="contact-block barong-order-form">
-              <form id="barongOrderForm" action="php/form-process.php" method="POST">
+              <form id="barongOrderForm">
+                <input type="hidden" name="access_key" value="94d60481-8c60-41e6-9538-159502ef091a" />
+                <input type="hidden" name="subject" value="New Barong Order — J.Kloting Website" />
                 <input type="hidden" name="form_type" value="barong_order" />
                 <input type="hidden" name="selected_product" id="form-product" value="Polo Barong" />
                 <!-- Honeypot — bots fill this; humans don't see it -->
@@ -555,17 +557,19 @@
         var $msg = $('#barongOrderMsg');
         $btn.prop('disabled', true).text('Sending...');
         $.ajax({
-          url: 'php/form-process.php',
+          url: 'https://api.web3forms.com/submit',
           type: 'POST',
           data: $(this).serialize(),
-          success: function (response) {
-            if (response === 'success') {
+          dataType: 'json',
+          success: function (data) {
+            if (data.success) {
               $msg.removeClass('hidden').css('color', '#28a745')
                   .text('Order request sent! We\'ll confirm within 24 hours.');
               $('#barongOrderForm')[0].reset();
               $('#selected-product').text('Polo Barong');
             } else {
-              $msg.removeClass('hidden').css('color', '#c0392b').text(response);
+              $msg.removeClass('hidden').css('color', '#c0392b')
+                  .text(data.message || 'Something went wrong. Please try again.');
             }
             $btn.prop('disabled', false).text('Submit Order Request');
           },
