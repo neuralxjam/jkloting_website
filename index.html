@@ -20,6 +20,11 @@
     <link rel="apple-touch-icon" href="img/favicon.png" />
     <title>J.Kloting</title>
 
+    <!-- Google Fonts: Playfair Display + Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/font-awesome.min.css" />
@@ -42,7 +47,10 @@
           <!-- Brand and toggle get grouped for better mobile display -->
           <div class="navbar-header">
             <a href="index.html" class="navbar-brand"
-              ><img class="img-fluid" src="img/logo.png" alt=""
+              ><img
+                class="img-fluid"
+                src="img/logo-white.png"
+                alt="JKloting Logo"
             /></a>
             <button
               class="navbar-toggler"
@@ -65,10 +73,16 @@
                 <a class="nav-link page-scroll" href="#services">Services</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="#features">Features</a>
+                <a class="nav-link" href="barong.html">Barong</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link page-scroll" href="#portfolios">Works</a>
+                <a class="nav-link page-scroll" href="#portfolios">Portfolio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#pricing">Pricing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link page-scroll" href="#process">Process</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link page-scroll" href="#contact">Contact</a>
@@ -86,10 +100,16 @@
             <a class="page-scroll" href="#services">Services</a>
           </li>
           <li>
-            <a class="page-scroll" href="#features">Features</a>
+            <a href="barong.html">Barong</a>
           </li>
           <li>
-            <a class="page-scroll" href="#portfolios">Works</a>
+            <a class="page-scroll" href="#portfolios">Portfolio</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="#pricing">Pricing</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="#process">Process</a>
           </li>
           <li>
             <a class="page-scroll" href="#contact">Contact</a>
@@ -107,7 +127,7 @@
                 data-wow-duration="1000ms"
                 data-wow-delay="0.3s"
               >
-                WE HELP YOU BUILD YOUR IDEALS
+                Custom Apparel Printing for Teams, Schools &amp; Brands &mdash; Meycauayan, Bulacan
               </h1>
               <p
                 class="lead wow fadeIn"
@@ -118,13 +138,10 @@
                 clothing, <br />including t-shirts, jackets, hoodies, and polo
                 shirts.
               </p>
-              <a
-                href="#"
-                class="btn btn-common wow fadeInUp"
-                data-wow-duration="1000ms"
-                data-wow-delay="400ms"
-                >Get Quote</a
-              >
+              <div class="hero-btns">
+                <a href="#contact" class="btn btn-common page-scroll">Get a Quote</a>
+                <a href="#portfolios" class="btn-outline-light-custom page-scroll">View Our Work</a>
+              </div>
             </div>
           </div>
         </div>
@@ -175,7 +192,7 @@
               </div>
               <h4>Sublimation</h4>
               <p>
-                Fade-resistant, all-over prints perfect for sports, teams, and`
+                Fade-resistant, all-over prints perfect for sports, teams, and
                 performance uniforms.
               </p>
             </div>
@@ -196,6 +213,37 @@
       </div>
     </section>
     <!-- Services Section End -->
+
+    <!-- Barong Collection Teaser -->
+    <section id="barong" class="section barong-teaser-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8 col-md-12 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <p class="barong-teaser-label">New Collection</p>
+            <h2 class="barong-teaser-title">Modern Barong Collection</h2>
+            <p class="barong-teaser-desc">
+              Contemporary polo barongs crafted for the modern Filipino —
+              perfect for weddings, events, and everyday smart-casual wear.
+              Sizes XS–XXL. Custom embroidery available. <strong>₱650 per piece.</strong>
+            </p>
+            <div class="barong-teaser-highlights">
+              <span><i class="lnr lnr-checkmark-circle"></i> Made to order</span>
+              <span><i class="lnr lnr-checkmark-circle"></i> Sizes XS–XXL</span>
+              <span><i class="lnr lnr-checkmark-circle"></i> Custom embroidery</span>
+              <span><i class="lnr lnr-checkmark-circle"></i> Ships nationwide</span>
+            </div>
+            <a href="barong.html" class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
+              View Full Collection <i class="lnr lnr-arrow-right"></i>
+            </a>
+          </div>
+          <div class="col-lg-4 col-md-12 text-center wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.4s">
+            <!-- TODO: replace with real barong-teaser.jpg -->
+            <img src="img/dummy.png" alt="Modern Barong Collection" class="img-fluid barong-teaser-img" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Barong Teaser End -->
 
     <!-- Features Section Start -->
     <section id="features" class="section" data-stellar-background-ratio="0.2">
@@ -275,97 +323,108 @@
 
     <!-- Portfolio Section -->
     <section id="portfolios" class="section">
-      <!-- Container Starts -->
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Our Portfolio</h2>
-          <hr class="lines" />
-          <p class="section-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat,
-            dignissimos! <br />
-            Lorem ipsum dolor sit amet, consectetur.
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Our Portfolio</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            Real work from real orders — custom prints, uniforms, barongs, and more.<br />
+            Browse by category or view everything we've made.
           </p>
         </div>
         <div class="row">
           <div class="col-md-12">
-            <!-- Portfolio Controller/Buttons -->
             <div class="controls text-center">
-              <a class="filter active btn btn-common" data-filter="all">
-                All
-              </a>
-              <a class="filter btn btn-common" data-filter=".design">
-                Design
-              </a>
-              <a class="filter btn btn-common" data-filter=".development">
-                Development
-              </a>
-              <a class="filter btn btn-common" data-filter=".print"> Print </a>
+              <a class="filter active btn btn-common" data-filter="all">All</a>
+              <a class="filter btn btn-common" data-filter=".barong">Barong</a>
+              <a class="filter btn btn-common" data-filter=".uniforms">Uniforms</a>
+              <a class="filter btn btn-common" data-filter=".sportswear">Sportswear</a>
+              <a class="filter btn btn-common" data-filter=".streetwear">Streetwear</a>
+              <a class="filter btn btn-common" data-filter=".corporate">Corporate</a>
             </div>
-            <!-- Portfolio Controller/Buttons Ends-->
           </div>
 
-          <!-- Portfolio Recent Projects -->
           <div id="portfolio" class="row">
-            <div
-              class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix development print"
-            >
+            <!-- TODO: replace img1.jpg with real corporate uniform photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix corporate uniforms">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img1.jpg" alt="" />
+                  <img src="img/portfolio/img1.jpg" alt="Corporate Polo Shirts" />
                   <a class="overlay lightbox" href="img/portfolio/img1.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>Company Polo Shirts</h5>
+                      <span>Silk Screen · Corporate</span>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix design print">
+            <!-- TODO: replace img2.jpg with real sportswear/jersey photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix sportswear">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img2.jpg" alt="" />
+                  <img src="img/portfolio/img2.jpg" alt="Sports Jerseys" />
                   <a class="overlay lightbox" href="img/portfolio/img2.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>Team Jerseys</h5>
+                      <span>Sublimation · Sportswear</span>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix development">
+            <!-- TODO: replace img3.jpg with real school/org uniform photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix uniforms">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img3.jpg" alt="" />
+                  <img src="img/portfolio/img3.jpg" alt="School Uniforms" />
                   <a class="overlay lightbox" href="img/portfolio/img3.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>School PE Uniforms</h5>
+                      <span>Silk Screen · Uniforms</span>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div
-              class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix development design"
-            >
+            <!-- TODO: replace img4.jpg with real barong photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix barong">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img4.jpg" alt="" />
+                  <img src="img/portfolio/img4.jpg" alt="Modern Barong" />
                   <a class="overlay lightbox" href="img/portfolio/img4.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>Modern Polo Barong</h5>
+                      <span>Custom Embroidery · Barong</span>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix development">
+            <!-- TODO: replace img5.jpg with real streetwear/custom print photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix streetwear">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img5.jpg" alt="" />
+                  <img src="img/portfolio/img5.jpg" alt="Custom Streetwear" />
                   <a class="overlay lightbox" href="img/portfolio/img5.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>Custom T-Shirts</h5>
+                      <span>DTF · Streetwear</span>
+                    </div>
                   </a>
                 </div>
               </div>
             </div>
-            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix print design">
+            <!-- TODO: replace img6.jpg with real hoodie/jacket photo -->
+            <div class="col-sm-6 col-md-4 col-lg-4 col-xl-4 mix streetwear corporate">
               <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img6.jpg" alt="" />
+                  <img src="img/portfolio/img6.jpg" alt="Custom Hoodies" />
                   <a class="overlay lightbox" href="img/portfolio/img6.jpg">
-                    <i class="lnr lnr-eye item-icon"></i>
+                    <div class="portfolio-caption">
+                      <h5>Custom Hoodies</h5>
+                      <span>DTF · Streetwear</span>
+                    </div>
                   </a>
                 </div>
               </div>
@@ -373,580 +432,307 @@
           </div>
         </div>
       </div>
-      <!-- Container Ends -->
     </section>
     <!-- Portfolio Section Ends -->
 
-    <!-- Start Video promo Section -->
-    <section class="video-promo section">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-8">
-            <div class="video-promo-content text-center">
-              <h2
-                class="wow zoomIn"
-                data-wow-duration="1000ms"
-                data-wow-delay="100ms"
-              >
-                Watch Our Intro video
-              </h2>
-              <p
-                class="wow zoomIn"
-                data-wow-duration="1000ms"
-                data-wow-delay="100ms"
-              >
-                Aliquam vestibulum cursus felis. In iaculis iaculis sapien ac
-                condimentum. Vestibulum congue posuere lacus, id tincidunt nisi
-                porta sit amet. Suspendisse et sapien varius, pellentesque dui
-                non, semper orci.
-              </p>
-              <a
-                href="https://www.youtube.com/watch?v=IXoMDwh4Cq8"
-                class="video-popup wow fadeInUp"
-                data-wow-duration="1000ms"
-                data-wow-delay="0.3s"
-                ><i class="lnr lnr-film-play"></i
-              ></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- End Video Promo Section -->
+    <!-- Video Promo Section: removed — re-add when a real intro video is available -->
 
-    <!-- Start Pricing Table Section -->
+    <!-- Pricing Section Start -->
     <div id="pricing" class="section pricing-section">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Pricing Table</h2>
-          <hr class="lines" />
-          <p class="section-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat,
-            dignissimos! <br />
-            Lorem ipsum dolor sit amet, consectetur.
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Pricing & Packages</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            Transparent pricing for every type of order — from single custom pieces to bulk corporate runs.<br />
+            <small>Contact us for exact quotes. Prices vary by design complexity and garment type.</small>
           </p>
         </div>
 
         <div class="row pricing-tables">
-          <div class="col-md-4 col-sm-6 col-xs-12">
+          <!-- DTF -->
+          <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.2s">
             <div class="pricing-table">
               <div class="pricing-details">
-                <h2>Free</h2>
-                <span>$00</span>
+                <h2>DTF Starter</h2>
+                <span>Direct to Film</span>
                 <ul>
-                  <li>Consectetur adipiscing</li>
-                  <li>Nunc luctus nulla et tellus</li>
-                  <li>Suspendisse quis metus</li>
-                  <li>Vestibul varius fermentum erat</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> 1 piece minimum</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Full-color, photo-quality prints</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Works on any fabric color</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Turnaround: 3–5 business days</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Best for: events, custom gifts, small runs</li>
+                  <!-- TODO: add peso pricing per piece once confirmed -->
                 </ul>
               </div>
               <div class="plan-button">
-                <a href="#" class="btn btn-common">Get Plan</a>
+                <a href="#contact" class="btn btn-common page-scroll">Get a Quote</a>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="pricing-table">
+          <!-- Sublimation -->
+          <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.4s">
+            <div class="pricing-table featured">
               <div class="pricing-details">
-                <h2>Popular</h2>
-                <span>$3.99</span>
+                <h2>Sublimation Bulk</h2>
+                <span>All-Over Printing</span>
                 <ul>
-                  <li>Consectetur adipiscing</li>
-                  <li>Nunc luctus nulla et tellus</li>
-                  <li>Suspendisse quis metus</li>
-                  <li>Vestibul varius fermentum erat</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> 12 pieces minimum</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Fade-resistant, vibrant colors</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Edge-to-edge full print</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Turnaround: 5–7 business days</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Best for: jerseys, sportswear, uniforms</li>
+                  <!-- TODO: add peso pricing per piece once confirmed -->
                 </ul>
               </div>
               <div class="plan-button">
-                <a href="#" class="btn btn-common">Buy Now</a>
+                <a href="#contact" class="btn btn-common page-scroll">Get a Quote</a>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 col-sm-6 col-xs-12">
+          <!-- Silk Screen -->
+          <div class="col-md-4 col-sm-6 col-xs-12 wow fadeInUp" data-wow-delay="0.6s">
             <div class="pricing-table">
               <div class="pricing-details">
-                <h2>Premium</h2>
-                <span>$9.50</span>
+                <h2>Silk Screen Volume</h2>
+                <span>Screen Printing</span>
                 <ul>
-                  <li>Consectetur adipiscing</li>
-                  <li>Nunc luctus nulla et tellus</li>
-                  <li>Suspendisse quis metus</li>
-                  <li>Vestibul varius fermentum erat</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> 24 pieces minimum</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Durable, high-opacity prints</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Cost-effective for bulk orders</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Turnaround: 7–10 business days</li>
+                  <li><i class="lnr lnr-checkmark-circle"></i> Best for: company shirts, school uniforms</li>
+                  <!-- TODO: add peso pricing per piece once confirmed -->
                 </ul>
               </div>
               <div class="plan-button">
-                <a href="#" class="btn btn-common">Buy Now</a>
+                <a href="#contact" class="btn btn-common page-scroll">Get a Quote</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Pricing Table Section -->
+    <!-- Pricing Section End -->
 
-    <!-- Counter Section Start -->
-    <div class="counters section" data-stellar-background-ratio="0.5">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="facts-item">
-              <div class="icon">
-                <i class="lnr lnr-clock"></i>
-              </div>
-              <div class="fact-count">
-                <h3><span class="counter">1589</span></h3>
-                <h4>Working Hours</h4>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="facts-item">
-              <div class="icon">
-                <i class="lnr lnr-briefcase"></i>
-              </div>
-              <div class="fact-count">
-                <h3><span class="counter">699</span></h3>
-                <h4>Completed Projects</h4>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="facts-item">
-              <div class="icon">
-                <i class="lnr lnr-user"></i>
-              </div>
-              <div class="fact-count">
-                <h3><span class="counter">203</span></h3>
-                <h4>No. of Clients</h4>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 col-md-3 col-lg-3">
-            <div class="facts-item">
-              <div class="icon">
-                <i class="lnr lnr-heart"></i>
-              </div>
-              <div class="fact-count">
-                <h3><span class="counter">1689</span></h3>
-                <h4>Peoples Love</h4>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Counter Section End -->
+    <!-- Counters Section: removed — re-add with real numbers when confirmed -->
 
-    <!-- Team section Start -->
-    <section id="team" class="section">
+    <!-- Team Section: removed — re-add with real team photos if needed -->
+
+    <!-- Testimonials Section: removed — re-add when real customer quotes are available -->
+
+    <!-- Blog Section: removed — re-add when real project posts are ready -->
+
+    <!-- Process Section Start -->
+    <section id="process" class="section process-section">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">Our Team</h2>
-          <hr class="lines" />
-          <p class="section-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat,
-            dignissimos! <br />
-            Lorem ipsum dolor sit amet, consectetur.
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">How It Works</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            From inquiry to delivery — here's what to expect when you order with J.Kloting.
           </p>
         </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6 col-xs-12">
-            <div class="single-team">
-              <img src="img/team/team1.jpg" alt="" />
-              <div class="team-details">
-                <div class="team-inner">
-                  <h4 class="team-title">Jhon Doe</h4>
-                  <p>Chief Technical Officer</p>
-                  <ul class="social-list">
-                    <li class="facebook">
-                      <a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="twitter">
-                      <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="google-plus">
-                      <a href="#"><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li class="linkedin">
-                      <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+
+        <!-- Steps -->
+        <div class="row process-steps text-center">
+          <div class="col-sm-6 col-md-3 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="process-step">
+              <div class="step-icon"><i class="lnr lnr-envelope"></i></div>
+              <div class="step-number">01</div>
+              <h4>Send Inquiry</h4>
+              <p>Tell us your garment type, quantity, design idea, and deadline via our contact form, Messenger, or phone.</p>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-xs-12">
-            <div class="single-team">
-              <img src="img/team/team2.jpg" alt="" />
-              <div class="team-details">
-                <div class="team-inner">
-                  <h4 class="team-title">Paul Kowalsy</h4>
-                  <p>CEO & Co-Founder</p>
-                  <ul class="social-list">
-                    <li class="facebook">
-                      <a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="twitter">
-                      <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="google-plus">
-                      <a href="#"><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li class="linkedin">
-                      <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div class="col-sm-6 col-md-3 wow fadeInUp" data-wow-delay="0.3s">
+            <div class="process-step">
+              <div class="step-icon"><i class="lnr lnr-pencil"></i></div>
+              <div class="step-number">02</div>
+              <h4>Get Quote & Mockup</h4>
+              <p>We send you a detailed quote and a digital mockup of your design within 24 hours.</p>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-xs-12">
-            <div class="single-team">
-              <img src="img/team/team3.jpg" alt="" />
-              <div class="team-details">
-                <div class="team-inner">
-                  <h4 class="team-title">Emilly Williams</h4>
-                  <p>Business Manager</p>
-                  <ul class="social-list">
-                    <li class="facebook">
-                      <a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="twitter">
-                      <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="google-plus">
-                      <a href="#"><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li class="linkedin">
-                      <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div class="col-sm-6 col-md-3 wow fadeInUp" data-wow-delay="0.5s">
+            <div class="process-step">
+              <div class="step-icon"><i class="lnr lnr-checkmark-circle"></i></div>
+              <div class="step-number">03</div>
+              <h4>Approve & Pay</h4>
+              <p>Approve the mockup and settle the 50% downpayment to begin production.</p>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-xs-12">
-            <div class="single-team">
-              <img class="img-fulid" src="img/team/team4.jpg" alt="" />
-              <div class="team-details">
-                <div class="team-inner">
-                  <h4 class="team-title">Patricia Green</h4>
-                  <p>Graphic Designer</p>
-                  <ul class="social-list">
-                    <li class="facebook">
-                      <a href="#"><i class="fa fa-facebook"></i></a>
-                    </li>
-                    <li class="twitter">
-                      <a href="#"><i class="fa fa-twitter"></i></a>
-                    </li>
-                    <li class="google-plus">
-                      <a href="#"><i class="fa fa-google-plus"></i></a>
-                    </li>
-                    <li class="linkedin">
-                      <a href="#"><i class="fa fa-linkedin"></i></a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+          <div class="col-sm-6 col-md-3 wow fadeInUp" data-wow-delay="0.7s">
+            <div class="process-step">
+              <div class="step-icon"><i class="lnr lnr-gift"></i></div>
+              <div class="step-number">04</div>
+              <h4>Production & Delivery</h4>
+              <p>We print, pack, and ship your order. Final payment upon delivery or pickup.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Turnaround + Payment/Delivery info -->
+        <div class="row process-info mt-5">
+          <div class="col-md-6 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <div class="process-info-box">
+              <h4><i class="lnr lnr-clock"></i> Turnaround Times</h4>
+              <ul>
+                <li><strong>DTF (Direct to Film):</strong> 3–5 business days</li>
+                <li><strong>Sublimation:</strong> 5–7 business days</li>
+                <li><strong>Silk Screen (bulk):</strong> 7–10 business days</li>
+                <li><strong>Barong / Custom Apparel:</strong> 7–14 business days</li>
+              </ul>
+              <p class="info-note"><small>Rush orders available — contact us for availability.</small></p>
+            </div>
+          </div>
+          <div class="col-md-6 wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <div class="process-info-box">
+              <h4><i class="lnr lnr-cart"></i> Payment & Delivery</h4>
+              <ul>
+                <li><strong>Payment:</strong> GCash · Bank Transfer · Cash on Pickup</li>
+                <li><strong>Terms:</strong> 50% downpayment, balance upon release</li>
+                <li><strong>Pickup:</strong> Meycauayan City, Bulacan</li>
+                <li><strong>Delivery:</strong> Nationwide via J&T Express or Lalamove</li>
+              </ul>
+              <p class="info-note"><small>Shipping fee shouldered by the customer.</small></p>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Team section End -->
-
-    <!-- testimonial Section Start -->
-    <div id="testimonial" class="section" data-stellar-background-ratio="0.1">
-      <div class="container">
-        <div class="row justify-content-md-center">
-          <div class="col-md-12">
-            <div class="touch-slider owl-carousel owl-theme">
-              <div class="testimonial-item">
-                <img
-                  src="img/testimonial/customer1.jpg"
-                  alt="Client Testimonoal"
-                />
-                <div class="testimonial-text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    send do <br />
-                    adipisicing ciusmod tempor incididunt ut labore et
-                  </p>
-                  <h3>Jone Deam</h3>
-                  <span>Fondor of Jalmori</span>
-                </div>
-              </div>
-              <div class="testimonial-item">
-                <img
-                  src="img/testimonial/customer2.jpg"
-                  alt="Client Testimonoal"
-                />
-                <div class="testimonial-text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    send do <br />
-                    adipisicing ciusmod tempor incididunt ut labore et
-                  </p>
-                  <h3>Oidila Matik</h3>
-                  <span>President Lexo Inc</span>
-                </div>
-              </div>
-              <div class="testimonial-item">
-                <img
-                  src="img/testimonial/customer3.jpg"
-                  alt="Client Testimonoal"
-                />
-                <div class="testimonial-text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    send do <br />
-                    adipisicing ciusmod tempor incididunt ut labore et
-                  </p>
-                  <h3>Alex Dattilo</h3>
-                  <span>CEO Optima Inc</span>
-                </div>
-              </div>
-              <div class="testimonial-item">
-                <img
-                  src="img/testimonial/customer4.jpg"
-                  alt="Client Testimonoal"
-                />
-                <div class="testimonial-text">
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    send do <br />
-                    adipisicing ciusmod tempor incididunt ut labore et
-                  </p>
-                  <h3>Paul Kowalsy</h3>
-                  <span>CEO & Founder</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- testimonial Section Start -->
-
-    <!-- Blog Section -->
-    <section id="blog" class="section">
-      <!-- Container Starts -->
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title">Recent Blog</h2>
-          <hr class="lines" />
-          <p class="section-subtitle">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quaerat,
-            dignissimos! <br />
-            Lorem ipsum dolor sit amet, consectetur.
-          </p>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
-            <!-- Blog Item Starts -->
-            <div class="blog-item-wrapper">
-              <div class="blog-item-img">
-                <a href="single-post.html">
-                  <img src="img/blog/img1.jpg" alt="" />
-                </a>
-              </div>
-              <div class="blog-item-text">
-                <div class="meta-tags">
-                  <span class="date"
-                    ><i class="lnr lnr-clock"></i>2 Days Ago</span
-                  >
-                  <span class="comments"
-                    ><a href="#"
-                      ><i class="lnr lnr-bubble"></i> 24 Comments</a
-                    ></span
-                  >
-                </div>
-                <h3>
-                  <a href="single-post.html">How often should you tweet?</a>
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua...
-                </p>
-                <a href="single-post.html" class="btn-rm"
-                  >Read More <i class="lnr lnr-arrow-right"></i
-                ></a>
-              </div>
-            </div>
-            <!-- Blog Item Wrapper Ends-->
-          </div>
-
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
-            <!-- Blog Item Starts -->
-            <div class="blog-item-wrapper">
-              <div class="blog-item-img">
-                <a href="single-post.html">
-                  <img src="img/blog/img2.jpg" alt="" />
-                </a>
-              </div>
-              <div class="blog-item-text">
-                <div class="meta-tags">
-                  <span class="date"
-                    ><i class="lnr lnr-clock"></i>2 Days Ago</span
-                  >
-                  <span class="comments"
-                    ><a href="#"
-                      ><i class="lnr lnr-bubble"></i> 24 Comments</a
-                    ></span
-                  >
-                </div>
-                <h3>
-                  <a href="single-post.html">Content is still king</a>
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua...
-                </p>
-                <a href="single-post.html" class="btn-rm"
-                  >Read More <i class="lnr lnr-arrow-right"></i
-                ></a>
-              </div>
-            </div>
-            <!-- Blog Item Wrapper Ends-->
-          </div>
-
-          <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 blog-item">
-            <!-- Blog Item Starts -->
-            <div class="blog-item-wrapper">
-              <div class="blog-item-img">
-                <a href="single-post.html">
-                  <img src="img/blog/img3.jpg" alt="" />
-                </a>
-              </div>
-              <div class="blog-item-text">
-                <div class="meta-tags">
-                  <span class="date"
-                    ><i class="lnr lnr-clock"></i>2 Days Ago</span
-                  >
-                  <span class="comments"
-                    ><a href="#"
-                      ><i class="lnr lnr-bubble"></i> 24 Comments</a
-                    ></span
-                  >
-                </div>
-                <h3>
-                  <a href="single-post.html">Social media at work</a>
-                </h3>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna
-                  aliqua...
-                </p>
-                <a href="single-post.html" class="btn-rm"
-                  >Read More <i class="lnr lnr-arrow-right"></i
-                ></a>
-              </div>
-            </div>
-            <!-- Blog Item Wrapper Ends-->
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- blog Section End -->
+    <!-- Process Section End -->
 
     <!-- Contact Section Start -->
     <section id="contact" class="section" data-stellar-background-ratio="-0.2">
       <div class="contact-form">
         <div class="container">
-          <div class="row">
-            <div class="col-lg-6 col-sm-6 col-xs-12">
+
+          <!-- Contact Info Row -->
+          <div class="row contact-info-row">
+            <div class="col-lg-4 col-md-12">
               <div class="contact-us">
-                <h3>Contact With us</h3>
+                <h3>Get In Touch</h3>
                 <div class="contact-address">
-                  <p>
+                  <p><i class="lnr lnr-map-marker"></i>
                     1111 Balaongan Street, Pantoc<br />
                     Meycauayan City, Bulacan Philippines
                   </p>
-                  <p class="phone">Phone: <span>+63 965 287 7366</span></p>
-                  <p class="email">
-                    E-mail: <span>jklothing.official@gmail.com</span>
+                  <p class="phone"><i class="lnr lnr-phone-handset"></i>
+                    <a href="tel:+639652877366">+63 965 287 7366</a>
+                  </p>
+                  <p class="email"><i class="lnr lnr-envelope"></i>
+                    <a href="mailto:jklothing.official@gmail.com">jklothing.official@gmail.com</a>
                   </p>
                 </div>
                 <div class="social-icons">
                   <ul>
                     <li class="facebook">
-                      <a href="https://www.facebook.com/jklotingofficial"
-                        ><i class="fa fa-facebook"></i
-                      ></a>
+                      <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener">
+                        <i class="fa fa-facebook"></i>
+                      </a>
                     </li>
                     <li class="instagram">
-                      <a href="https://www.instagram.com/jkloting_/"
-                        ><i class="fa fa-instagram"></i
-                      ></a>
+                      <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener">
+                        <i class="fa fa-instagram"></i>
+                      </a>
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-sm-6 col-xs-12">
+
+            <!-- Quick Contact -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
               <div class="contact-block">
+                <h4 class="form-title">Quick Message</h4>
                 <form id="contactForm">
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="name"
-                          name="name"
-                          placeholder="Your Name"
-                          required
-                          data-error="Please enter your name"
-                        />
-                        <div class="help-block with-errors"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <input
-                          type="text"
-                          placeholder="Your Email"
-                          id="email"
-                          class="form-control"
-                          name="name"
-                          required
-                          data-error="Please enter your email"
-                        />
-                        <div class="help-block with-errors"></div>
-                      </div>
-                    </div>
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <textarea
-                          class="form-control"
-                          id="message"
-                          placeholder="Your Message"
-                          rows="8"
-                          data-error="Write your message"
-                          required
-                        ></textarea>
-                        <div class="help-block with-errors"></div>
-                      </div>
-                      <div class="submit-button text-center">
-                        <button
-                          class="btn btn-common"
-                          id="submit"
-                          type="submit"
-                        >
-                          Send Message
-                        </button>
-                        <div id="msgSubmit" class="h3 text-center hidden"></div>
-                        <div class="clearfix"></div>
-                      </div>
-                    </div>
+                  <!-- Honeypot — bots fill this; humans don't see it -->
+                  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="name" name="name"
+                      placeholder="Your Name" required data-error="Please enter your name" />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="email" name="email"
+                      placeholder="Your Email" required data-error="Please enter a valid email" />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" id="message" name="message"
+                      placeholder="Your Message" rows="5"
+                      data-error="Please write your message" required></textarea>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="submit-button text-center">
+                    <button class="btn btn-common" id="submit" type="submit">Send Message</button>
+                    <div id="msgSubmit" class="h3 text-center hidden"></div>
+                    <div class="clearfix"></div>
                   </div>
                 </form>
               </div>
             </div>
+
+            <!-- Request a Quote -->
+            <div class="col-lg-4 col-md-6 col-sm-12">
+              <div class="contact-block quote-block">
+                <h4 class="form-title">Request a Quote</h4>
+                <form id="quoteForm" action="php/form-process.php" method="POST">
+                  <input type="hidden" name="form_type" value="quote" />
+                  <!-- Honeypot — bots fill this; humans don't see it -->
+                  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
+                  <div class="form-group">
+                    <input type="text" class="form-control" id="quote-name" name="quote_name"
+                      placeholder="Your Name" required data-error="Please enter your name" />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="email" class="form-control" id="quote-email" name="quote_email"
+                      placeholder="Email Address" required data-error="Please enter a valid email" />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="tel" class="form-control" id="quote-phone" name="quote_phone"
+                      placeholder="Phone / Viber Number" />
+                  </div>
+                  <div class="form-group">
+                    <select class="form-control" id="quote-garment" name="quote_garment" required data-error="Please select a garment type">
+                      <option value="" disabled selected>Garment Type</option>
+                      <option>T-Shirt</option>
+                      <option>Polo Shirt</option>
+                      <option>Hoodie</option>
+                      <option>Jacket</option>
+                      <option>Jersey / Sportswear</option>
+                      <option>Barong</option>
+                      <option>School / Org Uniform</option>
+                      <option>Corporate Uniform</option>
+                      <option>Other</option>
+                    </select>
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="number" class="form-control" id="quote-qty" name="quote_qty"
+                      placeholder="Quantity (pcs)" min="1" required data-error="Please enter quantity" />
+                    <div class="help-block with-errors"></div>
+                  </div>
+                  <div class="form-group">
+                    <input type="date" class="form-control" id="quote-deadline" name="quote_deadline"
+                      placeholder="Target Deadline" />
+                  </div>
+                  <div class="form-group">
+                    <textarea class="form-control" id="quote-notes" name="quote_notes"
+                      placeholder="Describe your design, or paste a Google Drive / Facebook link to your artwork" rows="4"></textarea>
+                  </div>
+                  <div class="submit-button text-center">
+                    <button class="btn btn-common" id="quote-submit" type="submit">Submit Quote Request</button>
+                    <div id="quoteSubmit" class="h3 text-center hidden"></div>
+                    <div class="clearfix"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -961,16 +747,22 @@
           <div class="col-lg-6 col-sm-6 col-xs-12">
             <ul class="footer-links">
               <li>
-                <a href="#">Homepage</a>
+                <a class="page-scroll" href="#hero-area">Home</a>
               </li>
               <li>
-                <a href="#">Services</a>
+                <a class="page-scroll" href="#services">Services</a>
               </li>
               <li>
-                <a href="#">About Us</a>
+                <a class="page-scroll" href="#barong">Barong</a>
               </li>
               <li>
-                <a href="#">Contact</a>
+                <a class="page-scroll" href="#portfolios">Portfolio</a>
+              </li>
+              <li>
+                <a class="page-scroll" href="#pricing">Pricing</a>
+              </li>
+              <li>
+                <a class="page-scroll" href="#contact">Contact</a>
               </li>
             </ul>
           </div>
@@ -996,6 +788,18 @@
       </div>
     </div>
 
+    <!-- Sticky mobile contact bar (visible only on small screens) -->
+    <div class="mobile-contact-bar" role="region" aria-label="Quick contact">
+      <a href="tel:+639652877366" class="mobile-contact-bar__btn mobile-contact-bar__btn--call" aria-label="Call J.Kloting">
+        <i class="lnr lnr-phone-handset" aria-hidden="true"></i>
+        <span>Call</span>
+      </a>
+      <a href="https://m.me/jklotingofficial" target="_blank" rel="noopener" class="mobile-contact-bar__btn mobile-contact-bar__btn--msg" aria-label="Message us on Facebook Messenger">
+        <i class="lnr lnr-bubble" aria-hidden="true"></i>
+        <span>Message</span>
+      </a>
+    </div>
+
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="js/jquery-min.js"></script>
     <script src="js/popper.min.js"></script>
@@ -1017,5 +821,6 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/logo-switcher.js"></script>
   </body>
 </html>

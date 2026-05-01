@@ -1,3 +1,50 @@
+/* ==========================================================================
+   Sticky mobile contact bar — hidden by default, shown only on small screens
+   ========================================================================== */
+.mobile-contact-bar { display: none; }
+
+@media (max-width: 767px) {
+  .mobile-contact-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    background: #fff;
+    box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.15);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+  }
+  .mobile-contact-bar__btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 56px;
+    padding: 14px 12px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    transition: opacity 0.2s ease;
+  }
+  .mobile-contact-bar__btn:hover,
+  .mobile-contact-bar__btn:focus,
+  .mobile-contact-bar__btn:active {
+    opacity: 0.9;
+    color: #fff;
+    text-decoration: none;
+  }
+  .mobile-contact-bar__btn i { font-size: 18px; }
+  .mobile-contact-bar__btn--call { background: #2ea44f; }
+  .mobile-contact-bar__btn--msg  { background: #0084ff; }
+
+  /* Reserve space at page bottom so the bar doesn't cover footer / back-to-top */
+  body { padding-bottom: 60px; }
+  .back-to-top { bottom: 75px !important; }
+}
+
 /* only small desktops */
 /* tablets */
 /* only small tablets */
@@ -54,19 +101,11 @@
     margin: 0px;
   }
   .controls .btn {
-    font-size: 13px;
-    padding: 7px 7px;
-  }
-  .video-promo .video-promo-content h2 {
-    font-size: 22px;
+    font-size: 12px;
+    padding: 6px 10px;
+    margin: 2px 1px;
   }
   .pricing-table {
-    margin-bottom: 15px;
-  }
-  .counters .facts-item {
-    margin-bottom: 30px;
-  }
-  .single-team {
     margin-bottom: 15px;
   }
   .contact-us {
@@ -81,4 +120,140 @@
   .copyright {
     float: left;
   }
+
+  /* Barong gallery — stack to 2 columns */
+  .barong-details {
+    padding-left: 15px;
+    margin-top: 30px;
+  }
+
+  /* Process steps — stack nicely */
+  .process-step {
+    margin: 8px 0;
+    height: auto;
+  }
+
+  /* Contact dual form — stack vertically */
+  .contact-info-row > div {
+    margin-bottom: 30px;
+  }
+
+  /* Hero button row — stack on mobile */
+  .hero-btns {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .hero-btns .btn,
+  .hero-btns .btn-outline-light-custom {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* Tablet tweaks for new sections */
+@media (min-width: 768px) and (max-width: 991px) {
+  .barong-details {
+    padding-left: 15px;
+    margin-top: 20px;
+  }
+  .process-step {
+    margin: 6px;
+  }
+  .process-info-box {
+    margin-bottom: 20px;
+  }
+}
+
+/* ==========================================================================
+   DESIGN SYSTEM — Responsive Overrides
+   ========================================================================== */
+
+/* Tablet (768–991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .section { padding: 72px 0; }
+  .section-title { font-size: 32px !important; }
+  #hero-area .contents h1 { font-size: 42px !important; }
+  .barong-hero-content h1 { font-size: 40px !important; }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767px) {
+  /* Section spacing */
+  .section { padding: 56px 0; }
+  .section-header { margin-bottom: 36px; }
+  .section-title { font-size: 28px !important; letter-spacing: -0.3px !important; }
+  .section-subtitle { font-size: 14px !important; }
+
+  /* Hero */
+  #hero-area .contents h1 { font-size: 30px !important; line-height: 1.15 !important; letter-spacing: -0.5px !important; }
+  #hero-area .contents p.lead { font-size: 14px !important; line-height: 1.75 !important; }
+  #hero-area .contents { padding: 120px 0 80px !important; }
+
+  /* Barong hero */
+  .barong-hero-content h1 { font-size: 30px !important; }
+  .barong-hero-content { padding: 120px 0 80px !important; }
+
+  /* Buttons — full width on small screens */
+  .btn-common,
+  .btn-outline-light-custom {
+    display: block;
+    width: 100%;
+    margin: 0 0 12px 0 !important;
+    text-align: center;
+  }
+
+  /* PREVENT iOS ZOOM on form inputs */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+
+  /* Services cards */
+  .item-boxes { padding: 24px 20px; }
+
+  /* Portfolio filters */
+  .controls .btn-common {
+    width: auto !important;
+    display: inline-block !important;
+    font-size: 11px !important;
+    padding: 6px 12px !important;
+    margin: 3px 2px !important;
+  }
+
+  /* Process steps */
+  .process-step { margin: 6px 0; }
+  .process-steps .col-sm-6 { margin-bottom: 12px; }
+
+  /* Process info boxes */
+  .process-info-box { margin-bottom: 20px; }
+
+  /* Contact — stack forms */
+  .contact-info-row > div { margin-bottom: 28px; }
+  .form-title { font-size: 18px !important; }
+
+  /* Product cards */
+  .product-img img { height: 220px; }
+
+  /* Order form */
+  .order-summary { margin-bottom: 24px; }
+
+  /* Size guide */
+  .size-guide-table thead th,
+  .size-guide-table tbody td { padding: 10px 10px; font-size: 13px; }
+
+  /* Care section */
+  .care-info-box { margin-bottom: 20px; }
+
+  /* Barong teaser on homepage */
+  .barong-teaser-title { font-size: 26px !important; }
+  .barong-teaser-img { max-width: 200px; margin-top: 24px; }
+  .barong-teaser-highlights { gap: 8px; }
+}
+
+/* Small mobile (≤480px) */
+@media (max-width: 480px) {
+  #hero-area .contents h1 { font-size: 26px !important; }
+  .barong-hero-content h1 { font-size: 26px !important; }
+  .section-title { font-size: 24px !important; }
+  .product-img img { height: 200px; }
 }
