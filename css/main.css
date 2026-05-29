@@ -2960,6 +2960,61 @@ footer h4 {
   font-family: var(--font-display);
 }
 
+/* --- 23. Portfolio Carousel ----------------------------------------------- */
+
+/* Spacing between slides */
+#portfolio-carousel .portfolio-item {
+  padding: 0 8px;
+}
+
+/* Fixed image height so it's not full-screen tall */
+#portfolio-carousel .shot-item img {
+  height: 300px;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Arrows — position on sides, vertically centered on the image */
+#portfolios #portfolio-carousel {
+  position: relative;
+}
+
+#portfolios .owl-controls .owl-buttons .owl-prev,
+#portfolios .owl-controls .owl-buttons .owl-next {
+  position: absolute;
+  top: 150px; /* half of 300px image height */
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.92) !important;
+  color: #333 !important;
+  border-radius: 50% !important;
+  width: 42px !important;
+  height: 42px !important;
+  line-height: 42px !important;
+  text-align: center;
+  font-size: 16px;
+  opacity: 1 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  transition: background 0.2s, box-shadow 0.2s;
+  z-index: 10;
+}
+
+#portfolios .owl-controls .owl-buttons .owl-prev:hover,
+#portfolios .owl-controls .owl-buttons .owl-next:hover {
+  background: #fff !important;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+}
+
+#portfolios .owl-controls .owl-buttons .owl-prev {
+  left: 6px;
+}
+
+#portfolios .owl-controls .owl-buttons .owl-next {
+  right: 6px;
+  left: auto;
+}
+
 /* --- 23. Back to top button ----------------------------------------------- */
 .back-to-top i {
   background: var(--navy) !important;

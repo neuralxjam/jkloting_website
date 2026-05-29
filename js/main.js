@@ -72,14 +72,13 @@
       $('#portfolio-carousel').owlCarousel({
         navigation: true,
         pagination: true,
-        slideSpeed: 1000,
+        slideSpeed: 600,
         stopOnHover: true,
         autoPlay: 5000,
-        singleItem: true,
-        items: 1,
-        itemsDesktop: [1199, 1],
-        itemsDesktopSmall: [1024, 1],
-        itemsTablet: [600, 1],
+        items: 3,
+        itemsDesktop: [1199, 3],
+        itemsDesktopSmall: [1024, 3],
+        itemsTablet: [768, 2],
         itemsMobile: [479, 1]
       });
       $('#portfolio-carousel').find('.owl-prev').html('<i class="lnr lnr-chevron-left"></i>');
