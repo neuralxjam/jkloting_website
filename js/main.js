@@ -66,10 +66,24 @@
     }
 
 /*
-   MixitUp
+   Portfolio Gallery Carousel (Owl Carousel)
    ========================================================================== */
-    if ($('#portfolio').length) {
-      $('#portfolio').mixItUp();
+    if ($('#portfolio-carousel').length) {
+      $('#portfolio-carousel').owlCarousel({
+        navigation: true,
+        pagination: true,
+        slideSpeed: 1000,
+        stopOnHover: true,
+        autoPlay: 5000,
+        singleItem: true,
+        items: 1,
+        itemsDesktop: [1199, 1],
+        itemsDesktopSmall: [1024, 1],
+        itemsTablet: [600, 1],
+        itemsMobile: [479, 1]
+      });
+      $('#portfolio-carousel').find('.owl-prev').html('<i class="lnr lnr-chevron-left"></i>');
+      $('#portfolio-carousel').find('.owl-next').html('<i class="lnr lnr-chevron-right"></i>');
     }
 
 /*
