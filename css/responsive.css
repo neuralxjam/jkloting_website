@@ -26,19 +26,32 @@
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
-    color: #fff;
     transition: opacity 0.2s ease;
   }
   .mobile-contact-bar__btn:hover,
   .mobile-contact-bar__btn:focus,
   .mobile-contact-bar__btn:active {
     opacity: 0.9;
-    color: #fff;
     text-decoration: none;
   }
   .mobile-contact-bar__btn i { font-size: 18px; }
-  .mobile-contact-bar__btn--call { background: #2ea44f; }
-  .mobile-contact-bar__btn--msg  { background: #0084ff; }
+  .mobile-contact-bar__btn--call {
+    background: #fff;
+    color: #000;
+    border-right: 1px solid #e5e5e5;
+  }
+  .mobile-contact-bar__btn--call:hover,
+  .mobile-contact-bar__btn--call:focus,
+  .mobile-contact-bar__btn--call:active { color: #000; }
+  .mobile-contact-bar__btn--call i { color: #000; }
+  .mobile-contact-bar__btn--msg {
+    background: #000;
+    color: #fff;
+  }
+  .mobile-contact-bar__btn--msg:hover,
+  .mobile-contact-bar__btn--msg:focus,
+  .mobile-contact-bar__btn--msg:active { color: #fff; }
+  .mobile-contact-bar__btn--msg i { color: #fff; }
 
   /* Reserve space at page bottom so the bar doesn't cover footer / back-to-top */
   body { padding-bottom: 60px; }
