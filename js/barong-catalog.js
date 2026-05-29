@@ -34,6 +34,8 @@ const db = getFirestore(app)
 // ---- DOM REFS --------------------------------------------------------------
 const $loading = document.getElementById('barong-catalog-loading')
 const $empty = document.getElementById('barong-catalog-empty')
+const $featuredSection = document.getElementById('barong-featured-section')
+const $featuredGrid = document.getElementById('barong-featured-grid')
 const $coloredSection = document.getElementById('colored-barong-section')
 const $whiteSection = document.getElementById('white-barong-section')
 const $coloredGrid = document.getElementById('colored-barong-grid')
@@ -59,7 +61,7 @@ function messengerLinkFor(barong) {
   return barong.fb_link && barong.fb_link.trim() ? barong.fb_link : MESSENGER_URL
 }
 
-function renderCard(barong, index) {
+function renderCard(barong, index, tier) {
   const images = Array.isArray(barong.images) && barong.images.length > 0
     ? barong.images
     : [PLACEHOLDER_IMG]
@@ -82,11 +84,17 @@ function renderCard(barong, index) {
       </div>`
     : ''
 
+  // tier-specific column sizing: 'featured' = 3 across on desktop, 'compact' = 4 across
+  const colClasses = tier === 'featured'
+    ? 'col-lg-4 col-md-6 col-sm-12'
+    : 'col-lg-3 col-md-4 col-sm-6 col-xs-12'
+
+  const cardSizeClass = tier === 'featured' ? 'barong-card-featured' : 'barong-card-compact'
   const wowDelay = (0.1 + (index % 3) * 0.15).toFixed(2)
 
   return `
-    <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="${wowDelay}s">
-      <div class="product-card barong-card" id="${cardId}">
+    <div class="${colClasses} wow fadeInUp" data-wow-delay="${wowDelay}s">
+      <div class="product-card barong-card ${cardSizeClass}" id="${cardId}">
         <div class="product-img barong-card-img">
           <img src="${escapeHtml(mainImg)}" alt="${label}" data-main-img />
           <div class="product-badge">${escapeHtml(price)}</div>
@@ -142,28 +150,39 @@ async function loadCatalog() {
     )
     const snap = await getDocs(q)
 
+    const featured = []
     const colored = []
     const white = []
     snap.forEach((doc) => {
       const data = { id: doc.id, ...doc.data() }
-      if (data.type === 'white') white.push(data)
-      else colored.push(data)
+      if (data.featured === true) {
+        featured.push(data)
+      } else if (data.type === 'white') {
+        white.push(data)
+      } else {
+        colored.push(data)
+      }
     })
 
     if ($loading) $loading.style.display = 'none'
 
-    if (colored.length === 0 && white.length === 0) {
+    if (featured.length === 0 && colored.length === 0 && white.length === 0) {
       if ($empty) $empty.style.display = 'block'
       return
     }
 
+    if (featured.length > 0) {
+      $featuredGrid.innerHTML = featured.map((b, i) => renderCard(b, i, 'featured')).join('')
+      $featuredSection.style.display = 'block'
+      wireThumbnailSwitching($featuredGrid)
+    }
     if (colored.length > 0) {
-      $coloredGrid.innerHTML = colored.map(renderCard).join('')
+      $coloredGrid.innerHTML = colored.map((b, i) => renderCard(b, i, 'compact')).join('')
       $coloredSection.style.display = 'block'
       wireThumbnailSwitching($coloredGrid)
     }
     if (white.length > 0) {
-      $whiteGrid.innerHTML = white.map(renderCard).join('')
+      $whiteGrid.innerHTML = white.map((b, i) => renderCard(b, i, 'compact')).join('')
       $whiteSection.style.display = 'block'
       wireThumbnailSwitching($whiteGrid)
     }

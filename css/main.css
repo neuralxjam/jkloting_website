@@ -1822,38 +1822,114 @@ footer {
   background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(30,30,30,0.85));
 }
 
-.barong-hero-content {
-  padding: 200px 0 130px;
+.barong-hero-row {
+  padding: 140px 0 100px;
   position: relative;
   z-index: 1;
 }
 
-.barong-hero-label {
-  font-size: 12px;
+.barong-hero-eyebrow {
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #bbb;
-  margin-bottom: 16px;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 18px;
 }
 
-.barong-hero-content h1 {
-  font-size: 48px;
+.barong-hero-headline {
+  font-family: var(--font-display, 'Playfair Display'), serif;
+  font-size: 64px;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 20px;
-  line-height: 1.1;
+  margin: 0 0 22px;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  text-transform: uppercase;
 }
 
-.barong-hero-content .lead {
+.barong-hero-lead {
   font-size: 16px;
-  color: rgba(255,255,255,0.85);
-  line-height: 32px;
-  margin-bottom: 35px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.7;
+  margin-bottom: 36px;
+  max-width: 480px;
 }
 
-.barong-hero-content .btn {
-  margin: 0 12px 0 0;
+.barong-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.barong-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #111;
+  border: 2px solid #fff;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.barong-hero-cta:hover,
+.barong-hero-cta:focus {
+  background: transparent;
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.barong-hero-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.35);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.barong-hero-cta-secondary:hover,
+.barong-hero-cta-secondary:focus {
+  border-color: #fff;
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.barong-hero-image {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.barong-hero-image img {
+  max-width: 100%;
+  max-height: 460px;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.45));
+}
+
+@media (max-width: 991px) {
+  .barong-hero-row { padding: 110px 0 70px; }
+  .barong-hero-headline { font-size: 44px; }
+  .barong-hero-image { margin-top: 30px; }
+  .barong-hero-image img { max-height: 320px; }
 }
 
 /* ==========================================================================
@@ -2847,15 +2923,6 @@ h5 {
   color: rgba(255,255,255,0.7) !important;
 }
 
-/* --- 14. Barong Page Hero ------------------------------------------------- */
-.barong-hero-content h1 {
-  font-family: var(--font-display);
-  font-size: 56px;
-  font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.1;
-}
-
 /* --- 15. Barong Product Cards -------------------------------------------- */
 .product-card {
   border-radius: 10px !important;
@@ -3291,4 +3358,102 @@ footer h4 {
 
 .barong-card .btn-order {
   margin-top: auto;
+}
+
+/* --- 18. Barong Catalog Section + Featured / Compact tiers --------------- */
+.barong-catalog-section {
+  background: var(--bg-light, #f8f8f8) !important;
+  padding-top: 80px !important;
+  padding-bottom: 80px !important;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--navy);
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.barong-catalog-section .section-title {
+  text-transform: uppercase;
+  letter-spacing: -0.5px;
+}
+
+.barong-subsection-title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0 0 24px 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Card aesthetic — white with soft rounded shadow (inspo) */
+.barong-catalog-section .product-card,
+.barong-catalog-section .barong-card {
+  background: #fff !important;
+  border: none !important;
+  border-radius: 14px !important;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.06) !important;
+  transition: transform var(--transition), box-shadow var(--transition) !important;
+  overflow: hidden;
+}
+
+.barong-catalog-section .product-card:hover,
+.barong-catalog-section .barong-card:hover {
+  box-shadow: 0 14px 36px rgba(0,0,0,0.12) !important;
+  transform: translateY(-6px) !important;
+}
+
+/* Featured tier — larger image */
+.featured-grid .barong-card-featured .barong-card-img img {
+  height: 360px;
+}
+
+.featured-grid .barong-card-featured .product-details {
+  padding: 22px;
+}
+
+.featured-grid .barong-card-featured .product-details h4 {
+  font-size: 20px !important;
+}
+
+/* Compact tier — smaller cards, 4 across on desktop */
+.product-grid-compact .barong-card-compact .barong-card-img img {
+  height: 240px;
+}
+
+.product-grid-compact .barong-card-compact .product-details {
+  padding: 16px;
+}
+
+.product-grid-compact .barong-card-compact .product-details h4 {
+  font-size: 15px !important;
+  margin-bottom: 8px;
+}
+
+.product-grid-compact .barong-card-compact .size-pill {
+  font-size: 11px;
+  padding: 3px 10px;
+}
+
+.product-grid-compact .barong-card-compact .barong-thumbs {
+  display: none;
+}
+
+.product-grid-compact .barong-card-compact .btn-order {
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 991px) {
+  .featured-grid .barong-card-featured .barong-card-img img { height: 280px; }
+  .product-grid-compact .barong-card-compact .barong-card-img img { height: 200px; }
 }
