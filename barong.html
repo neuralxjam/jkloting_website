@@ -108,80 +108,47 @@
     </header>
     <!-- Hero End -->
 
-    <!-- Product Grid -->
+    <!-- Product Grid (dynamic — populated by js/barong-catalog.js) -->
     <section id="products" class="section">
       <div class="container">
         <div class="section-header">
           <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Our Collection</h2>
           <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
           <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            All pieces are made-to-order at <strong>₱650 per piece</strong>. Sizes XS to XXL available.<br />
-            Click "Order This" on any style to place your order.
+            Each piece in our collection is unique — when it's gone, it's gone.<br />
+            Tap any piece to message us and reserve it.
           </p>
         </div>
 
-        <div class="row product-grid">
-
-          <!-- Card 1 -->
-          <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="product-card">
-              <div class="product-img">
-                <!-- TODO: replace with img/barong/polo-white.jpg -->
-                <img src="img/dummy.png" alt="Polo Barong Classic White" />
-                <div class="product-badge">₱650</div>
-              </div>
-              <div class="product-details">
-                <h4>Polo Barong — Classic White</h4>
-                <p class="product-desc">Clean, timeless white polo barong cut for a modern silhouette. Perfect for formal occasions and everyday smart-casual wear.</p>
-                <div class="size-badges">
-                  <span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span>
-                </div>
-                <a href="#order" class="btn btn-common btn-order page-scroll" data-product="Polo Barong — Classic White">Order This</a>
-              </div>
-            </div>
+        <!-- Loading state -->
+        <div id="barong-catalog-loading" class="text-center" style="padding: 40px 0;">
+          <div class="spinner" style="margin: 0 auto;">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
           </div>
-
-          <!-- Card 2 -->
-          <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.4s">
-            <div class="product-card featured-product">
-              <div class="product-img">
-                <!-- TODO: replace with img/barong/polo-modern.jpg -->
-                <img src="img/dummy.png" alt="Polo Barong Modern Cut" />
-                <div class="product-badge">₱650</div>
-                <div class="product-tag">Most Popular</div>
-              </div>
-              <div class="product-details">
-                <h4>Polo Barong — Modern Cut</h4>
-                <p class="product-desc">Slim-fit contemporary cut with subtle texture. Versatile enough for both formal events and professional office settings.</p>
-                <div class="size-badges">
-                  <span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span>
-                </div>
-                <a href="#order" class="btn btn-common btn-order page-scroll" data-product="Polo Barong — Modern Cut">Order This</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="col-lg-4 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay="0.6s">
-            <div class="product-card">
-              <div class="product-img">
-                <!-- TODO: replace with img/barong/polo-event.jpg -->
-                <img src="img/dummy.png" alt="Polo Barong Event Ready" />
-                <div class="product-badge">₱650</div>
-              </div>
-              <div class="product-details">
-                <h4>Polo Barong — Event Ready</h4>
-                <p class="product-desc">Ideal for wedding entourages, debuts, and group events. Available with optional custom embroidery for a personalized touch.</p>
-                <div class="size-badges">
-                  <span>XS</span><span>S</span><span>M</span><span>L</span><span>XL</span><span>XXL</span>
-                </div>
-                <p class="product-note"><i class="lnr lnr-pencil"></i> Custom embroidery available — mention in your order</p>
-                <a href="#order" class="btn btn-common btn-order page-scroll" data-product="Polo Barong — Event Ready">Order This</a>
-              </div>
-            </div>
-          </div>
-
+          <p style="margin-top: 16px; color: #888;">Loading our latest pieces…</p>
         </div>
+
+        <!-- Empty state -->
+        <div id="barong-catalog-empty" class="text-center" style="display:none; padding: 40px 0;">
+          <p style="color:#888;">No pieces available right now — check back soon, or
+            <a href="https://m.me/jklotingofficial" target="_blank" rel="noopener">message us</a>
+            for upcoming stock.
+          </p>
+        </div>
+
+        <!-- Colored Barongs -->
+        <div id="colored-barong-section" style="display:none;">
+          <h3 class="barong-subsection-title">Colored Barongs</h3>
+          <div id="colored-barong-grid" class="row product-grid"></div>
+        </div>
+
+        <!-- White Barongs -->
+        <div id="white-barong-section" style="display:none; margin-top: 40px;">
+          <h3 class="barong-subsection-title">White Barongs</h3>
+          <div id="white-barong-grid" class="row product-grid"></div>
+        </div>
+
       </div>
     </section>
     <!-- Product Grid End -->
@@ -527,6 +494,9 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/main.js"></script>
     <script src="js/logo-switcher.js"></script>
+
+    <!-- Barong Catalog (Firebase Firestore + dynamic rendering) -->
+    <script type="module" src="js/barong-catalog.js"></script>
 
     <!-- Sticky mobile contact bar (visible only on small screens) -->
     <div class="mobile-contact-bar" role="region" aria-label="Quick contact">
