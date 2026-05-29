@@ -2057,6 +2057,43 @@ footer {
   margin-bottom: 10px;
 }
 
+.contact-info-block {
+  margin-bottom: 22px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid #333;
+}
+
+.contact-info-block p {
+  font-size: 14px;
+  color: #ddd;
+  line-height: 1.7;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.contact-info-block p:last-child {
+  margin-bottom: 0;
+}
+
+.contact-info-block i {
+  color: #888;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.contact-info-block a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-info-block a:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
 .barong-order-form {
   background: #2a2a2a;
   border: 1px solid #444;

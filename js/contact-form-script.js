@@ -1,4 +1,4 @@
-// Contact Form
+// Contact Form (unified — handles general inquiries, quotes, custom orders)
 $("#contactForm").validator().on("submit", function (event) {
     if (event.isDefaultPrevented()) {
         formError();
@@ -10,6 +10,8 @@ $("#contactForm").validator().on("submit", function (event) {
 });
 
 function submitContactForm() {
+    var $btn = $("#submit");
+    $btn.prop("disabled", true).text("Sending...");
     $.ajax({
         type: "POST",
         url: "https://api.web3forms.com/submit",
@@ -22,17 +24,19 @@ function submitContactForm() {
                 formError();
                 submitMSG(false, data.message || "Something went wrong. Please try again.");
             }
+            $btn.prop("disabled", false).text("Send Message");
         },
         error: function () {
             formError();
             submitMSG(false, "Something went wrong. Please message us on Facebook.");
+            $btn.prop("disabled", false).text("Send Message");
         }
     });
 }
 
 function formSuccess() {
     $("#contactForm")[0].reset();
-    submitMSG(true, "Message Submitted!");
+    submitMSG(true, "Message sent! We'll reply within 24 hours.");
 }
 
 function formError() {
@@ -43,48 +47,7 @@ function formError() {
 
 function submitMSG(valid, msg) {
     var msgClasses = valid
-        ? "h3 text-center tada animated text-success"
-        : "h3 text-center text-danger";
+        ? "h4 text-center tada animated text-success"
+        : "h4 text-center text-danger";
     $("#msgSubmit").removeClass().addClass(msgClasses).text(msg);
-}
-
-// Quote Form
-$("#quoteForm").validator().on("submit", function (event) {
-    if (event.isDefaultPrevented()) {
-        // validator shows inline errors
-    } else {
-        event.preventDefault();
-        submitQuoteForm();
-    }
-});
-
-function submitQuoteForm() {
-    var $btn = $('#quote-submit');
-    var $msg = $('#quoteSubmit');
-    $btn.prop('disabled', true).text('Sending...');
-    $.ajax({
-        type: "POST",
-        url: "https://api.web3forms.com/submit",
-        data: $("#quoteForm").serialize(),
-        dataType: "json",
-        success: function (data) {
-            if (data.success) {
-                $("#quoteForm")[0].reset();
-                $msg.removeClass('hidden text-danger')
-                    .addClass('h3 text-center tada animated text-success')
-                    .text("Quote Request Sent!");
-            } else {
-                $msg.removeClass('hidden text-success')
-                    .addClass('h3 text-center text-danger')
-                    .text(data.message || "Something went wrong. Please try again.");
-            }
-            $btn.prop('disabled', false).text('Submit Quote Request');
-        },
-        error: function () {
-            $msg.removeClass('hidden text-success')
-                .addClass('h3 text-center text-danger')
-                .text("Something went wrong. Please message us on Facebook.");
-            $btn.prop('disabled', false).text('Submit Quote Request');
-        }
-    });
 }

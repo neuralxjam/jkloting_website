@@ -564,140 +564,137 @@
     <!-- Process Section End -->
 
     <!-- Contact Section Start -->
-    <section id="contact" class="section" data-stellar-background-ratio="-0.2">
-      <div class="contact-form">
-        <div class="container">
+    <section id="contact" class="section barong-order-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Get in Touch</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            Send a message, request a quote, or ask anything — we'll get back within 24 hours.<br />
+            Prefer chat? Message us on Facebook for the fastest reply.
+          </p>
+        </div>
 
-          <!-- Contact Info Row -->
-          <div class="row contact-info-row">
-            <div class="col-lg-4 col-md-12">
-              <div class="contact-us">
-                <h3>Get In Touch</h3>
-                <div class="contact-address">
-                  <p><i class="lnr lnr-map-marker"></i>
-                    1111 Balaongan Street, Pantoc<br />
-                    Meycauayan City, Bulacan Philippines
-                  </p>
-                  <p class="phone"><i class="lnr lnr-phone-handset"></i>
-                    <a href="tel:+639652877366">+63 965 287 7366</a>
-                  </p>
-                  <p class="email"><i class="lnr lnr-envelope"></i>
-                    <a href="mailto:jklothing.official@gmail.com">jklothing.official@gmail.com</a>
-                  </p>
-                </div>
-                <div class="social-icons">
-                  <ul>
-                    <li class="facebook">
-                      <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener">
-                        <i class="fa fa-facebook"></i>
-                      </a>
-                    </li>
-                    <li class="instagram">
-                      <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener">
-                        <i class="fa fa-instagram"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+        <div class="row">
+
+          <!-- Get in Touch info card -->
+          <div class="col-lg-4 col-md-12 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <div class="order-summary">
+              <h4><i class="lnr lnr-phone-handset"></i> Get in Touch</h4>
+              <div class="contact-info-block">
+                <p><i class="lnr lnr-map-marker"></i>
+                  1111 Balaongan Street, Pantoc<br />
+                  Meycauayan City, Bulacan Philippines
+                </p>
+                <p><i class="lnr lnr-phone-handset"></i>
+                  <a href="tel:+639652877366">+63 965 287 7366</a>
+                </p>
+                <p><i class="lnr lnr-envelope"></i>
+                  <a href="mailto:jklothing.official@gmail.com">jklothing.official@gmail.com</a>
+                </p>
+              </div>
+              <div class="order-summary-note">
+                <i class="lnr lnr-clock"></i>
+                <strong>Reply time:</strong> within 24 hours<br />
+                <i class="lnr lnr-store"></i>
+                <strong>Workshop:</strong> Meycauayan, Bulacan
+              </div>
+              <div class="order-summary-contact">
+                <p>Or message us directly:</p>
+                <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener" class="btn btn-common btn-sm">
+                  <i class="fa fa-facebook"></i> Facebook
+                </a>
+                <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener" class="btn btn-common btn-sm" style="margin-left:8px;">
+                  <i class="fa fa-instagram"></i> Instagram
+                </a>
               </div>
             </div>
-
-            <!-- Quick Contact -->
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <div class="contact-block">
-                <h4 class="form-title">Quick Message</h4>
-                <form id="contactForm">
-                  <input type="hidden" name="access_key" value="94d60481-8c60-41e6-9538-159502ef091a" />
-                  <input type="hidden" name="subject" value="New Contact Message — J.Kloting Website" />
-                  <!-- Honeypot — bots fill this; humans don't see it -->
-                  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="name" name="name"
-                      placeholder="Your Name" required data-error="Please enter your name" />
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <input type="email" class="form-control" id="email" name="email"
-                      placeholder="Your Email" required data-error="Please enter a valid email" />
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control" id="message" name="message"
-                      placeholder="Your Message" rows="5"
-                      data-error="Please write your message" required></textarea>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="submit-button text-center">
-                    <button class="btn btn-common" id="submit" type="submit">Send Message</button>
-                    <div id="msgSubmit" class="h3 text-center hidden"></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <!-- Request a Quote -->
-            <div class="col-lg-4 col-md-6 col-sm-12">
-              <div class="contact-block quote-block">
-                <h4 class="form-title">Request a Quote</h4>
-                <form id="quoteForm">
-                  <input type="hidden" name="access_key" value="94d60481-8c60-41e6-9538-159502ef091a" />
-                  <input type="hidden" name="subject" value="New Quote Request — J.Kloting Website" />
-                  <input type="hidden" name="form_type" value="quote" />
-                  <!-- Honeypot — bots fill this; humans don't see it -->
-                  <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
-                  <div class="form-group">
-                    <input type="text" class="form-control" id="quote-name" name="quote_name"
-                      placeholder="Your Name" required data-error="Please enter your name" />
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <input type="email" class="form-control" id="quote-email" name="quote_email"
-                      placeholder="Email Address" required data-error="Please enter a valid email" />
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <input type="tel" class="form-control" id="quote-phone" name="quote_phone"
-                      placeholder="Phone / Viber Number" />
-                  </div>
-                  <div class="form-group">
-                    <select class="form-control" id="quote-garment" name="quote_garment" required data-error="Please select a garment type">
-                      <option value="" disabled selected>Garment Type</option>
-                      <option>T-Shirt</option>
-                      <option>Polo Shirt</option>
-                      <option>Hoodie</option>
-                      <option>Jacket</option>
-                      <option>Jersey / Sportswear</option>
-                      <option>Barong</option>
-                      <option>School / Org Uniform</option>
-                      <option>Corporate Uniform</option>
-                      <option>Other</option>
-                    </select>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <input type="number" class="form-control" id="quote-qty" name="quote_qty"
-                      placeholder="Quantity (pcs)" min="1" required data-error="Please enter quantity" />
-                    <div class="help-block with-errors"></div>
-                  </div>
-                  <div class="form-group">
-                    <input type="date" class="form-control" id="quote-deadline" name="quote_deadline"
-                      placeholder="Target Deadline" />
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control" id="quote-notes" name="quote_notes"
-                      placeholder="Describe your design, or paste a Google Drive / Facebook link to your artwork" rows="4"></textarea>
-                  </div>
-                  <div class="submit-button text-center">
-                    <button class="btn btn-common" id="quote-submit" type="submit">Submit Quote Request</button>
-                    <div id="quoteSubmit" class="h3 text-center hidden"></div>
-                    <div class="clearfix"></div>
-                  </div>
-                </form>
-              </div>
-            </div>
-
           </div>
+
+          <!-- Unified contact / quote form -->
+          <div class="col-lg-8 col-md-12 wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <div class="contact-block barong-order-form">
+              <form id="contactForm">
+                <input type="hidden" name="access_key" value="94d60481-8c60-41e6-9538-159502ef091a" />
+                <input type="hidden" name="subject" value="New Inquiry — J.Kloting Website" />
+                <input type="hidden" name="form_type" value="contact" />
+                <!-- Honeypot — bots fill this; humans don't see it -->
+                <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="name" name="name"
+                        placeholder="Full Name *" required data-error="Please enter your name" />
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="tel" class="form-control" id="phone" name="phone"
+                        placeholder="Phone / Viber Number" />
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="email" class="form-control" id="email" name="email"
+                        placeholder="Email Address *" required data-error="Please enter a valid email" />
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <select class="form-control" id="garment" name="garment">
+                        <option value="" disabled selected>Garment Type (optional)</option>
+                        <option>General Inquiry</option>
+                        <option>T-Shirt</option>
+                        <option>Polo Shirt</option>
+                        <option>Hoodie</option>
+                        <option>Jacket</option>
+                        <option>Jersey / Sportswear</option>
+                        <option>Barong</option>
+                        <option>School / Org Uniform</option>
+                        <option>Corporate Uniform</option>
+                        <option>Other</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <input type="number" class="form-control" id="quantity" name="quantity"
+                        placeholder="Estimated Quantity (pcs)" min="1" />
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <input type="date" class="form-control" id="deadline" name="deadline" />
+                      <label class="field-hint">Target date (optional)</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <textarea class="form-control" id="message" name="message"
+                        placeholder="Your message — design ideas, questions, or paste a Google Drive / Facebook link to your artwork *"
+                        rows="5" required data-error="Please write your message"></textarea>
+                      <div class="help-block with-errors"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="submit-button text-center">
+                      <button class="btn btn-common btn-lg" id="submit" type="submit">
+                        Send Message
+                      </button>
+                      <div id="msgSubmit" class="h4 text-center hidden" style="margin-top:15px;"></div>
+                      <div class="clearfix"></div>
+                    </div>
+                  </div>
+                </div>
+
+              </form>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
