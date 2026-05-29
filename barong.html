@@ -149,172 +149,6 @@
     </section>
     <!-- Product Grid End -->
 
-    <!-- Order Form -->
-    <section id="order" class="section barong-order-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Place Your Order</h2>
-          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            Fill out the form below and we'll confirm your order within 24 hours.<br />
-            A 50% downpayment is required to begin production.
-          </p>
-        </div>
-
-        <div class="row">
-
-          <!-- Order Summary -->
-          <div class="col-lg-4 col-md-12 wow fadeInLeft" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            <div class="order-summary">
-              <h4><i class="lnr lnr-shirt"></i> Order Summary</h4>
-              <ul>
-                <li>
-                  <span class="summary-label">Product</span>
-                  <span class="summary-value" id="selected-product">Polo Barong</span>
-                </li>
-                <li>
-                  <span class="summary-label">Price</span>
-                  <span class="summary-value">₱650 / piece</span>
-                </li>
-                <li>
-                  <span class="summary-label">Downpayment</span>
-                  <span class="summary-value">50% upon approval</span>
-                </li>
-                <li>
-                  <span class="summary-label">Turnaround</span>
-                  <span class="summary-value">7–14 business days</span>
-                </li>
-              </ul>
-              <div class="order-summary-note">
-                <i class="lnr lnr-map-marker"></i>
-                <strong>Pickup:</strong> Meycauayan City, Bulacan<br />
-                <i class="lnr lnr-car"></i>
-                <strong>Delivery:</strong> J&T · Lalamove (nationwide)
-              </div>
-              <div class="order-summary-contact">
-                <p>Questions? Message us:</p>
-                <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener" class="btn btn-common btn-sm">
-                  <i class="fa fa-facebook"></i> Facebook
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Order Form -->
-          <div class="col-lg-8 col-md-12 wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            <div class="contact-block barong-order-form">
-              <form id="barongOrderForm">
-                <input type="hidden" name="access_key" value="94d60481-8c60-41e6-9538-159502ef091a" />
-                <input type="hidden" name="subject" value="New Barong Order — J.Kloting Website" />
-                <input type="hidden" name="form_type" value="barong_order" />
-                <input type="hidden" name="selected_product" id="form-product" value="Polo Barong" />
-                <!-- Honeypot — bots fill this; humans don't see it -->
-                <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
-
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="barong-name" name="barong_name"
-                        placeholder="Full Name *" required data-error="Please enter your name" />
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="tel" class="form-control" id="barong-phone" name="barong_phone"
-                        placeholder="Phone / Viber Number *" required data-error="Please enter your phone number" />
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <input type="email" class="form-control" id="barong-email" name="barong_email"
-                        placeholder="Email Address *" required data-error="Please enter a valid email" />
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <select class="form-control" id="barong-size" name="barong_size" required data-error="Please select a size">
-                        <option value="" disabled selected>Select Size *</option>
-                        <option>XS</option>
-                        <option>S</option>
-                        <option>M</option>
-                        <option>L</option>
-                        <option>XL</option>
-                        <option>XXL</option>
-                        <option>Custom Measurements</option>
-                      </select>
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="number" class="form-control" id="barong-qty" name="barong_qty"
-                        placeholder="Quantity (pcs) *" min="1" required data-error="Please enter quantity" />
-                      <div class="help-block with-errors"></div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group form-check-group">
-                      <label class="barong-checkbox-label">
-                        <input type="checkbox" name="barong_embroidery" id="barong-embroidery" value="yes" />
-                        <span>Add custom embroidery (monogram or design) — price to be quoted separately</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="text" class="form-control" id="barong-occasion" name="barong_occasion"
-                        placeholder="Occasion / Event (e.g. Wedding)" />
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <input type="date" class="form-control" id="barong-deadline" name="barong_deadline" />
-                      <label class="field-hint">Target date needed</label>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label class="delivery-label">Delivery Preference *</label>
-                      <div class="delivery-options">
-                        <label class="barong-radio-label">
-                          <input type="radio" name="barong_delivery" value="Pickup in Meycauayan" required />
-                          <span>Pickup in Meycauayan, Bulacan</span>
-                        </label>
-                        <label class="barong-radio-label">
-                          <input type="radio" name="barong_delivery" value="Ship via J&T or Lalamove" />
-                          <span>Ship nationwide (J&T / Lalamove — shipping fee on customer)</span>
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <textarea class="form-control" id="barong-notes" name="barong_notes"
-                        placeholder="Additional notes (measurements, design preferences, etc.)" rows="4"></textarea>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="submit-button text-center">
-                      <button class="btn btn-common btn-lg" id="barong-submit" type="submit">
-                        Submit Order Request
-                      </button>
-                      <div id="barongOrderMsg" class="h4 text-center hidden" style="margin-top:15px;"></div>
-                    </div>
-                  </div>
-                </div>
-
-              </form>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-    <!-- Order Form End -->
-
     <!-- Size Guide -->
     <section id="size-guide" class="section size-guide-section">
       <div class="container">
@@ -353,7 +187,7 @@
               </div>
               <p class="size-guide-note">
                 <i class="lnr lnr-pencil"></i>
-                Need a custom fit? Select <strong>"Custom Measurements"</strong> in the order form and provide your chest, shoulder, length, and sleeve measurements in the notes field.
+                Need a custom fit? <strong>Message us on Facebook</strong> with your chest, shoulder, length, and sleeve measurements — we'll tailor it to you.
               </p>
             </div>
           </div>
@@ -367,14 +201,14 @@
       <div class="container text-center">
         <h3 class="wow fadeIn" data-wow-duration="1000ms">Ready to Order?</h3>
         <p class="wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.2s">
-          ₱650 per piece · Sizes XS–XXL · Made to order · Ships nationwide
+          Each piece is unique · Made to order · Ships nationwide
         </p>
-        <a href="#order" class="btn btn-common page-scroll wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
-          Place Your Order
+        <a href="https://m.me/jklotingofficial" target="_blank" rel="noopener"
+          class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
+          <i class="fa fa-facebook"></i> Message to Order
         </a>
-        <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener"
-          class="btn-outline-light-custom wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
-          <i class="fa fa-facebook"></i> Message Us
+        <a href="#products" class="btn-outline-light-custom page-scroll wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
+          Browse Collection
         </a>
       </div>
     </div>
@@ -442,48 +276,6 @@
         <span>Message</span>
       </a>
     </div>
-
-    <script>
-      // Pre-fill selected product in order form when "Order This" is clicked
-      $(document).on('click', '.btn-order', function () {
-        var product = $(this).data('product');
-        if (product) {
-          $('#form-product').val(product);
-          $('#selected-product').text(product);
-        }
-      });
-
-      // Barong order form AJAX submission
-      $('#barongOrderForm').on('submit', function (e) {
-        e.preventDefault();
-        var $btn = $('#barong-submit');
-        var $msg = $('#barongOrderMsg');
-        $btn.prop('disabled', true).text('Sending...');
-        $.ajax({
-          url: 'https://api.web3forms.com/submit',
-          type: 'POST',
-          data: $(this).serialize(),
-          dataType: 'json',
-          success: function (data) {
-            if (data.success) {
-              $msg.removeClass('hidden').css('color', '#28a745')
-                  .text('Order request sent! We\'ll confirm within 24 hours.');
-              $('#barongOrderForm')[0].reset();
-              $('#selected-product').text('Polo Barong');
-            } else {
-              $msg.removeClass('hidden').css('color', '#c0392b')
-                  .text(data.message || 'Something went wrong. Please try again.');
-            }
-            $btn.prop('disabled', false).text('Submit Order Request');
-          },
-          error: function () {
-            $msg.removeClass('hidden').css('color', '#c0392b')
-                .text('Something went wrong. Please message us on Facebook.');
-            $btn.prop('disabled', false).text('Submit Order Request');
-          }
-        });
-      });
-    </script>
 
   </body>
 </html>
