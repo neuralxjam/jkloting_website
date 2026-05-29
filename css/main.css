@@ -2631,6 +2631,7 @@ h5 {
   margin-bottom: 5px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  color: #fff !important;
 }
 
 /* --- 10. Pricing Section -------------------------------------------------- */
