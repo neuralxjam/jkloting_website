@@ -1359,46 +1359,99 @@ button:focus {
 /* ==========================================================================
 15. Footer Style
  ========================================================================== */
-footer {
-  background: #292f35;
-  padding: 20px 0;
+/* ==========================================================================
+   Site Footer — centered, black, brand-forward
+   ========================================================================== */
+.site-footer {
+  background: #000;
+  padding: 50px 0 30px;
+  color: rgba(255,255,255,0.78);
+  text-align: center;
 }
 
-.footer-links {
-  line-height: 48px;
+.site-footer__brand {
+  display: inline-block;
+  margin-bottom: 24px;
 }
 
-.footer-links li {
-  float: left;
+.site-footer__brand img {
+  height: 38px;
+  width: auto;
 }
 
-.footer-links li a {
+.site-footer__nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+
+.site-footer__nav li { margin: 0; }
+
+.site-footer__nav a {
+  color: rgba(255,255,255,0.78);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-footer__nav a:hover,
+.site-footer__nav a:focus {
   color: #fff;
-  margin-right: 15px;
-  transition: all 0.3s ease-in-out;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
+  text-decoration: none;
 }
 
-.footer-links li a:hover {
-  color: #ccc;
+.site-footer__social {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 28px;
 }
 
-.copyright {
-  margin-top: 10px;
-  float: right;
+.site-footer__social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.78);
+  font-size: 15px;
+  text-decoration: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, transform 0.2s ease;
 }
 
-.copyright p {
+.site-footer__social a:hover,
+.site-footer__social a:focus {
+  border-color: #fff;
+  color: #000;
+  background: #fff;
+  transform: translateY(-2px);
+}
+
+.site-footer__copyright {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin: 0;
+}
+
+.site-footer__copyright span {
   color: #fff;
+  font-weight: 600;
 }
 
-.copyright p a {
-  color: #fff;
-}
-
-.copyright p a:hover {
-  color: #ccc;
+@media (max-width: 575px) {
+  .site-footer { padding: 36px 0 24px; }
+  .site-footer__nav { gap: 18px; }
+  .site-footer__nav a { font-size: 13px; }
 }
 
 /* ==========================================================================
@@ -3073,11 +3126,6 @@ a:focus-visible {
 #pricing { background: #fff; }
 .size-guide-section { background: var(--bg-light) !important; }
 .care-section { background: #fff; }
-
-/* --- 22. Footer ----------------------------------------------------------- */
-footer h4 {
-  font-family: var(--font-display);
-}
 
 /* --- 23. Portfolio Carousel ----------------------------------------------- */
 
