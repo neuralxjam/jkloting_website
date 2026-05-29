@@ -2588,8 +2588,12 @@ h5 {
 }
 
 #features .box-item:hover .icon {
-  background: rgba(255,255,255,0.15);
+  background: #fff;
   border-color: #fff;
+}
+
+#features .box-item:hover .icon i {
+  color: #000;
 }
 
 #features .box-item .text h4 {
@@ -2972,6 +2976,11 @@ footer h4 {
   height: 300px;
   object-fit: cover;
   object-position: center;
+  /* prevent subpixel blur from carousel transforms */
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  -webkit-filter: none;
+  filter: none;
 }
 
 /* Arrows — position on sides, vertically centered on the image */
@@ -3013,6 +3022,16 @@ footer h4 {
 #portfolios .owl-controls .owl-buttons .owl-next {
   right: 6px;
   left: auto;
+}
+
+/* Dots — dark on light background so they're visible */
+#portfolios .owl-theme .owl-controls .owl-page span {
+  background: #bbb;
+  width: 10px;
+  height: 10px;
+}
+#portfolios .owl-theme .owl-controls .owl-page.active span {
+  background: #333;
 }
 
 /* --- 23. Back to top button ----------------------------------------------- */
