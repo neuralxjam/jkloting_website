@@ -3423,8 +3423,8 @@ a:focus-visible {
 /* --- 18. Barong Catalog Section + Featured / Compact tiers --------------- */
 .barong-catalog-section {
   background: var(--bg-light, #f8f8f8) !important;
-  padding-top: 80px !important;
-  padding-bottom: 80px !important;
+  padding-top: 0 !important;
+  padding-bottom: 60px !important;
 }
 
 .section-eyebrow {
@@ -3516,4 +3516,698 @@ a:focus-visible {
 @media (max-width: 991px) {
   .featured-grid .barong-card-featured .barong-card-img img { height: 280px; }
   .product-grid-compact .barong-card-compact .barong-card-img img { height: 200px; }
+}
+
+/* --- 19. Barong — minimalist product card (redesign) -------------------- */
+.barong-catalog-section .product-grid {
+  margin-top: 36px;
+}
+
+.barong-sizeguide-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: var(--navy);
+  border: 1px solid var(--border-color);
+  background: #fff;
+  padding: 7px 16px;
+  border-radius: 999px;
+  transition: border-color var(--transition), color var(--transition), box-shadow var(--transition);
+}
+.barong-sizeguide-link:hover {
+  border-color: var(--navy);
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  color: var(--navy);
+}
+
+.jk-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border-radius: 22px;
+  padding: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+  cursor: pointer;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.jk-card:hover,
+.jk-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.14);
+  outline: none;
+}
+
+.jk-card__media {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg-light);
+}
+.jk-card__media img[data-main-img] {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.jk-card:hover .jk-card__media img[data-main-img] {
+  transform: scale(1.04);
+}
+
+.jk-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 6px 13px;
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.jk-card__badge--new {
+  background: linear-gradient(135deg, #ffe066 0%, #d4a017 30%, #f5c842 55%, #b8860b 80%, #ffe066 100%);
+  color: #1a1a1a;
+  box-shadow: 0 2px 8px rgba(212,160,23,0.55), inset 0 1px 0 rgba(255,255,255,0.35);
+  text-shadow: 0 1px 0 rgba(255,255,200,0.4);
+}
+.jk-card__badge--featured {
+  background: rgba(34,34,34,0.88);
+  color: #fff;
+}
+
+.jk-card__brand {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.28);
+  overflow: hidden;
+}
+.jk-card__brand img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.jk-card__dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+}
+.jk-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.55);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.jk-dot:hover { background: rgba(255,255,255,0.85); }
+.jk-dot.is-active {
+  background: #fff;
+  transform: scale(1.35);
+}
+
+.jk-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 18px 10px 10px;
+}
+.jk-card__title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 4px;
+  line-height: 1.25;
+}
+.jk-card__sub {
+  font-size: 13px;
+  color: var(--text-light);
+  margin: 0 0 16px;
+}
+.jk-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+}
+.jk-card__price {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  background: var(--bg-light);
+  padding: 8px 16px;
+  border-radius: 999px;
+}
+.jk-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--navy);
+  padding: 9px 18px;
+  border-radius: 999px;
+  white-space: nowrap;
+  transition: background var(--transition), transform var(--transition);
+}
+.jk-card__cta:hover {
+  background: var(--navy-hover);
+  color: #fff;
+  text-decoration: none;
+  transform: translateX(2px);
+}
+
+/* --- 20. Barong — pagination ------------------------------------------- */
+.barong-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+.jk-page {
+  min-width: 42px;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-dark);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.jk-page:hover:not(:disabled):not(.is-active) {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+.jk-page.is-active {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.jk-page:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* --- 21. Barong — modal (product detail + size guide) ------------------ */
+body.jk-modal-open {
+  overflow: hidden;
+}
+.jk-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000000;
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 84px 24px 24px; /* 84px = navbar height; keeps dialog below it at all widths */
+  overflow-y: auto;
+}
+.jk-modal.is-open {
+  display: flex;
+}
+.jk-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15,18,25,0.62);
+  backdrop-filter: blur(3px);
+}
+.jk-modal__dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 860px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  animation: jkModalIn 0.28s ease;
+}
+.jk-modal__dialog--narrow {
+  max-width: 560px;
+  padding: 32px 28px;
+}
+@keyframes jkModalIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.jk-modal__close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 3;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.9);
+  color: var(--text-dark);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  transition: background var(--transition);
+}
+.jk-modal__close:hover { background: #fff; }
+
+.jk-modal__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.jk-modal__media {
+  background: var(--bg-light);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: 22px 0 0 22px;
+}
+.jk-modal__media #jk-modal-img {
+  width: 100%;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 14px;
+}
+.jk-modal__thumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.jk-modal__thumb {
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  transition: border-color var(--transition);
+}
+.jk-modal__thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.jk-modal__thumb.is-active { border-color: var(--navy); }
+
+.jk-modal__info {
+  padding: 38px 34px;
+  display: flex;
+  flex-direction: column;
+}
+.jk-modal__eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin: 0 0 10px;
+}
+.jk-modal__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 8px;
+}
+.jk-modal__price {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 18px;
+}
+.jk-modal__size {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.jk-modal__sizeguide {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  text-decoration: underline;
+}
+.jk-modal__sizeguide:hover { color: var(--navy-hover); }
+.jk-modal__care {
+  border-top: 1px solid var(--border-color);
+  padding-top: 18px;
+  margin-bottom: 24px;
+}
+.jk-modal__care h5 {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-dark);
+  margin: 0 0 8px;
+}
+.jk-modal__care p {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0;
+}
+.jk-modal__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 22px;
+  border-radius: 12px;
+  margin-top: auto;
+  transition: background var(--transition);
+}
+.jk-modal__cta:hover { background: var(--navy-hover); color: #fff; text-decoration: none; }
+.jk-modal__note {
+  font-size: 12px;
+  color: var(--text-light);
+  text-align: center;
+  margin: 12px 0 0;
+}
+.jk-modal__subnote {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  margin: 4px 0 20px;
+}
+
+@media (max-width: 767px) {
+  .jk-modal { padding: 84px 0 0; } /* keep top clearance; no side/bottom padding so dialog fills width */
+  .jk-modal__dialog {
+    max-width: 100%;
+    max-height: none;
+    min-height: calc(100vh - 84px);
+    border-radius: 0 0 0 0;
+  }
+  .jk-modal__grid { grid-template-columns: 1fr; }
+  .jk-modal__media {
+    border-radius: 0;
+    padding: 16px;
+  }
+  .jk-modal__media #jk-modal-img { height: 260px; }
+  .jk-modal__info { padding: 24px 22px 40px; }
+  .jk-modal__title { font-size: 22px; }
+  .jk-card__media img[data-main-img] { height: 200px; }
+}
+
+/* --- 21b. Load More button (mobile only) ------------------------------ */
+.barong-load-more-wrap {
+  display: none; /* JS controls visibility; flex when shown */
+  justify-content: center;
+  margin-top: 28px;
+}
+.barong-load-more-btn {
+  padding: 13px 40px;
+  background: var(--navy);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.barong-load-more-btn:hover {
+  background: var(--navy-hover);
+  transform: translateY(-2px);
+}
+
+/* On desktop: pagination visible, load-more wrap always hidden */
+@media (min-width: 768px) {
+  .barong-load-more-wrap { display: none !important; }
+}
+/* On mobile: pagination hidden (JS renders nothing into it) */
+@media (max-width: 767px) {
+  .barong-pagination { display: none !important; }
+}
+
+/* --- 22. Barong — Dark featured band ---------------------------------- */
+.jk-featured-band {
+  /* full-bleed breakout from the container */
+  margin-left:  calc(-50vw + 50%);
+  margin-right: calc(-50vw + 50%);
+  padding-left:  calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
+  padding-top: 50px;
+  padding-bottom: 16px;
+  background: #161616;
+}
+
+/* Tighten header bottom margin inside dark band */
+.jk-featured-band .section-header { margin-bottom: 0 !important; padding-bottom: 0 !important; }
+.jk-featured-band .section-subtitle { margin-bottom: 0 !important; }
+
+/* White text for everything inside the dark band */
+.jk-featured-band .section-eyebrow  { color: rgba(255,255,255,0.5) !important; opacity: 1; }
+.jk-featured-band .section-title    { color: #fff !important; }
+.jk-featured-band .section-subtitle { color: rgba(255,255,255,0.65) !important; }
+.jk-featured-band .lines            { background: rgba(255,255,255,0.25) !important; border-color: rgba(255,255,255,0.25) !important; }
+
+/* Nav buttons on dark bg */
+.jk-featured-band .jk-carousel__nav {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.jk-featured-band .jk-carousel__nav:hover {
+  background: #fff;
+  border-color: #fff;
+  color: #161616;
+}
+
+/* Dots on dark bg */
+.jk-featured-band .jk-cdot          { background: rgba(255,255,255,0.25); }
+.jk-featured-band .jk-cdot.is-active { background: #fff; }
+
+/* All Pieces divider — sits just below the dark band, light bg */
+.barong-all-label {
+  margin-top: 40px;
+}
+
+/* --- 23. Barong — Featured carousel ----------------------------------- */
+.jk-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 4px;
+}
+
+.jk-carousel__track-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.jk-carousel__track {
+  list-style: none;
+  margin: 0;
+  padding: 16px 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  position: relative;
+  min-height: 380px;
+}
+
+/* Each slide is absolutely positioned relative to the track centre */
+.jk-carousel__slide {
+  position: absolute;
+  width: 300px;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.5s cubic-bezier(0.34, 1.28, 0.64, 1),
+              opacity 0.4s ease,
+              z-index 0s;
+  user-select: none;
+}
+
+/* Active (centre) */
+.jk-carousel__slide.is-active {
+  transform: translateX(0) scale(1);
+  opacity: 1;
+  z-index: 10;
+}
+/* One step left */
+.jk-carousel__slide.is-prev {
+  transform: translateX(-68%) scale(0.82) rotate(-4deg);
+  opacity: 0.7;
+  z-index: 5;
+}
+/* One step right */
+.jk-carousel__slide.is-next {
+  transform: translateX(68%) scale(0.82) rotate(4deg);
+  opacity: 0.7;
+  z-index: 5;
+}
+/* Further cards */
+.jk-carousel__slide.is-far {
+  transform: translateX(0) scale(0.65);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.jk-carousel__card {
+  background: #fff;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+}
+
+.jk-carousel__img-wrap {
+  position: relative;
+}
+.jk-carousel__img-wrap img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.jk-carousel__slide.is-active .jk-carousel__img-wrap img {
+  transform: scale(1.03);
+}
+.jk-carousel__img-wrap .jk-card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.jk-carousel__info {
+  padding: 20px 20px 18px;
+}
+.jk-carousel__title {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 4px;
+}
+.jk-carousel__sub {
+  font-size: 13px;
+  color: var(--text-light);
+  margin: 0 0 14px;
+}
+.jk-carousel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/* Nav buttons */
+.jk-carousel__nav {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  border-radius: 50%;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: background var(--transition), border-color var(--transition), transform var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.jk-carousel__nav:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+/* Dot indicators */
+.jk-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+.jk-cdot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border-color);
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+}
+.jk-cdot.is-active {
+  background: var(--navy);
+  transform: scale(1.4);
+}
+
+/* "All Pieces" divider label */
+.barong-all-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  text-align: center;
+  margin: 48px 0 -8px;
+  position: relative;
+}
+.barong-all-label::before,
+.barong-all-label::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 30%;
+  height: 1px;
+  background: var(--border-color);
+}
+.barong-all-label::before { right: calc(50% + 60px); }
+.barong-all-label::after  { left:  calc(50% + 60px); }
+
+@media (max-width: 767px) {
+  .jk-carousel__track { min-height: 320px; padding: 40px 0; }
+  .jk-carousel__slide { width: 220px; }
+  .jk-carousel__img-wrap img { height: 180px; }
+  .jk-carousel__slide.is-prev { transform: translateX(-60%) scale(0.8) rotate(-3deg); }
+  .jk-carousel__slide.is-next { transform: translateX(60%)  scale(0.8) rotate(3deg); }
+  .jk-carousel__nav { width: 38px; height: 38px; font-size: 15px; }
 }

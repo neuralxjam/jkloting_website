@@ -112,14 +112,33 @@
     <!-- Product Grid (dynamic — populated by js/barong-catalog.js) -->
     <section id="products" class="section barong-catalog-section">
       <div class="container">
-        <div class="section-header text-center">
-          <p class="section-eyebrow">J.Kloting Pieces</p>
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Our Collection</h2>
-          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            Each piece is unique — when it's gone, it's gone. Tap any card to reserve it on Messenger.
-          </p>
+        <!-- Dark featured band: header + carousel -->
+        <div class="jk-featured-band">
+          <div class="section-header text-center">
+            <p class="section-eyebrow">J.Kloting Pieces</p>
+            <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Featured Collections</h2>
+            <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+            <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+              Each piece is one-of-a-kind. Once it's claimed, it's gone forever — tap to make it yours.
+            </p>
+          </div>
+
+          <!-- Featured carousel (featured:true items; populated by JS) -->
+          <div id="barong-featured-carousel-wrap" style="display:none;">
+            <div class="jk-carousel">
+              <button type="button" class="jk-carousel__nav jk-carousel__nav--prev" id="jk-carousel-prev" aria-label="Previous">&larr;</button>
+              <div class="jk-carousel__track-wrap">
+                <ul class="jk-carousel__track" id="jk-carousel-track"></ul>
+              </div>
+              <button type="button" class="jk-carousel__nav jk-carousel__nav--next" id="jk-carousel-next" aria-label="Next">&rarr;</button>
+            </div>
+            <div class="jk-carousel__dots" id="jk-carousel-dots"></div>
+          </div>
         </div>
+        <!-- /dark featured band -->
+
+        <!-- Divider between carousel and the main grid -->
+        <div id="barong-all-label" class="barong-all-label" style="display:none;">All Pieces</div>
 
         <!-- Loading state -->
         <div id="barong-catalog-loading" class="text-center" style="padding: 60px 0;">
@@ -138,91 +157,91 @@
           </p>
         </div>
 
-        <!-- Featured Pieces (top tier — flagged via featured:true in Firestore) -->
-        <div id="barong-featured-section" style="display:none; margin-bottom: 60px;">
-          <div id="barong-featured-grid" class="row featured-grid"></div>
-        </div>
+        <!-- Unified catalog grid (sorted newest-first; paginated by JS) -->
+        <div id="barong-grid" class="row product-grid"></div>
 
-        <!-- Colored Barongs (compact tier) -->
-        <div id="colored-barong-section" style="display:none;">
-          <h3 class="barong-subsection-title">Colored Barongs</h3>
-          <div id="colored-barong-grid" class="row product-grid product-grid-compact"></div>
-        </div>
-
-        <!-- White Barongs (compact tier) -->
-        <div id="white-barong-section" style="display:none; margin-top: 50px;">
-          <h3 class="barong-subsection-title">White Barongs</h3>
-          <div id="white-barong-grid" class="row product-grid product-grid-compact"></div>
+        <!-- Numbered pagination (desktop) / Load More (mobile) -->
+        <nav id="barong-pagination" class="barong-pagination" aria-label="Catalog pages"></nav>
+        <div id="barong-load-more-wrap" class="barong-load-more-wrap" style="display:none;">
+          <button type="button" id="barong-load-more" class="barong-load-more-btn">Load More</button>
         </div>
 
       </div>
     </section>
     <!-- Product Grid End -->
 
-    <!-- Size Guide -->
-    <section id="size-guide" class="section size-guide-section">
-      <div class="container">
-        <div class="section-header">
-          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">Size Guide</h2>
-          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
-          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            All measurements are in centimeters (cm). When in doubt, size up for a more relaxed fit.
-          </p>
-        </div>
+    <!-- Product Detail Modal -->
+    <div id="barong-modal" class="jk-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="jk-modal-title">
+      <div class="jk-modal__overlay" data-close></div>
+      <div class="jk-modal__dialog">
+        <button type="button" class="jk-modal__close" data-close aria-label="Close">&times;</button>
+        <div class="jk-modal__grid">
+          <div class="jk-modal__media">
+            <img id="jk-modal-img" src="" alt="" />
+            <div id="jk-modal-thumbs" class="jk-modal__thumbs"></div>
+          </div>
+          <div class="jk-modal__info">
+            <p class="jk-modal__eyebrow" id="jk-modal-eyebrow">Barong</p>
+            <h3 class="jk-modal__title" id="jk-modal-title"></h3>
+            <p class="jk-modal__price" id="jk-modal-price"></p>
 
-        <div class="row justify-content-center">
-          <div class="col-lg-10 col-md-12 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
-            <div class="size-guide-wrapper">
-              <div class="table-responsive">
-                <table class="size-guide-table table">
-                  <thead>
-                    <tr>
-                      <th>Size</th>
-                      <th>Chest (cm)</th>
-                      <th>Shoulder (cm)</th>
-                      <th>Length (cm)</th>
-                      <th>Sleeve (cm)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- TODO: replace XX with actual measurements from your barong pattern -->
-                    <tr><td><strong>XS</strong></td><td>88</td><td>40</td><td>70</td><td>58</td></tr>
-                    <tr><td><strong>S</strong></td><td>92</td><td>42</td><td>72</td><td>60</td></tr>
-                    <tr><td><strong>M</strong></td><td>96</td><td>44</td><td>74</td><td>62</td></tr>
-                    <tr><td><strong>L</strong></td><td>100</td><td>46</td><td>76</td><td>64</td></tr>
-                    <tr><td><strong>XL</strong></td><td>104</td><td>48</td><td>78</td><td>66</td></tr>
-                    <tr><td><strong>XXL</strong></td><td>110</td><td>50</td><td>80</td><td>68</td></tr>
-                  </tbody>
-                </table>
-              </div>
-              <p class="size-guide-note">
-                <i class="lnr lnr-pencil"></i>
-                Need a custom fit? <strong>Message us on Facebook</strong> with your chest, shoulder, length, and sleeve measurements — we'll tailor it to you.
+            <div class="jk-modal__size">
+              <span class="size-pill" id="jk-modal-size"></span>
+              <a href="#" class="jk-modal__sizeguide" data-size-guide>
+                <i class="lnr lnr-pencil" aria-hidden="true"></i> Size Guide
+              </a>
+            </div>
+
+            <div class="jk-modal__care">
+              <h5>Fabric &amp; Care</h5>
+              <p>
+                Tailored from a premium jusi-blend fabric with a soft, breathable hand-feel.
+                Hand wash cold or dry clean, hang to dry, and iron on low. Each piece is made
+                in a limited run — handle with care to keep it heirloom-ready.
               </p>
             </div>
+
+            <a href="#" id="jk-modal-cta" target="_blank" rel="noopener" class="jk-modal__cta">
+              <i class="fa fa-facebook"></i> Reserve on Messenger
+            </a>
+            <p class="jk-modal__note">One-of-a-kind · Once it's claimed, it's gone for good.</p>
           </div>
         </div>
       </div>
-    </section>
-    <!-- Size Guide End -->
+    </div>
+    <!-- Product Detail Modal End -->
 
-    <!-- CTA Banner -->
-    <div class="barong-cta-banner">
-      <div class="container text-center">
-        <h3 class="wow fadeIn" data-wow-duration="1000ms">Ready to Order?</h3>
-        <p class="wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.2s">
-          Each piece is unique · Made to order · Ships nationwide
-        </p>
-        <a href="https://m.me/jklotingofficial" target="_blank" rel="noopener"
-          class="btn btn-common wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
-          <i class="fa fa-facebook"></i> Message to Order
-        </a>
-        <a href="#products" class="btn-outline-light-custom page-scroll wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
-          Browse Collection
-        </a>
+    <!-- Size Guide Modal -->
+    <div id="size-guide-modal" class="jk-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="jk-sizeguide-title">
+      <div class="jk-modal__overlay" data-close></div>
+      <div class="jk-modal__dialog jk-modal__dialog--narrow">
+        <button type="button" class="jk-modal__close" data-close aria-label="Close">&times;</button>
+        <h3 class="jk-modal__title" id="jk-sizeguide-title">Size Guide</h3>
+        <p class="jk-modal__subnote">All measurements are in centimeters (cm). When in doubt, size up for a more relaxed fit.</p>
+        <div class="table-responsive">
+          <table class="size-guide-table table">
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Chest (cm)</th>
+                <th>Shoulder (cm)</th>
+                <th>Length (cm)</th>
+                <th>Sleeve (cm)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>XS</strong></td><td>88</td><td>40</td><td>70</td><td>58</td></tr>
+              <tr><td><strong>S</strong></td><td>92</td><td>42</td><td>72</td><td>60</td></tr>
+              <tr><td><strong>M</strong></td><td>96</td><td>44</td><td>74</td><td>62</td></tr>
+              <tr><td><strong>L</strong></td><td>100</td><td>46</td><td>76</td><td>64</td></tr>
+              <tr><td><strong>XL</strong></td><td>104</td><td>48</td><td>78</td><td>66</td></tr>
+              <tr><td><strong>XXL</strong></td><td>110</td><td>50</td><td>80</td><td>68</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    <!-- CTA Banner End -->
+    <!-- Size Guide Modal End -->
 
     <!-- Footer -->
     <footer class="site-footer">
