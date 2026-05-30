@@ -155,9 +155,11 @@ async function loadCatalog() {
     const white = []
     snap.forEach((doc) => {
       const data = { id: doc.id, ...doc.data() }
+      // `color` is the new dedicated field; legacy docs stored white/colored in `type`.
+      const colorVal = data.color || data.type
       if (data.featured === true) {
         featured.push(data)
-      } else if (data.type === 'white') {
+      } else if (colorVal === 'white') {
         white.push(data)
       } else {
         colored.push(data)
