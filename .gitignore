@@ -4,3 +4,10 @@
 !.dev.vars.example
 .env*
 !.env.example
+
+# OS / editor junk
+.DS_Store
+**/.DS_Store
+
+# image source files
+*.psd

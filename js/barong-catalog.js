@@ -137,9 +137,9 @@ function renderCard(barong, globalIndex, posInPage) {
     <div class="col-lg-3 col-md-4 col-sm-6 col-12 wow fadeInUp" data-wow-delay="${wowDelay}s">
       <article class="jk-card" id="${cardId}" data-index="${globalIndex}" role="button" tabindex="0" aria-label="View details for ${label}">
         <div class="jk-card__media">
-          <img src="${escapeHtml(mainImg)}" alt="${label}" data-main-img />
+          <img src="${escapeHtml(mainImg)}" alt="${label}" data-main-img loading="lazy" decoding="async" />
           ${badge}
-          <span class="jk-card__brand"><img src="${BRAND_MARK}" alt="J.Kloting" /></span>
+          <span class="jk-card__brand"><img src="${BRAND_MARK}" alt="J.Kloting" loading="lazy" decoding="async" /></span>
           ${dots}
         </div>
         <div class="jk-card__body">
@@ -440,6 +440,45 @@ function showError(message) {
   }
 }
 
+// ---- STRUCTURED DATA (SEO) -------------------------------------------------
+// Inject an ItemList of Products so Google can surface the catalog as
+// product rich-results. Googlebot renders JS, so this runs after fetch.
+function injectProductSchema(items) {
+  if (!items.length) return
+  const elements = items.map((b, i) => {
+    const images = imagesOf(b)
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Product',
+        name: b.label || 'Barong',
+        image: images.length ? images : undefined,
+        category: 'Barong Tagalog',
+        url: messengerLinkFor(b),
+        offers: {
+          '@type': 'Offer',
+          priceCurrency: 'PHP',
+          price: Number(b.price) || 650,
+          availability: 'https://schema.org/InStock',
+          seller: { '@type': 'Organization', name: 'J.Kloting' },
+        },
+      },
+    }
+  })
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'J.Kloting Barong Collection',
+    itemListElement: elements,
+  }
+  const script = document.createElement('script')
+  script.type = 'application/ld+json'
+  script.id = 'barong-itemlist-schema'
+  script.textContent = JSON.stringify(data)
+  document.head.appendChild(script)
+}
+
 // ---- LOAD ------------------------------------------------------------------
 async function loadCatalog() {
   try {
@@ -464,6 +503,8 @@ async function loadCatalog() {
       if ($empty) $empty.style.display = 'block'
       return
     }
+
+    injectProductSchema(allBarongs)
 
     wireEvents()
     if (featuredBarongs.length) buildCarousel()

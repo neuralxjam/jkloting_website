@@ -338,7 +338,13 @@ button:focus {
    3. Hero Area
    ========================================================================== */
 #hero-area {
-  background: url(../img/hero-area.jpg) fixed no-repeat;
+  background-color: #1a1a1a; /* paint while the image loads */
+  background-image: url(../img/hero-area.jpg); /* fallback for browsers without image-set */
+  background-image: -webkit-image-set(url(../img/hero-area.webp) type("image/webp"), url(../img/hero-area.jpg) type("image/jpeg"));
+  background-image: image-set(url(../img/hero-area.webp) type("image/webp"), url(../img/hero-area.jpg) type("image/jpeg"));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
   background-size: cover;
   color: #fff;
   overflow: hidden;
@@ -1857,8 +1863,13 @@ button:focus {
    BARONG PAGE — hero
    ========================================================================== */
 #barong-hero {
-  background: url(../img/hero-area.jpg) fixed no-repeat center center;
-  /* TODO: replace with url(../img/barong/barong-hero.jpg) */
+  background-color: #1a1a1a; /* paint while the image loads */
+  background-image: url(../img/hero-area.jpg); /* fallback for browsers without image-set */
+  background-image: -webkit-image-set(url(../img/hero-area.webp) type("image/webp"), url(../img/hero-area.jpg) type("image/jpeg"));
+  background-image: image-set(url(../img/hero-area.webp) type("image/webp"), url(../img/hero-area.jpg) type("image/jpeg"));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
   background-size: cover;
   color: #fff;
   overflow: hidden;

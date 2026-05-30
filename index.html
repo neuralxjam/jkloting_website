@@ -3,22 +3,33 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <meta
-      name="keywords"
-      content="Bootstrap, Parallax, Template, Registration, Landing"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
-    <meta name="author" content="Grayrids" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Primary SEO -->
+    <title>J.Kloting — Modern Barong Tagalog | Meycauayan, Bulacan</title>
+    <meta name="description" content="J.Kloting crafts modern Barong Tagalog and custom apparel — polo barongs for weddings, events, and everyday wear from ₱650. Based in Meycauayan, Bulacan. Message us on Messenger to reserve." />
+    <meta name="keywords" content="Barong Tagalog, Modern Barong, Polo Barong, Custom Barong, Filipino formal wear, wedding barong, J.Kloting, Meycauayan Bulacan, custom apparel Philippines" />
+    <meta name="author" content="J.Kloting" />
+    <link rel="canonical" href="https://jkloting.store/" />
     <link rel="icon" type="image/png" href="img/favicon.png" />
     <link rel="apple-touch-icon" href="img/favicon.png" />
-    <title>J.Kloting</title>
+
+    <!-- Open Graph (Facebook / Messenger) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="J.Kloting" />
+    <meta property="og:title" content="J.Kloting — Modern Barong Tagalog" />
+    <meta property="og:description" content="Modern Barong Tagalog and custom apparel from ₱650. Based in Meycauayan, Bulacan. Message us on Messenger to reserve your piece." />
+    <meta property="og:url" content="https://jkloting.store/" />
+    <meta property="og:image" content="https://jkloting.store/img/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_PH" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="J.Kloting — Modern Barong Tagalog" />
+    <meta name="twitter:description" content="Modern Barong Tagalog and custom apparel from ₱650. Based in Meycauayan, Bulacan." />
+    <meta name="twitter:image" content="https://jkloting.store/img/og-image.jpg" />
 
     <!-- Google Fonts: Playfair Display + Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -37,6 +48,29 @@
     <link rel="stylesheet" href="css/animate.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+
+    <!-- Structured data: local clothing store -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ClothingStore",
+      "name": "J.Kloting",
+      "url": "https://jkloting.store/",
+      "logo": "https://jkloting.store/img/logo-white.png",
+      "image": "https://jkloting.store/img/og-image.jpg",
+      "description": "Modern Barong Tagalog and custom apparel maker based in Meycauayan, Bulacan. Polo barongs for weddings, events, and everyday wear from ₱650.",
+      "priceRange": "₱₱",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Meycauayan",
+        "addressRegion": "Bulacan",
+        "addressCountry": "PH"
+      },
+      "sameAs": [
+        "https://www.facebook.com/jklotingofficial"
+      ]
+    }
+    </script>
   </head>
   <body>
     <!-- Header Section Start -->
@@ -226,7 +260,7 @@
           </div>
           <div class="col-lg-4 col-md-12 text-center wow fadeInRight" data-wow-duration="1000ms" data-wow-delay="0.4s">
             <!-- TODO: replace with real barong-teaser.jpg -->
-            <img src="img/dummy.png" alt="Modern Barong Collection" class="img-fluid barong-teaser-img" />
+            <img src="img/dummy.png" alt="Modern Barong Collection" class="img-fluid barong-teaser-img" loading="lazy" decoding="async" />
           </div>
         </div>
       </div>
@@ -301,7 +335,7 @@
           </div>
           <div class="col-lg-4 col-xs-12">
             <div class="show-box">
-              <img class="img-fulid" src="img/features/feature.png" alt="" />
+              <img class="img-fluid" src="img/features/feature.png" alt="J.Kloting custom apparel showcase" loading="lazy" decoding="async" />
             </div>
           </div>
         </div>
@@ -325,7 +359,7 @@
             <!-- TODO: replace img1.jpg with real corporate uniform photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img1.jpg" alt="Corporate Polo Shirts" />
+                  <img src="img/portfolio/img1.jpg" alt="Corporate Polo Shirts" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img1.jpg">
                     <div class="portfolio-caption">
                       <h5>Company Polo Shirts</h5>
@@ -336,7 +370,7 @@
             <!-- TODO: replace img2.jpg with real sportswear/jersey photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img2.jpg" alt="Sports Jerseys" />
+                  <img src="img/portfolio/img2.jpg" alt="Sports Jerseys" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img2.jpg">
                     <div class="portfolio-caption">
                       <h5>Team Jerseys</h5>
@@ -347,7 +381,7 @@
             <!-- TODO: replace img3.jpg with real school/org uniform photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img3.jpg" alt="School Uniforms" />
+                  <img src="img/portfolio/img3.jpg" alt="School Uniforms" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img3.jpg">
                     <div class="portfolio-caption">
                       <h5>School PE Uniforms</h5>
@@ -358,7 +392,7 @@
             <!-- TODO: replace img4.jpg with real barong photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img4.jpg" alt="Modern Barong" />
+                  <img src="img/portfolio/img4.jpg" alt="Modern Barong" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img4.jpg">
                     <div class="portfolio-caption">
                       <h5>Modern Polo Barong</h5>
@@ -369,7 +403,7 @@
             <!-- TODO: replace img5.jpg with real streetwear/custom print photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img5.jpg" alt="Custom Streetwear" />
+                  <img src="img/portfolio/img5.jpg" alt="Custom Streetwear" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img5.jpg">
                     <div class="portfolio-caption">
                       <h5>Custom T-Shirts</h5>
@@ -380,7 +414,7 @@
             <!-- TODO: replace img6.jpg with real hoodie/jacket photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img6.jpg" alt="Custom Hoodies" />
+                  <img src="img/portfolio/img6.jpg" alt="Custom Hoodies" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img6.jpg">
                     <div class="portfolio-caption">
                       <h5>Custom Hoodies</h5>
@@ -706,7 +740,7 @@
     <footer class="site-footer">
       <div class="container">
         <a href="index.html" class="site-footer__brand">
-          <img src="img/logo-white.png" alt="J.Kloting" />
+          <img src="img/logo-white.png" alt="J.Kloting" loading="lazy" decoding="async" />
         </a>
 
         <ul class="site-footer__nav">
