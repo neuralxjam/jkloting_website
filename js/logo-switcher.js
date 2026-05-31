@@ -8,7 +8,7 @@
   // Logo switcher configuration
   var logoWhite = "img/logo-white.png"; // Path to your white logo
   var logoDark = "img/logo.png"; // Path to your dark/colored logo
-  var scrollThreshold = 50; // Pixels to scroll before switching
+  var scrollThreshold = 200; // Match nav-collapse threshold so dark logo never shows on dark navbar
 
   // Get the logo element
   var $logo = $(".navbar-brand img");
