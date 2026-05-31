@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="css/line-icons.css" />
     <link rel="stylesheet" href="css/animate.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260531" />
+    <link rel="stylesheet" href="css/main.css?v=20260531e" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: breadcrumb -->
@@ -67,13 +67,17 @@
           <button
             class="navbar-toggler"
             type="button"
-            data-toggle="collapse"
-            data-target="#barong-navbar"
-            aria-controls="barong-navbar"
+            aria-controls="jk-drawer"
             aria-expanded="false"
-            aria-label="Toggle navigation"
+            aria-label="Open menu"
+            data-jk-drawer-open
           >
-            <i class="lnr lnr-menu"></i>
+            <svg class="jk-burger" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+              <rect x="3"  y="3"  width="8" height="8" rx="2"></rect>
+              <rect x="13" y="3"  width="8" height="8" rx="2"></rect>
+              <rect x="3"  y="13" width="8" height="8" rx="2"></rect>
+              <rect x="13" y="13" width="8" height="8" rx="2"></rect>
+            </svg>
           </button>
         </div>
         <div class="collapse navbar-collapse" id="barong-navbar">
@@ -97,14 +101,6 @@
         </div>
       </div>
 
-      <!-- Mobile Menu -->
-      <ul class="mobile-menu">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#services">Services</a></li>
-        <li><a href="index.html#portfolios">Portfolio</a></li>
-        <li><a href="index.html#pricing">Pricing</a></li>
-        <li><a href="index.html#contact">Contact</a></li>
-      </ul>
     </nav>
     <!-- Navbar End -->
 
@@ -400,6 +396,7 @@
     <script src="js/contact-form-script.js"></script>
     <script src="js/main.js"></script>
     <script src="js/logo-switcher.js"></script>
+    <script src="js/mobile-drawer.js?v=20260531e"></script>
 
     <!-- Barong Catalog (Firebase Firestore + dynamic rendering) -->
     <script type="module" src="js/barong-catalog.js"></script>
@@ -417,5 +414,52 @@
       </a>
     </div>
 
+    <!-- Mobile slide-in drawer (positioned as body-level overlay) -->
+    <div class="jk-drawer" id="jk-drawer" aria-hidden="true">
+      <div class="jk-drawer__overlay" data-jk-drawer-close></div>
+      <aside class="jk-drawer__panel" role="dialog" aria-modal="true" aria-label="Main menu">
+        <div class="jk-drawer__header">
+          <a href="index.html" class="jk-drawer__brand">
+            <img src="img/logo.png" alt="JKloting" />
+          </a>
+          <button class="jk-drawer__close" type="button" aria-label="Close menu" data-jk-drawer-close>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+        <nav class="jk-drawer__nav" aria-label="Mobile navigation">
+          <a class="jk-drawer__item" href="index.html">
+            <i class="lnr lnr-home" aria-hidden="true"></i><span>Home</span>
+          </a>
+          <a class="jk-drawer__item" href="index.html#services">
+            <i class="lnr lnr-layers" aria-hidden="true"></i><span>Services</span>
+          </a>
+          <a class="jk-drawer__item is-active" href="barong.html" aria-current="page">
+            <i class="lnr lnr-shirt" aria-hidden="true"></i><span>Barong Collection</span>
+          </a>
+          <a class="jk-drawer__item" href="index.html#portfolios">
+            <i class="lnr lnr-camera" aria-hidden="true"></i><span>Portfolio</span>
+          </a>
+          <a class="jk-drawer__item" href="index.html#pricing">
+            <i class="lnr lnr-tag" aria-hidden="true"></i><span>Pricing</span>
+          </a>
+          <a class="jk-drawer__item" href="index.html#contact">
+            <i class="lnr lnr-envelope" aria-hidden="true"></i><span>Contact</span>
+          </a>
+        </nav>
+        <div class="jk-drawer__footer">
+          <p class="jk-drawer__footer-label">Follow Us</p>
+          <div class="jk-drawer__social">
+            <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+            <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+            <a href="https://m.me/jklotingofficial" target="_blank" rel="noopener" aria-label="Messenger"><i class="fa fa-comments"></i></a>
+            <a href="mailto:jklothing.official@gmail.com" aria-label="Email"><i class="fa fa-envelope"></i></a>
+          </div>
+        </div>
+      </aside>
+    </div>
+    <!-- Drawer End -->
   </body>
 </html>

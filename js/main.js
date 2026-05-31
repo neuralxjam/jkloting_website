@@ -46,14 +46,7 @@
 
     });
 
-    // Slick Nav 
-    $('.mobile-menu').slicknav({
-      prependTo: '.navbar-header',
-      parentTag: 'span',
-      allowParentLinks: true,
-      duplicate: false,
-      label: '',
-    });
+    // Mobile drawer is initialized from js/mobile-drawer.js (vanilla JS, no jQuery)
 
 
 /*
