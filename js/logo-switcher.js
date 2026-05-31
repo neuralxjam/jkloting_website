@@ -8,7 +8,9 @@
   // Logo switcher configuration
   var logoWhite = "img/logo-white.png"; // Path to your white logo
   var logoDark = "img/logo.png"; // Path to your dark/colored logo
-  var scrollThreshold = 50; // Pixels to scroll before switching
+  var scrollThreshold = 200; // Synced with .top-nav-collapse threshold so the wordmark
+                              // (with its baked-in white background) only appears once the
+                              // navbar itself has turned white — prevents the white-box-on-dark-nav artifact
 
   // Get the logo element
   var $logo = $(".navbar-brand img");

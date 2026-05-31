@@ -479,6 +479,12 @@ button:focus {
   top: 0px;
 }
 
+/* logo.png has a white rectangle baked in behind the wordmark.
+   Multiply blend renders white pixels invisible against the white scrolled-nav. */
+.top-nav-collapse .navbar-brand img {
+  mix-blend-mode: multiply;
+}
+
 .top-nav-collapse .navbar-nav .nav-link {
   color: #333 !important;
   margin-top: 20px !important;
