@@ -365,6 +365,11 @@ button:focus {
   opacity: 0.9;
 }
 
+#hero-area > .container {
+  position: relative;
+  z-index: 1;
+}
+
 #hero-area .contents {
   padding: 200px 0 130px;
 }
@@ -680,7 +685,10 @@ button:focus {
   6. Features Section Style
    ========================================================================== */
 #features {
-  background: url(../img/bg1.jpg) fixed no-repeat;
+  background-color: #1a1a1a; /* paint while the image loads */
+  background-image: url(../img/bg1.jpg);
+  background-repeat: no-repeat;
+  background-position: center center;
   background-size: cover;
   color: #fff;
   overflow: hidden;
@@ -694,7 +702,9 @@ button:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.75);
+  /* gradient (gray endpoint, not pure black) keeps the photo's dark half reading
+     as charcoal instead of a dead-black void, while staying dark enough for text */
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(48, 48, 48, 0.82));
   z-index: 0;
 }
 
@@ -708,7 +718,7 @@ button:focus {
 }
 
 #features .section-subtitle {
-  color: #ccc;
+  color: #e6e6e6 !important;
 }
 
 #features .section-header .lines {
@@ -764,7 +774,7 @@ button:focus {
 #features .box-item .text p {
   font-size: 14px;
   line-height: 26px;
-  color: #ccc;
+  color: #dddddd;
 }
 
 #features .box-item:hover .icon {
@@ -1802,8 +1812,19 @@ button:focus {
    BARONG TEASER — homepage section
    ========================================================================== */
 .barong-teaser-section {
-  background: #111;
+  position: relative;
+  background-color: #111;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+    url(../img/barong-teaser.webp);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
   color: #fff;
+  min-height: 520px;
+  display: flex;
+  align-items: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .barong-teaser-label {
@@ -1837,7 +1858,8 @@ button:focus {
 .barong-teaser-highlights {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  justify-content: center;
+  gap: 12px 24px;
   margin-bottom: 30px;
 }
 
@@ -1989,11 +2011,83 @@ button:focus {
   filter: drop-shadow(0 30px 60px rgba(0,0,0,0.45));
 }
 
+/* Hero image wall — 3 columns of continuously scrolling barong posters */
+.barong-hero-image {
+  padding: 0;
+  text-align: left;
+}
+
+.bwall {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  height: 520px;
+  overflow: hidden;
+  /* fade the wall into the dark hero at top & bottom */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+
+.bwall__col {
+  overflow: hidden;
+}
+
+.bwall__track {
+  display: flex;
+  flex-direction: column;
+  animation: bwall-up 30s linear infinite;
+  will-change: transform;
+}
+
+.bwall__col--down .bwall__track {
+  animation-name: bwall-down;
+}
+
+/* vary speeds so the columns never line up */
+.bwall__col:nth-child(2) .bwall__track { animation-duration: 38s; }
+.bwall__col:nth-child(3) .bwall__track { animation-duration: 33s; }
+
+.bwall__card {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  display: block;
+  margin-bottom: 14px;
+  border-radius: 10px;
+  background: #1a1a1a;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+/* track holds the set twice; -50% lands exactly on the duplicate = seamless loop */
+@keyframes bwall-up {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+@keyframes bwall-down {
+  from { transform: translateY(-50%); }
+  to   { transform: translateY(0); }
+}
+
+.bwall:hover .bwall__track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bwall__track { animation: none; }
+}
+
 @media (max-width: 991px) {
   .barong-hero-row { padding: 110px 0 70px; }
   .barong-hero-headline { font-size: 44px; }
-  .barong-hero-image { margin-top: 30px; }
-  .barong-hero-image img { max-height: 320px; }
+  .barong-hero-image { margin-top: 40px; }
+  .bwall { height: 460px; }
+}
+
+@media (max-width: 575px) {
+  .bwall { height: 400px; gap: 10px; }
+  .bwall__card { margin-bottom: 10px; }
 }
 
 /* ==========================================================================
@@ -2991,10 +3085,6 @@ h5 {
 }
 
 /* --- 13. Barong Teaser (homepage) ---------------------------------------- */
-.barong-teaser-section {
-  background: var(--navy) !important;
-}
-
 .barong-teaser-highlights span i {
   color: rgba(255,255,255,0.7) !important;
 }
