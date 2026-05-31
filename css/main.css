@@ -584,8 +584,19 @@ button:focus {
 }
 
 @media screen and (max-width: 768px) {
+  /* Make the navbar tall enough to fully contain the 40px logo + its 15px padding.
+     Without this, the logo overflows past the navbar's bottom edge and the
+     baked-in white box on logo.png shows against the hero image behind. */
+  .scrolling-navbar,
+  .scrolling-navbar.indigo,
+  .scrolling-navbar.top-nav-collapse {
+    min-height: 70px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
   .navbar-header {
     width: 100%;
+    min-height: 70px;
   }
   .navbar-brand {
     position: absolute;
