@@ -74,12 +74,12 @@ a:not([href]):not([tabindex]):hover {
    2.1 Section Title
    ========================================================================== */
 .section {
-  padding: 80px 0;
+  padding: 60px 0;
 }
 
 .section-header {
   color: #fff;
-  margin-bottom: 40px;
+  margin-bottom: 28px;
   text-align: center;
 }
 
@@ -789,6 +789,145 @@ button:focus {
 #features .show-box img {
   position: absolute;
   bottom: -120px;
+}
+
+/* ==========================================================================
+   WHY CHOOSE US — animated numeric stats band (two-row marquee)
+   ========================================================================== */
+.stats-marquee {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  /* fade cards in/out at the left & right edges */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+}
+
+.stats-row {
+  display: flex;
+  overflow: hidden;
+}
+
+.stats-track {
+  display: flex;
+  flex: none;
+  gap: 18px;
+  width: max-content;
+  padding-right: 18px; /* keeps the gap consistent across the loop seam */
+  will-change: transform;
+  animation: stats-left 38s linear infinite;
+}
+
+.stats-row--right .stats-track {
+  animation-name: stats-right;
+  animation-duration: 34s;
+}
+
+.stats-row--left .stats-track {
+  animation-name: stats-left;
+  animation-duration: 40s;
+}
+
+/* track holds the set twice; -50% lands exactly on the duplicate = seamless loop */
+@keyframes stats-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes stats-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.stats-marquee:hover .stats-track {
+  animation-play-state: paused;
+}
+
+.stat-card {
+  flex: none;
+  min-width: 200px;
+  padding: 18px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  border-radius: 16px;
+  border: 1px solid rgba(220, 220, 220, 0.14);
+  background: linear-gradient(
+    160deg,
+    #2c2c2c 0%,
+    #111111 100%
+  );
+  box-shadow:
+    0 10px 28px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.stat-num {
+  font-size: 38px;
+  font-weight: 700;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.05;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+
+.stat-label {
+  margin-top: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(200, 200, 200, 0.6);
+  white-space: nowrap;
+}
+
+.stat-card--badge .stat-num {
+  font-size: 26px;
+  letter-spacing: 0;
+}
+
+/* silver accent on the left edge */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(210,210,210,0.4), transparent);
+}
+
+.stat-card {
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats-track { animation: none; }
+  .stats-row {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .stats-row::-webkit-scrollbar { display: none; }
 }
 
 /* ==========================================================================
@@ -1782,7 +1921,7 @@ button:focus {
    SECTION SPACING — more breathing room
    ========================================================================== */
 .section {
-  padding: 100px 0;
+  padding: 60px 0;
 }
 
 /* ==========================================================================
@@ -3234,7 +3373,19 @@ a:focus-visible {
 }
 
 /* --- 21. Section background alternation ----------------------------------- */
-#services { background: #fff; }
+#services { background: #fff; padding-bottom: 0; }
+
+/* Why Choose Us band sits flush at the bottom of the Services section */
+#features {
+  display: block;
+  padding: 48px 0 52px;
+  margin-top: 48px;
+}
+
+/* smaller header margins inside the merged band */
+#features .why-choose-header {
+  margin-bottom: 32px;
+}
 #portfolios { background: var(--bg-light); }
 #pricing { background: #fff; }
 .size-guide-section { background: var(--bg-light) !important; }
