@@ -1656,9 +1656,7 @@ button:focus {
 }
 
 .portfolio-caption {
-  color: #fff;
-  text-align: left;
-  width: 100%;
+  display: none;
 }
 
 .portfolio-caption h5 {
