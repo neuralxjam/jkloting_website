@@ -479,12 +479,6 @@ button:focus {
   top: 0px;
 }
 
-/* When scrolled (white navbar), logo.png may have white pixels — multiply blends
-   the white logo background into the white navbar, making it invisible */
-.top-nav-collapse .navbar-brand img {
-  mix-blend-mode: multiply;
-}
-
 .top-nav-collapse .navbar-nav .nav-link {
   color: #333 !important;
   margin-top: 20px !important;
@@ -3398,30 +3392,13 @@ a:focus-visible {
 }
 
 /* --- 21. Section background alternation ----------------------------------- */
-/* Services + Why Choose Us share one dark block — they read as a single section */
-#services {
-  background: #111;
-  padding-bottom: 0;
-}
+#services { background: #fff; padding-bottom: 0; }
 
-/* Dark-mode overrides for service cards inside the shared dark block */
-#services .section-title            { color: #fff; }
-#services .section-subtitle         { color: rgba(255,255,255,0.65); }
-#services .section-header .lines    { border-top-color: rgba(255,255,255,0.4); }
-#services .item-boxes h4            { color: #fff; }
-#services .item-boxes p             { color: rgba(255,255,255,0.65); }
-#services .item-boxes .icon         { border-color: rgba(255,255,255,0.25); }
-#services .item-boxes .icon i       { color: rgba(255,255,255,0.85); }
-#services .item-boxes:hover .icon   { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.5); }
-#services .item-boxes:hover .icon i { color: #fff; }
-
-/* Why Choose Us — flush join, no extra top gap */
+/* Why Choose Us band sits flush at the bottom of the Services section */
 #features {
   display: block;
-  padding: 0 0 52px;
-  margin-top: 0;
-  /* subtle top divider so the two sub-blocks are distinguished */
-  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 48px 0 52px;
+  margin-top: 48px;
 }
 
 /* smaller header margins inside the merged band */
