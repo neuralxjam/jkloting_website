@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="css/line-icons.css" />
     <link rel="stylesheet" href="css/animate.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260601c" />
+    <link rel="stylesheet" href="css/main.css?v=20260602c" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: breadcrumb -->
@@ -98,10 +98,6 @@
               <a class="nav-link" href="/#contact">Contact</a>
             </li>
           </ul>
-          <form class="barong-search-form" role="search" onsubmit="return false;">
-            <i class="lnr lnr-magnifier barong-search-icon" aria-hidden="true"></i>
-            <input type="search" id="barong-search-desktop" class="barong-search-input" placeholder="Search color…" autocomplete="off" aria-label="Search barong by color" />
-          </form>
         </div>
       </div>
 
@@ -240,8 +236,17 @@
         </div>
         <!-- /dark featured band -->
 
-        <!-- Divider between carousel and the main grid -->
-        <div id="barong-all-label" class="barong-all-label" style="display:none;">Our Barong Collections</div>
+        <!-- Catalog toolbar: label (left) + search + AI stylist (right) -->
+        <div id="barong-all-label" class="barong-all-label" style="display:none;">
+          <span class="barong-all-label__text">Our Barong Collections</span>
+          <div class="barong-all-label__tools">
+            <form class="barong-search-form" role="search" onsubmit="return false;">
+              <i class="lnr lnr-magnifier barong-search-icon" aria-hidden="true"></i>
+              <input type="search" id="barong-search-desktop" class="barong-search-input" placeholder="Barong Color" autocomplete="off" aria-label="Search barong by color" />
+            </form>
+            <button type="button" class="barong-stylist-inline-btn" data-stylist-open>Style with AI</button>
+          </div>
+        </div>
 
         <!-- Loading state -->
         <div id="barong-catalog-loading" class="text-center" style="padding: 60px 0;">
@@ -346,6 +351,55 @@
     </div>
     <!-- Size Guide Modal End -->
 
+    <!-- AI Barong Stylist Modal -->
+    <div id="barong-stylist-modal" class="jk-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="jk-stylist-title">
+      <div class="jk-modal__overlay" data-close></div>
+      <div class="jk-modal__dialog jk-modal__dialog--narrow jk-stylist">
+        <button type="button" class="jk-modal__close" data-close aria-label="Close">&times;</button>
+        <p class="jk-modal__eyebrow"><span aria-hidden="true">✨</span> AI Barong Stylist</p>
+        <h3 class="jk-modal__title" id="jk-stylist-title">Find your perfect barong color</h3>
+
+        <div id="jk-stylist-form">
+          <div class="jk-stylist__group">
+            <label class="jk-stylist__label">What's the occasion?</label>
+            <div class="jk-stylist__chips" data-group="occasion">
+              <button type="button" class="jk-chip" data-value="wedding-groom">My wedding (groom)</button>
+              <button type="button" class="jk-chip" data-value="wedding-guest">Wedding guest / Ninong</button>
+              <button type="button" class="jk-chip" data-value="formal">Formal / Graduation / Office</button>
+              <button type="button" class="jk-chip" data-value="casual">Everyday / Casual</button>
+            </div>
+          </div>
+
+          <div class="jk-stylist__group">
+            <label class="jk-stylist__label">Your skin tone?</label>
+            <div class="jk-stylist__chips" data-group="skin">
+              <button type="button" class="jk-chip" data-value="fair">Fair / Light</button>
+              <button type="button" class="jk-chip" data-value="medium">Medium</button>
+              <button type="button" class="jk-chip" data-value="morena">Morena / Deep</button>
+            </div>
+          </div>
+
+          <div class="jk-stylist__group">
+            <label class="jk-stylist__label">Your style?</label>
+            <div class="jk-stylist__chips" data-group="vibe">
+              <button type="button" class="jk-chip" data-value="classic">Classic &amp; timeless</button>
+              <button type="button" class="jk-chip" data-value="modern">Modern &amp; bold</button>
+            </div>
+          </div>
+
+          <div class="jk-stylist__group">
+            <label class="jk-stylist__label" for="jk-stylist-motif">Event color motif? <span class="jk-stylist__optional">(optional)</span></label>
+            <input type="text" id="jk-stylist-motif" class="jk-stylist__input" placeholder="e.g. blue, gold, maroon" autocomplete="off" />
+          </div>
+
+          <button type="button" id="jk-stylist-submit" class="jk-stylist__submit">Find my barong</button>
+        </div>
+
+        <div id="jk-stylist-result" style="display:none;"></div>
+      </div>
+    </div>
+    <!-- AI Barong Stylist Modal End -->
+
     <!-- Footer -->
     <footer class="site-footer">
       <div class="container">
@@ -403,7 +457,7 @@
     <script src="js/mobile-drawer.js?v=20260531e"></script>
 
     <!-- Barong Catalog (Firebase Firestore + dynamic rendering) -->
-    <script type="module" src="js/barong-catalog.js"></script>
+    <script type="module" src="js/barong-catalog.js?v=20260602a"></script>
 
 
     <!-- Sticky mobile contact bar (visible only on small screens) -->
@@ -447,6 +501,9 @@
           <a class="jk-drawer__item is-active" href="/barong" aria-current="page">
             <i class="lnr lnr-shirt" aria-hidden="true"></i><span>Barong Collection</span>
           </a>
+          <button type="button" class="jk-drawer__item jk-drawer__item--btn" data-stylist-open data-jk-drawer-close>
+            <i class="lnr lnr-magic-wand" aria-hidden="true"></i><span>AI Barong Stylist</span>
+          </button>
           <a class="jk-drawer__item" href="/#portfolios">
             <i class="lnr lnr-camera" aria-hidden="true"></i><span>Portfolio</span>
           </a>

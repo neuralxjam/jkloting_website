@@ -63,6 +63,13 @@ const $modalCta = document.getElementById('jk-modal-cta')
 // Size guide modal refs
 const $sizeModal = document.getElementById('size-guide-modal')
 
+// AI Stylist modal refs
+const $stylistModal   = document.getElementById('barong-stylist-modal')
+const $stylistForm    = document.getElementById('jk-stylist-form')
+const $stylistResult  = document.getElementById('jk-stylist-result')
+const $stylistSubmit  = document.getElementById('jk-stylist-submit')
+const $stylistMotif   = document.getElementById('jk-stylist-motif')
+
 // ---- STATE -----------------------------------------------------------------
 let allBarongs = []       // full sorted list; index === modal lookup key
 let filteredBarongs = []  // active filtered list (default: all)
@@ -238,16 +245,23 @@ function openSizeGuide() {
 // ---- CAROUSEL --------------------------------------------------------------
 function renderCarouselSlide(b, slideIndex) {
   const images = imagesOf(b)
+  const noPhoto = images.length === 1 && images[0] === PLACEHOLDER_IMG
   const label = escapeHtml(b.label || 'Barong')
   const price = peso(b.price || 0)
   const size = escapeHtml(b.size || '')
   const mainImg = escapeHtml(images[0])
   const orderUrl = escapeHtml(messengerLinkFor(b))
+  const mediaContent = noPhoto
+    ? `<div class="jk-carousel__placeholder" aria-label="No photo yet">
+        <i class="lnr lnr-shirt" aria-hidden="true"></i>
+        <span>Photo Coming Soon</span>
+      </div>`
+    : `<img src="${mainImg}" alt="${label}" />`
   return `
     <li class="jk-carousel__slide" data-slide="${slideIndex}" data-index="${b._index}" role="button" tabindex="0" aria-label="View ${label}">
       <div class="jk-carousel__card">
-        <div class="jk-carousel__img-wrap">
-          <img src="${mainImg}" alt="${label}" />
+        <div class="jk-carousel__img-wrap${noPhoto ? ' jk-carousel__img-wrap--placeholder' : ''}">
+          ${mediaContent}
         </div>
         <div class="jk-carousel__info">
           <h4 class="jk-carousel__title">${label}</h4>
@@ -290,7 +304,7 @@ function buildCarousel() {
   ).join('')
   setCarouselActive(0)
   $carouselWrap.style.display = 'block'
-  $allLabel.style.display = 'block'
+  $allLabel.style.display = 'flex'
   startCarouselTimer()
 }
 
@@ -332,10 +346,193 @@ function applySearch(term) {
         <i class="lnr lnr-magnifier" aria-hidden="true"></i>
         <p>No barongs found for <strong>"${escapeHtml(term)}"</strong>.</p>
         <p class="barong-no-results__sub">Try a different color, or <a href="${MESSENGER_URL}" target="_blank" rel="noopener">message us</a> for custom orders.</p>
+        <p class="barong-no-results__sub">Not sure what to look for? <a href="#" data-stylist-open>Try the AI Stylist</a>.</p>
+        <div class="barong-no-results__social">
+          <p class="barong-no-results__social-label">Follow us for the newest drops</p>
+          <div class="barong-no-results__social-links">
+            <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+            <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+          </div>
+        </div>
       </div>`
   } else {
     renderLoadMore(false)
   }
+}
+
+// ---- AI STYLIST ------------------------------------------------------------
+// Client-side, rule-based color recommender. Reads the user's answers, scores
+// the colors that actually exist in stock, and hands the winner to applySearch.
+
+// Canonical colors + the free-form synonyms a Firestore `color` value might use,
+// plus a swatch for the result panel.
+const CANONICAL_COLORS = {
+  white:  { label: 'White',             swatch: '#f4f1ea', syn: ['white', 'ivory', 'cream', 'off-white', 'offwhite', 'eggshell', 'pearl', 'bone'] },
+  beige:  { label: 'Beige / Champagne', swatch: '#cbb892', syn: ['beige', 'champagne', 'gold', 'golden', 'tan', 'khaki', 'sand', 'nude', 'taupe', 'camel'] },
+  gray:   { label: 'Gray',              swatch: '#8a8f98', syn: ['gray', 'grey', 'silver', 'ash', 'smoke', 'stone'] },
+  navy:   { label: 'Navy Blue',         swatch: '#1f2d4d', syn: ['navy', 'blue', 'royal', 'midnight', 'cobalt', 'teal'] },
+  black:  { label: 'Black',             swatch: '#1a1a1a', syn: ['black', 'jet', 'onyx', 'charcoal'] },
+  maroon: { label: 'Maroon',            swatch: '#6b2230', syn: ['maroon', 'burgundy', 'wine', 'oxblood', 'red'] },
+  green:  { label: 'Green',             swatch: '#3b5d4a', syn: ['green', 'emerald', 'olive', 'sage', 'forest'] },
+  colored:{ label: 'Colored / Printed', swatch: 'linear-gradient(135deg,#d98cb3,#8cb3d9,#d9c98c)', syn: ['colored', 'colorful', 'color', 'printed', 'print', 'pattern', 'patterned', 'floral', 'multi'] },
+}
+
+// Scoring tables: per answer, how well each canonical color fits.
+const STYLIST_RULES = {
+  occasion: {
+    'wedding-groom': { white: 3, beige: 2, gray: 1 },
+    'wedding-guest': { black: 3, navy: 3, gray: 2, maroon: 1 },
+    'formal':        { white: 3, navy: 2, beige: 2, gray: 1 },
+    'casual':        { black: 2, gray: 2, navy: 1, maroon: 1, green: 1, colored: 2 },
+  },
+  skin: {
+    'fair':   { navy: 2, black: 2, maroon: 2, green: 1 },
+    'medium': { navy: 2, maroon: 2, beige: 1, white: 1, green: 1, colored: 1 },
+    'morena': { white: 2, beige: 2, gray: 1, maroon: 1, colored: 1 },
+  },
+  vibe: {
+    'classic': { white: 2, black: 2, navy: 1 },
+    'modern':  { beige: 2, gray: 2, green: 1, maroon: 1, colored: 2 },
+  },
+}
+
+const OCCASION_LABEL = {
+  'wedding-groom': 'your wedding day',
+  'wedding-guest': 'attending a wedding',
+  'formal':        'a formal event',
+  'casual':        'everyday wear',
+}
+const SKIN_LABEL = { fair: 'fair', medium: 'medium', morena: 'morena' }
+
+// Current selections (chip groups) + optional motif text.
+let stylistAnswers = { occasion: '', skin: '', vibe: '', motif: '' }
+
+// Map a free-form color string to a canonical key (first synonym hit wins).
+// Matches whole words so e.g. "colored" doesn't match the "red" synonym.
+function canonicalOf(colorStr) {
+  const s = String(colorStr || '').toLowerCase()
+  for (const key in CANONICAL_COLORS) {
+    if (CANONICAL_COLORS[key].syn.some((syn) => {
+      const pattern = '\\b' + syn.replace(/[^a-z]+/g, '\\W?') + '\\b'
+      return new RegExp(pattern).test(s)
+    })) return key
+  }
+  return null
+}
+
+// Distinct in-stock colors → { lower: { display, count } }.
+function stockColors() {
+  const map = new Map()
+  allBarongs.forEach((b) => {
+    const c = (b.color || '').trim()
+    if (!c) return
+    const lc = c.toLowerCase()
+    const entry = map.get(lc) || { display: c, count: 0 }
+    entry.count += 1
+    map.set(lc, entry)
+  })
+  return map
+}
+
+// Score the actual in-stock colors against the answers and pick a winner.
+// Returns { ok, display, canon, count, fallback } or { ok:false } when no
+// colored stock exists at all.
+function scoreColors(answers) {
+  const stock = stockColors()
+  if (stock.size === 0) return { ok: false }
+
+  let best = null
+  stock.forEach((info, lc) => {
+    const canon = canonicalOf(lc)
+    let score = 0
+    if (canon) {
+      score += (STYLIST_RULES.occasion[answers.occasion] || {})[canon] || 0
+      score += (STYLIST_RULES.skin[answers.skin] || {})[canon] || 0
+      score += (STYLIST_RULES.vibe[answers.vibe] || {})[canon] || 0
+      if (answers.motifCanon) {
+        if (canon === 'white' || canon === 'beige') score += 1   // neutral complements
+        if (canon === answers.motifCanon) score += 1             // tonal match
+      }
+    }
+    // Tie-break by how many pieces are available in that color.
+    if (!best || score > best.score || (score === best.score && info.count > best.count)) {
+      best = { display: info.display, canon, score, count: info.count }
+    }
+  })
+
+  // score 0 = no rule matched stock; still suggest the most-available color.
+  return { ok: true, fallback: best.score === 0, ...best }
+}
+
+// Build a short, plain-English reason for the pick.
+function stylistReason(answers, rec) {
+  if (rec.fallback) {
+    return `This is one of our most-loved colors right now and works for almost any occasion.`
+  }
+  const bits = []
+  if (OCCASION_LABEL[answers.occasion]) bits.push(`great for ${OCCASION_LABEL[answers.occasion]}`)
+  if (SKIN_LABEL[answers.skin]) bits.push(`flattering on ${SKIN_LABEL[answers.skin]} skin`)
+  if (answers.vibe === 'modern') bits.push('with a modern feel')
+  else if (answers.vibe === 'classic') bits.push('with a timeless, classic look')
+  const tail = bits.length ? bits.join(', ') : 'a versatile, easy-to-style choice'
+  return `A ${rec.display.toLowerCase()} barong is ${tail}.`
+}
+
+function openStylist() {
+  resetStylist()
+  openOverlay($stylistModal)
+}
+
+function resetStylist() {
+  stylistAnswers = { occasion: '', skin: '', vibe: '', motif: '' }
+  if ($stylistMotif) $stylistMotif.value = ''
+  if ($stylistForm) {
+    $stylistForm.style.display = 'block'
+    $stylistForm.querySelectorAll('.jk-chip.is-selected').forEach((c) => c.classList.remove('is-selected'))
+  }
+  if ($stylistResult) { $stylistResult.style.display = 'none'; $stylistResult.innerHTML = '' }
+}
+
+function renderStylistResult() {
+  stylistAnswers.motif = ($stylistMotif && $stylistMotif.value || '').trim()
+  const answers = { ...stylistAnswers, motifCanon: stylistAnswers.motif ? canonicalOf(stylistAnswers.motif) : null }
+  const rec = scoreColors(answers)
+
+  if (!rec.ok) {
+    // No colored stock to recommend — point the shopper to us instead.
+    $stylistResult.innerHTML = `
+      <p class="jk-stylist__rec">We're between drops right now.</p>
+      <p class="jk-stylist__reason">Follow along or message us and we'll help you pick the perfect color for your event.</p>
+      <div class="jk-stylist__actions">
+        <a href="${MESSENGER_URL}" target="_blank" rel="noopener" class="jk-stylist__view">Message us</a>
+        <button type="button" class="jk-stylist__restart" data-stylist-restart>Start over</button>
+      </div>`
+    $stylistForm.style.display = 'none'
+    $stylistResult.style.display = 'block'
+    return
+  }
+
+  const swatch = (rec.canon && CANONICAL_COLORS[rec.canon]) ? CANONICAL_COLORS[rec.canon].swatch : '#cccccc'
+  const countLabel = rec.count === 1 ? '1 piece available now' : `${rec.count} pieces available now`
+  $stylistResult.innerHTML = `
+    <span class="jk-stylist__swatch" style="background:${swatch}" aria-hidden="true"></span>
+    <p class="jk-stylist__rec">We recommend a <strong>${escapeHtml(capitalize(rec.display))}</strong> barong</p>
+    <p class="jk-stylist__reason">${escapeHtml(stylistReason(answers, rec))}</p>
+    <p class="jk-stylist__count">${countLabel}</p>
+    <div class="jk-stylist__actions">
+      <button type="button" class="jk-stylist__view" data-stylist-view="${escapeHtml(rec.display)}">View these barongs</button>
+      <button type="button" class="jk-stylist__restart" data-stylist-restart>Start over</button>
+    </div>`
+  $stylistForm.style.display = 'none'
+  $stylistResult.style.display = 'block'
+}
+
+// Filter the live catalog to the recommended color and scroll to the grid.
+function viewStylistPick(color) {
+  closeOverlay($stylistModal)
+  applySearch(color)
+  const grid = document.getElementById('barong-grid')
+  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
 // ---- EVENT WIRING ----------------------------------------------------------
@@ -431,6 +628,36 @@ function wireEvents() {
       document.querySelectorAll('.jk-modal.is-open').forEach((m) => closeOverlay(m))
     }
   })
+
+  // --- AI Stylist ---
+  // Open from any trigger (CTA button, drawer item, no-results link).
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('[data-stylist-open]')) { e.preventDefault(); openStylist() }
+  })
+
+  if ($stylistForm) {
+    // Chip selection: one choice per group.
+    $stylistForm.addEventListener('click', (e) => {
+      const chip = e.target.closest('.jk-chip')
+      if (!chip) return
+      const wrap = chip.closest('[data-group]')
+      if (!wrap) return
+      const group = wrap.dataset.group
+      wrap.querySelectorAll('.jk-chip').forEach((c) => c.classList.remove('is-selected'))
+      chip.classList.add('is-selected')
+      stylistAnswers[group] = chip.dataset.value
+    })
+  }
+
+  if ($stylistSubmit) $stylistSubmit.addEventListener('click', renderStylistResult)
+
+  if ($stylistResult) {
+    $stylistResult.addEventListener('click', (e) => {
+      const view = e.target.closest('[data-stylist-view]')
+      if (view) { viewStylistPick(view.dataset.stylistView); return }
+      if (e.target.closest('[data-stylist-restart]')) resetStylist()
+    })
+  }
 }
 
 function showError(message) {

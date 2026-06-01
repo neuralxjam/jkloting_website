@@ -4303,10 +4303,7 @@ body.jk-modal-open {
 .jk-featured-band .jk-cdot          { background: rgba(255,255,255,0.25); }
 .jk-featured-band .jk-cdot.is-active { background: #fff; }
 
-/* All Pieces divider — sits just below the dark band, light bg */
-.barong-all-label {
-  margin-top: 40px;
-}
+/* All Pieces toolbar — see "AI BARONG STYLIST" section for full styles */
 
 /* --- 23. Barong — Featured carousel ----------------------------------- */
 .jk-carousel {
@@ -4389,6 +4386,33 @@ body.jk-modal-open {
   display: block;
   transition: transform 0.5s ease;
 }
+.jk-carousel__img-wrap--placeholder {
+  height: 200px;
+  background: var(--navy-tint, #f5f5f5);
+}
+.jk-carousel__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+  color: #b0a898;
+  pointer-events: none;
+  user-select: none;
+}
+.jk-carousel__placeholder .lnr-shirt {
+  font-size: 48px;
+  opacity: 0.55;
+}
+.jk-carousel__placeholder span {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
 .jk-carousel__slide.is-active .jk-carousel__img-wrap img {
   transform: scale(1.03);
 }
@@ -4466,28 +4490,10 @@ body.jk-modal-open {
   transform: scale(1.4);
 }
 
-/* "All Pieces" divider label */
+/* "All Pieces" toolbar — base declaration (detail in AI STYLIST section) */
 .barong-all-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  color: var(--text-light);
-  text-align: center;
-  margin: 48px 0 -8px;
   position: relative;
 }
-.barong-all-label::before,
-.barong-all-label::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 1px;
-  background: var(--border-color);
-}
-.barong-all-label::before { right: calc(50% + 60px); }
-.barong-all-label::after  { left:  calc(50% + 60px); }
 
 @media (max-width: 767px) {
   .jk-carousel__track { min-height: 320px; padding: 40px 0; }
@@ -4819,4 +4825,290 @@ body.jk-drawer-open { overflow: hidden; }
 .barong-no-results__sub a {
   color: inherit;
   text-decoration: underline;
+}
+
+/* Empty-state social CTA */
+.barong-no-results__social {
+  margin-top: 28px;
+}
+.barong-no-results__social-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+.barong-no-results__social-links {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+.barong-no-results__social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--navy-tint);
+  color: var(--navy);
+  font-size: 18px;
+  transition: var(--transition, 0.2s linear);
+}
+.barong-no-results__social-links a:hover {
+  background: var(--navy);
+  color: #fff;
+}
+
+/* ==========================================================================
+   AI BARONG STYLIST
+   ========================================================================== */
+
+/* Catalog toolbar — "Our Barong Collections" label row */
+/* Overrides the old centered label; now a flex row */
+.barong-all-label {
+  display: flex !important;           /* always visible when JS sets display:none -> block; override to flex */
+  align-items: center !important;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 48px 0 16px;
+  position: relative;
+}
+/* Remove the decorative lines — they don't suit a flex layout */
+.barong-all-label::before,
+.barong-all-label::after { display: none; }
+
+.barong-all-label__text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  white-space: nowrap;
+}
+.barong-all-label__tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Search form inside the toolbar */
+.barong-all-label__tools .barong-search-form {
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1.5px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+.barong-all-label__tools .barong-search-form:focus-within {
+  border-color: var(--navy);
+}
+.barong-all-label__tools .barong-search-icon {
+  position: static;
+  padding: 0 10px;
+  font-size: 15px;
+  color: #aaa;
+  pointer-events: none;
+}
+.barong-all-label__tools .barong-search-input {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 9px 12px 9px 0;
+  font-size: 13px;
+  color: var(--text-dark);
+  width: 200px;
+  outline: none;
+  box-shadow: none;
+}
+.barong-all-label__tools .barong-search-input::placeholder { color: #bbb; }
+.barong-all-label__tools .barong-search-input:focus { width: 200px; }
+
+/* Style with AI button */
+.barong-stylist-inline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: 1.5px solid var(--navy);
+  border-radius: 8px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: var(--transition, 0.2s linear);
+}
+.barong-stylist-inline-btn:hover {
+  background: var(--navy-hover);
+  border-color: var(--navy-hover);
+}
+
+/* Mobile: label on its own line, search + button full-width below */
+@media (max-width: 575px) {
+  .barong-all-label {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px;
+  }
+  .barong-all-label__tools {
+    width: 100%;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+  .barong-all-label__tools .barong-search-form {
+    flex: 1;
+  }
+  .barong-all-label__tools .barong-search-input {
+    width: 100%;
+  }
+}
+
+/* Stylist modal body */
+.jk-stylist .jk-modal__eyebrow {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.jk-stylist .jk-modal__title { margin-bottom: 22px; }
+
+.jk-stylist__group { margin-bottom: 20px; }
+.jk-stylist__label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 10px;
+}
+.jk-stylist__optional {
+  font-weight: 400;
+  color: var(--text-light);
+}
+.jk-stylist__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.jk-chip {
+  padding: 9px 16px;
+  border: 1.5px solid var(--border-color, #ddd);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--text-dark);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition, 0.2s linear);
+}
+.jk-chip:hover { border-color: var(--navy); }
+.jk-chip.is-selected {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+.jk-stylist__input {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid var(--border-color, #ddd);
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+.jk-stylist__input:focus {
+  outline: none;
+  border-color: var(--navy);
+}
+.jk-stylist__submit {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition, 0.2s linear);
+}
+.jk-stylist__submit:hover { background: var(--navy-hover); }
+
+/* Result panel */
+#jk-stylist-result { text-align: center; padding: 8px 0 4px; }
+.jk-stylist__swatch {
+  display: inline-block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(0, 0, 0, 0.08));
+  margin-bottom: 16px;
+}
+.jk-stylist__rec {
+  font-family: var(--font-display);
+  font-size: 22px;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+.jk-stylist__reason {
+  font-size: 14px;
+  color: var(--text-light);
+  max-width: 380px;
+  margin: 0 auto 12px;
+}
+.jk-stylist__count {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 20px;
+}
+.jk-stylist__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.jk-stylist__view {
+  display: inline-block;
+  padding: 13px 24px;
+  border: none;
+  border-radius: 8px;
+  background: var(--navy);
+  color: #fff;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--transition, 0.2s linear);
+}
+.jk-stylist__view:hover { background: var(--navy-hover); color: #fff; }
+.jk-stylist__restart {
+  padding: 10px;
+  border: none;
+  background: none;
+  color: var(--text-light);
+  font-size: 13px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Drawer stylist button matches the link items */
+.jk-drawer__item--btn {
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
 }
