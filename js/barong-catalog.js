@@ -28,8 +28,8 @@ const MESSENGER_URL = 'https://m.me/jklotingofficial'
 const PLACEHOLDER_IMG = 'img/dummy.png'
 const BRAND_MARK = 'img/brand-mark.png' // drop your new icon here; falls back to favicon if missing
 
-const PAGE_SIZE = 8 // cards per page
-const NEW_COUNT = 4 // newest N pieces get a "New" badge
+const PAGE_SIZE = 8  // cards per "Load More" batch
+const NEW_COUNT = 4  // newest N pieces get a "New" badge
 
 // ---- INIT ------------------------------------------------------------------
 const app = initializeApp(firebaseConfig)
@@ -42,6 +42,7 @@ const $grid           = document.getElementById('barong-grid')
 const $pagination     = document.getElementById('barong-pagination')
 const $loadMoreWrap   = document.getElementById('barong-load-more-wrap')
 const $loadMoreBtn    = document.getElementById('barong-load-more')
+const $searchInputs   = () => document.querySelectorAll('.barong-search-input')
 const $carouselWrap   = document.getElementById('barong-featured-carousel-wrap')
 const $carouselTrack = document.getElementById('jk-carousel-track')
 const $carouselDots = document.getElementById('jk-carousel-dots')
@@ -63,15 +64,14 @@ const $modalCta = document.getElementById('jk-modal-cta')
 const $sizeModal = document.getElementById('size-guide-modal')
 
 // ---- STATE -----------------------------------------------------------------
-let allBarongs = []      // full sorted list; index === modal lookup key
-let currentPage = 1
-let mobileLoaded = 0     // how many cards shown on mobile so far
-let featuredBarongs = [] // featured:true subset, for carousel
-let carouselActive = 0   // index inside featuredBarongs
+let allBarongs = []       // full sorted list; index === modal lookup key
+let filteredBarongs = []  // active filtered list (default: all)
+let searchTerm = ''
+let loadedCount = 0       // how many cards shown so far (Load More)
+let featuredBarongs = []  // featured:true subset, for carousel
+let carouselActive = 0    // index inside featuredBarongs
 let carouselTimer = null
 const CAROUSEL_INTERVAL = 4000
-
-function isMobile() { return window.innerWidth < 768 }
 
 // ---- HELPERS ---------------------------------------------------------------
 function peso(n) {
@@ -107,6 +107,7 @@ function messengerLinkFor(barong) {
 // ---- CARD RENDER -----------------------------------------------------------
 function renderCard(barong, globalIndex, posInPage) {
   const images = imagesOf(barong)
+  const noPhoto = images.length === 1 && images[0] === PLACEHOLDER_IMG
   const mainImg = images[0]
   const label = escapeHtml(barong.label || 'Barong')
   const size = escapeHtml(barong.size || '')
@@ -122,8 +123,16 @@ function renderCard(barong, globalIndex, posInPage) {
     badge = '<span class="jk-card__badge jk-card__badge--new">New</span>'
   }
 
-  // Carousel dots — only when 2+ images
-  const dots = images.length > 1
+  // Media: placeholder div or real image
+  const mediaContent = noPhoto
+    ? `<div class="jk-card__placeholder" aria-label="No photo yet">
+        <i class="lnr lnr-shirt" aria-hidden="true"></i>
+        <span>Photo Coming Soon</span>
+      </div>`
+    : `<img src="${escapeHtml(mainImg)}" alt="${label}" data-main-img loading="lazy" decoding="async" />`
+
+  // Carousel dots — only when 2+ real images
+  const dots = (!noPhoto && images.length > 1)
     ? `<div class="jk-card__dots">
         ${images.map((url, i) =>
           `<button type="button" class="jk-dot${i === 0 ? ' is-active' : ''}" data-src="${escapeHtml(url)}" aria-label="View image ${i + 1}"></button>`
@@ -136,8 +145,8 @@ function renderCard(barong, globalIndex, posInPage) {
   return `
     <div class="col-lg-3 col-md-4 col-sm-6 col-12 wow fadeInUp" data-wow-delay="${wowDelay}s">
       <article class="jk-card" id="${cardId}" data-index="${globalIndex}" role="button" tabindex="0" aria-label="View details for ${label}">
-        <div class="jk-card__media">
-          <img src="${escapeHtml(mainImg)}" alt="${label}" data-main-img loading="lazy" decoding="async" />
+        <div class="jk-card__media${noPhoto ? ' jk-card__media--placeholder' : ''}">
+          ${mediaContent}
           ${badge}
           <span class="jk-card__brand"><img src="${BRAND_MARK}" alt="J.Kloting" loading="lazy" decoding="async" /></span>
           ${dots}
@@ -157,54 +166,24 @@ function renderCard(barong, globalIndex, posInPage) {
   `
 }
 
-// ---- PAGINATION (desktop) --------------------------------------------------
-function totalPages() {
-  return Math.max(1, Math.ceil(allBarongs.length / PAGE_SIZE))
-}
-
-function renderPagination() {
-  const pages = totalPages()
-  if (pages <= 1) { $pagination.innerHTML = ''; return }
-  let html = `<button type="button" class="jk-page jk-page--nav" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous page">&larr;</button>`
-  for (let p = 1; p <= pages; p++) {
-    html += `<button type="button" class="jk-page${p === currentPage ? ' is-active' : ''}" data-page="${p}" aria-label="Page ${p}">${p}</button>`
-  }
-  html += `<button type="button" class="jk-page jk-page--nav" data-page="${currentPage + 1}" ${currentPage === pages ? 'disabled' : ''} aria-label="Next page">&rarr;</button>`
-  $pagination.innerHTML = html
-}
-
-function renderPage(page, scroll) {
-  const pages = totalPages()
-  currentPage = Math.min(Math.max(1, page), pages)
-  const start = (currentPage - 1) * PAGE_SIZE
-  const slice = allBarongs.slice(start, start + PAGE_SIZE)
-  $grid.innerHTML = slice.map((b, i) => renderCard(b, b._index, i)).join('')
-  renderPagination()
-  if (window.WOW) { try { new window.WOW().sync() } catch (_) {} }
-  if (scroll) {
-    const top = document.getElementById('products')
-    if (top) window.scrollTo({ top: top.offsetTop - 70, behavior: 'smooth' })
-  }
-}
-
-// ---- LOAD MORE (mobile) ----------------------------------------------------
+// ---- LOAD MORE (all screens) -----------------------------------------------
 function renderLoadMore(append) {
-  const slice = allBarongs.slice(mobileLoaded, mobileLoaded + PAGE_SIZE)
+  const slice = filteredBarongs.slice(loadedCount, loadedCount + PAGE_SIZE)
   if (!slice.length) return
-  const html = slice.map((b, i) => renderCard(b, b._index, mobileLoaded + i)).join('')
+  const html = slice.map((b, i) => renderCard(b, b._index, loadedCount + i)).join('')
   if (append) {
     $grid.insertAdjacentHTML('beforeend', html)
   } else {
     $grid.innerHTML = html
   }
-  mobileLoaded += slice.length
-  const hasMore = mobileLoaded < allBarongs.length
+  loadedCount += slice.length
+  const hasMore = loadedCount < filteredBarongs.length
   $loadMoreWrap.style.display = hasMore ? 'flex' : 'none'
   if (window.WOW) { try { new window.WOW().sync() } catch (_) {} }
 }
 
-function initMobileGrid() {
-  mobileLoaded = 0
+function initGrid() {
+  loadedCount = 0
   $grid.innerHTML = ''
   $pagination.innerHTML = ''
   renderLoadMore(false)
@@ -327,6 +306,38 @@ function resetCarouselTimer() {
   startCarouselTimer()
 }
 
+// ---- SEARCH ----------------------------------------------------------------
+function applySearch(term) {
+  searchTerm = term.trim().toLowerCase()
+  // Sync all search inputs
+  $searchInputs().forEach((inp) => { if (inp.value !== term) inp.value = term })
+
+  filteredBarongs = searchTerm
+    ? allBarongs.filter((b) => {
+        const label = (b.label || '').toLowerCase()
+        const color = (b.color || '').toLowerCase()
+        const type  = (b.type  || '').toLowerCase()
+        return label.includes(searchTerm) || color.includes(searchTerm) || type.includes(searchTerm)
+      })
+    : allBarongs.slice()
+
+  loadedCount = 0
+  $grid.innerHTML = ''
+  $pagination.innerHTML = ''
+
+  if (!filteredBarongs.length) {
+    $loadMoreWrap.style.display = 'none'
+    $grid.innerHTML = `
+      <div class="col-12 barong-no-results">
+        <i class="lnr lnr-magnifier" aria-hidden="true"></i>
+        <p>No barongs found for <strong>"${escapeHtml(term)}"</strong>.</p>
+        <p class="barong-no-results__sub">Try a different color, or <a href="${MESSENGER_URL}" target="_blank" rel="noopener">message us</a> for custom orders.</p>
+      </div>`
+  } else {
+    renderLoadMore(false)
+  }
+}
+
 // ---- EVENT WIRING ----------------------------------------------------------
 function wireEvents() {
   // Carousel: prev/next, dot, slide click
@@ -363,7 +374,7 @@ function wireEvents() {
       dot.classList.add('is-active')
       return
     }
-    if (e.target.closest('[data-no-modal]')) return // Reserve link → let it through
+    if (e.target.closest('[data-no-modal]')) return
     const card = e.target.closest('.jk-card')
     if (card) openModal(Number(card.dataset.index))
   })
@@ -377,29 +388,19 @@ function wireEvents() {
     }
   })
 
-  // Pagination (desktop)
-  $pagination.addEventListener('click', (e) => {
-    const btn = e.target.closest('.jk-page')
-    if (!btn || btn.disabled) return
-    renderPage(Number(btn.dataset.page), true)
-  })
-
-  // Load More (mobile)
+  // Load More (all screens)
   $loadMoreBtn.addEventListener('click', () => renderLoadMore(true))
 
-  // Swap modes if window resizes across the breakpoint
-  let lastMobile = isMobile()
-  window.addEventListener('resize', () => {
-    const nowMobile = isMobile()
-    if (nowMobile === lastMobile) return
-    lastMobile = nowMobile
-    if (nowMobile) {
-      initMobileGrid()
-    } else {
-      $loadMoreWrap.style.display = 'none'
-      mobileLoaded = 0
-      renderPage(1, false)
-    }
+  // Search inputs (debounced, synced across desktop + mobile)
+  $searchInputs().forEach((inp) => {
+    let debounceTimer = null
+    inp.addEventListener('input', () => {
+      clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => applySearch(inp.value), 300)
+    })
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') { applySearch(''); inp.blur() }
+    })
   })
 
   // Product modal: switch main image on thumb click
@@ -416,7 +417,7 @@ function wireEvents() {
     el.addEventListener('click', () => closeOverlay(el.closest('.jk-modal')))
   })
 
-  // Size guide triggers (header link + in-modal link)
+  // Size guide triggers
   document.querySelectorAll('[data-size-guide]').forEach((el) => {
     el.addEventListener('click', (e) => {
       e.preventDefault()
@@ -495,6 +496,7 @@ async function loadCatalog() {
     })
     // Stable global index used for modal lookup + "New" badge
     allBarongs.forEach((b, i) => { b._index = i })
+    filteredBarongs = allBarongs.slice()
     featuredBarongs = allBarongs.filter((b) => b.featured === true)
 
     if ($loading) $loading.style.display = 'none'
@@ -508,11 +510,7 @@ async function loadCatalog() {
 
     wireEvents()
     if (featuredBarongs.length) buildCarousel()
-    if (isMobile()) {
-      initMobileGrid()
-    } else {
-      renderPage(1, false)
-    }
+    initGrid()  // Load More on all screens
   } catch (err) {
     console.error('[barong-catalog] failed to load:', err)
     showError("We couldn't load the catalog right now. Please refresh, or message us on Facebook.")
