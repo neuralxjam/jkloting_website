@@ -277,3 +277,13 @@
   .section-title { font-size: 24px !important; }
   .product-img img { height: 200px; }
 }
+
+/* iOS / mobile — background-attachment: fixed is not supported on iOS Safari
+   and causes the hero to render as a blank gray area. Switch to scroll on
+   all touch devices (max 1024px covers all phones + tablets). */
+@media (max-width: 1024px) {
+  #hero-area,
+  #barong-hero {
+    background-attachment: scroll;
+  }
+}
