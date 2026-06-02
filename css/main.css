@@ -1924,7 +1924,10 @@ button:focus {
 }
 
 @media (max-width: 767px) {
-  .testimonial-card { margin-bottom: 20px; }
+  /* Stacked cards need breathing room between them */
+  .testimonials-section .row > [class*="col-"] { margin-bottom: 22px; }
+  .testimonials-section .row > [class*="col-"]:last-child { margin-bottom: 0; }
+  .testimonial-card { margin-bottom: 0; }
 }
 
 /* ==========================================================================
