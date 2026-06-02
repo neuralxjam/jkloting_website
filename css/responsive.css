@@ -184,7 +184,7 @@
 
 /* Tablet (768–991px) */
 @media (min-width: 768px) and (max-width: 991px) {
-  .section { padding: 48px 0; }
+  .section { padding: 36px 0; }
   .section-title { font-size: 32px !important; }
   #hero-area .contents h1 { font-size: 42px !important; }
   .barong-hero-content h1 { font-size: 40px !important; }
@@ -193,8 +193,8 @@
 /* Mobile (≤767px) */
 @media (max-width: 767px) {
   /* Section spacing */
-  .section { padding: 44px 0; }
-  .section-header { margin-bottom: 24px; }
+  .section { padding: 32px 0; }
+  .section-header { margin-bottom: 20px; }
 
   /* Stats band — smaller cards so the ticker stays compact on phones */
   .stat-card { min-width: 150px; padding: 14px 18px; }
