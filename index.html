@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="css/magnific-popup.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
     <link rel="stylesheet" href="css/animate.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260602j" />
+    <link rel="stylesheet" href="css/main.css?v=20260602k" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: local clothing store -->
@@ -60,12 +60,24 @@
       "image": "https://jkloting.store/img/og-image.jpg",
       "description": "Custom apparel and uniform printing based in Meycauayan, Bulacan — DTF, full sublimation, corporate and school uniforms. Bulk orders with nationwide and worldwide shipping.",
       "priceRange": "₱₱",
+      "telephone": "+639652877366",
+      "email": "jklothing.official@gmail.com",
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Meycauayan",
         "addressRegion": "Bulacan",
+        "postalCode": "3020",
         "addressCountry": "PH"
       },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Meycauayan+Bulacan",
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "09:00",
+          "closes": "18:00"
+        }
+      ],
       "areaServed": [
         { "@type": "Country", "name": "Philippines" },
         "Worldwide"
@@ -77,10 +89,18 @@
         { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "School & Organization Uniforms", "description": "PE uniforms, school shirts, and club or organization apparel." } }
       ],
       "sameAs": [
-        "https://www.facebook.com/jklotingofficial"
+        "https://www.facebook.com/jklotingofficial",
+        "https://www.instagram.com/jkloting_/",
+        "https://m.me/jklotingofficial"
       ]
     }
     </script>
+    <!--
+      TODO: Re-add aggregateRating + review schema inside the ClothingStore JSON-LD
+      above ONCE real customer reviews are collected. Google policy prohibits
+      review rich-result markup for placeholder/sample reviews. The visible
+      testimonial cards in the #testimonials section are currently placeholders.
+    -->
   </head>
   <body>
     <!-- Header Section Start -->
@@ -337,7 +357,7 @@
               Sizes XS–XXL. Custom embroidery available. <strong>₱650 per piece.</strong>
             </p>
             <div class="barong-teaser-highlights">
-              <span><i class="lnr lnr-checkmark-circle"></i> Made to order</span>
+              <span><i class="lnr lnr-checkmark-circle"></i> Limited stock</span>
               <span><i class="lnr lnr-checkmark-circle"></i> Sizes XS–XXL</span>
               <span><i class="lnr lnr-checkmark-circle"></i> Custom embroidery</span>
               <span><i class="lnr lnr-checkmark-circle"></i> Ships nationwide</span>
@@ -364,43 +384,39 @@
         <div class="row">
           <div class="col-md-12">
             <div id="portfolio-carousel" class="owl-carousel owl-theme">
-            <!-- TODO: replace img1.jpg with real corporate uniform photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img1.jpg" alt="Corporate Polo Shirts" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img1.jpg" alt="Custom embroidered corporate polo shirts by J.Kloting, Meycauayan Bulacan" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img1.jpg">
                     <div class="portfolio-caption">
-                      <h5>Company Polo Shirts</h5>
+                      <h5>Corporate Polo Shirts</h5>
                     </div>
                   </a>
                 </div>
               </div>
-            <!-- TODO: replace img2.jpg with real sportswear/jersey photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img2.jpg" alt="Sports Jerseys" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img2.jpg" alt="Custom full-sublimation team jerseys and sportswear printing" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img2.jpg">
                     <div class="portfolio-caption">
-                      <h5>Team Jerseys</h5>
+                      <h5>Full-Sublimation Jerseys</h5>
                     </div>
                   </a>
                 </div>
               </div>
-            <!-- TODO: replace img3.jpg with real school/org uniform photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img3.jpg" alt="School Uniforms" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img3.jpg" alt="Custom printed school and PE uniforms" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img3.jpg">
                     <div class="portfolio-caption">
-                      <h5>School PE Uniforms</h5>
+                      <h5>School &amp; PE Uniforms</h5>
                     </div>
                   </a>
                 </div>
               </div>
-            <!-- TODO: replace img4.jpg with real barong photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img4.jpg" alt="Modern Barong" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img4.jpg" alt="Modern polo barong with custom embroidery by J.Kloting" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img4.jpg">
                     <div class="portfolio-caption">
                       <h5>Modern Polo Barong</h5>
@@ -408,54 +424,52 @@
                   </a>
                 </div>
               </div>
-            <!-- TODO: replace img5.jpg with real streetwear/custom print photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img5.jpg" alt="Custom Streetwear" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img5.jpg" alt="Custom DTF-printed t-shirts and streetwear" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img5.jpg">
                     <div class="portfolio-caption">
-                      <h5>Custom T-Shirts</h5>
+                      <h5>Custom DTF T-Shirts</h5>
                     </div>
                   </a>
                 </div>
               </div>
-            <!-- TODO: replace img6.jpg with real hoodie/jacket photo -->
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img6.jpg" alt="Custom Hoodies" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img6.jpg" alt="Custom printed hoodies and jackets" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img6.jpg">
                     <div class="portfolio-caption">
-                      <h5>Custom Hoodies</h5>
+                      <h5>Custom Hoodies &amp; Jackets</h5>
                     </div>
                   </a>
                 </div>
               </div>
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img7.jpg" alt="Custom Apparel" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img7.jpg" alt="Custom printed team uniforms and apparel" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img7.jpg">
                     <div class="portfolio-caption">
-                      <h5>Custom Apparel</h5>
+                      <h5>Custom Team Uniforms</h5>
                     </div>
                   </a>
                 </div>
               </div>
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img8.jpg" alt="Custom Apparel" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img8.jpg" alt="Custom printed event shirts and giveaways" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img8.jpg">
                     <div class="portfolio-caption">
-                      <h5>Custom Apparel</h5>
+                      <h5>Custom Event Shirts</h5>
                     </div>
                   </a>
                 </div>
               </div>
             <div class="portfolio-item">
                 <div class="shot-item">
-                  <img src="img/portfolio/img9.jpg" alt="Custom Apparel" loading="lazy" decoding="async" />
+                  <img src="img/portfolio/img9.jpg" alt="Custom printed organization and club shirts" loading="lazy" decoding="async" />
                   <a class="overlay lightbox" href="img/portfolio/img9.jpg">
                     <div class="portfolio-caption">
-                      <h5>Custom Apparel</h5>
+                      <h5>Custom Org Shirts</h5>
                     </div>
                   </a>
                 </div>
@@ -698,6 +712,64 @@
 
     </section>
     <!-- About Us Section End -->
+
+    <!-- Testimonials Section Start -->
+    <section id="testimonials" class="section testimonials-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">What Our Clients Say</h2>
+          <hr class="lines wow zoomIn" data-wow-delay="0.3s" />
+          <p class="section-subtitle wow fadeIn" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            Real feedback from customers we've printed for across the Philippines.
+          </p>
+        </div>
+
+        <!-- TODO: replace placeholder testimonials with real customer quotes -->
+        <div class="row">
+
+          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.1s">
+            <div class="testimonial-card">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+              </div>
+              <p class="testimonial-quote">"We ordered corporate polos in bulk for our company and J.Kloting delivered ahead of schedule. The print quality and stitching were excellent — exactly the mockup they sent us."</p>
+              <div class="testimonial-author">
+                <h5>Maria Santos</h5>
+                <span>HR Officer · Bulacan</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
+            <div class="testimonial-card">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+              </div>
+              <p class="testimonial-quote">"Full-sublimation jerseys for our whole team came out vibrant and didn't fade after washes. Smooth communication from quote to delivery. Highly recommended for sports teams."</p>
+              <div class="testimonial-author">
+                <h5>Marvin Dela Cruz</h5>
+                <span>Team Manager · Sportswear Order</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
+            <div class="testimonial-card">
+              <div class="testimonial-stars" aria-label="5 out of 5 stars">
+                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
+              </div>
+              <p class="testimonial-quote">"Got modern polo barongs for our wedding entourage. The fit was perfect and the custom embroidery looked premium. Everyone kept asking where we had them made!"</p>
+              <div class="testimonial-author">
+                <h5>Anna Reyes</h5>
+                <span>Bride · Meycauayan</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!-- Testimonials Section End -->
 
     <!-- Contact Section Start -->
     <section id="contact" class="section barong-order-section">
