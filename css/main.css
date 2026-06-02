@@ -2177,7 +2177,7 @@ button:focus {
   padding: 20px 0;
 }
 
-.barong-hero-image img {
+.barong-hero-image img:not(.bwall__card) {
   max-width: 100%;
   max-height: 460px;
   object-fit: contain;
@@ -4971,6 +4971,7 @@ body.jk-drawer-open { overflow: hidden; }
 }
 
 /* Stylist modal body */
+.jk-stylist { text-align: center; }
 .jk-stylist .jk-modal__eyebrow {
   font-size: 12px;
   letter-spacing: 2px;
@@ -4996,6 +4997,7 @@ body.jk-drawer-open { overflow: hidden; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  justify-content: center;
 }
 .jk-chip {
   padding: 9px 16px;
@@ -5014,17 +5016,26 @@ body.jk-drawer-open { overflow: hidden; }
   border-color: var(--navy);
   color: #fff;
 }
-.jk-stylist__input {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border-color, #ddd);
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--text-dark);
+/* Skin-tone swatch palette (dark -> light) */
+.jk-stylist__swatches {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
-.jk-stylist__input:focus {
-  outline: none;
+.jk-skin-swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--tone, #ccc);
+  border: 2px solid var(--border-color, #ddd);
+  cursor: pointer;
+  padding: 0;
+  transition: var(--transition, 0.2s linear);
+}
+.jk-skin-swatch:hover { transform: scale(1.08); }
+.jk-skin-swatch.is-selected {
   border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
 }
 .jk-stylist__submit {
   width: 100%;
@@ -5041,6 +5052,11 @@ body.jk-drawer-open { overflow: hidden; }
   transition: var(--transition, 0.2s linear);
 }
 .jk-stylist__submit:hover { background: var(--navy-hover); }
+.jk-stylist__submit:disabled {
+  background: var(--border-color, #ddd);
+  color: #999;
+  cursor: not-allowed;
+}
 
 /* Result panel */
 #jk-stylist-result { text-align: center; padding: 8px 0 4px; }
@@ -5077,6 +5093,11 @@ body.jk-drawer-open { overflow: hidden; }
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+.jk-stylist__actions-secondary {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
 }
 .jk-stylist__view {
   display: inline-block;

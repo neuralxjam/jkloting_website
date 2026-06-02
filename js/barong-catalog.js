@@ -68,7 +68,6 @@ const $stylistModal   = document.getElementById('barong-stylist-modal')
 const $stylistForm    = document.getElementById('jk-stylist-form')
 const $stylistResult  = document.getElementById('jk-stylist-result')
 const $stylistSubmit  = document.getElementById('jk-stylist-submit')
-const $stylistMotif   = document.getElementById('jk-stylist-motif')
 
 // ---- STATE -----------------------------------------------------------------
 let allBarongs = []       // full sorted list; index === modal lookup key
@@ -364,118 +363,105 @@ function applySearch(term) {
 // Client-side, rule-based color recommender. Reads the user's answers, scores
 // the colors that actually exist in stock, and hands the winner to applySearch.
 
-// Canonical colors + the free-form synonyms a Firestore `color` value might use,
-// plus a swatch for the result panel.
-const CANONICAL_COLORS = {
-  white:  { label: 'White',             swatch: '#f4f1ea', syn: ['white', 'ivory', 'cream', 'off-white', 'offwhite', 'eggshell', 'pearl', 'bone'] },
-  beige:  { label: 'Beige / Champagne', swatch: '#cbb892', syn: ['beige', 'champagne', 'gold', 'golden', 'tan', 'khaki', 'sand', 'nude', 'taupe', 'camel'] },
-  gray:   { label: 'Gray',              swatch: '#8a8f98', syn: ['gray', 'grey', 'silver', 'ash', 'smoke', 'stone'] },
-  navy:   { label: 'Navy Blue',         swatch: '#1f2d4d', syn: ['navy', 'blue', 'royal', 'midnight', 'cobalt', 'teal'] },
-  black:  { label: 'Black',             swatch: '#1a1a1a', syn: ['black', 'jet', 'onyx', 'charcoal'] },
-  maroon: { label: 'Maroon',            swatch: '#6b2230', syn: ['maroon', 'burgundy', 'wine', 'oxblood', 'red'] },
-  green:  { label: 'Green',             swatch: '#3b5d4a', syn: ['green', 'emerald', 'olive', 'sage', 'forest'] },
-  colored:{ label: 'Colored / Printed', swatch: 'linear-gradient(135deg,#d98cb3,#8cb3d9,#d9c98c)', syn: ['colored', 'colorful', 'color', 'printed', 'print', 'pattern', 'patterned', 'floral', 'multi'] },
+// Color families — the recommendation targets + result swatch. Each barong is
+// tagged with one of these in the dashboard (`color_family`).
+const COLOR_FAMILIES = {
+  neutral: { label: 'Neutral',     swatch: 'linear-gradient(135deg,#f4f1ea,#cfcabd)' },
+  vibrant: { label: 'Vibrant',     swatch: 'linear-gradient(135deg,#e23b5a,#3b6fe2,#6b3be2)' },
+  pastel:  { label: 'Pastel',      swatch: 'linear-gradient(135deg,#cfe8f3,#f3d9e8,#e0f0d8)' },
+  earth:   { label: 'Earth Tones', swatch: 'linear-gradient(135deg,#8a6d3b,#6b7d4a,#a9714b)' },
 }
 
-// Scoring tables: per answer, how well each canonical color fits.
+// Scoring tables: how well each family fits each answer (tunable).
 const STYLIST_RULES = {
   occasion: {
-    'wedding-groom': { white: 3, beige: 2, gray: 1 },
-    'wedding-guest': { black: 3, navy: 3, gray: 2, maroon: 1 },
-    'formal':        { white: 3, navy: 2, beige: 2, gray: 1 },
-    'casual':        { black: 2, gray: 2, navy: 1, maroon: 1, green: 1, colored: 2 },
+    wedding:    { neutral: 3, pastel: 2, earth: 1 },
+    formal:     { neutral: 3, vibrant: 1, earth: 1 },
+    graduation: { neutral: 2, pastel: 2, vibrant: 1 },
+    office:     { neutral: 3, earth: 2 },
+    casual:     { vibrant: 2, earth: 2, pastel: 2, neutral: 1 },
   },
+  // Skin tone: '1' deepest … '5' lightest.
   skin: {
-    'fair':   { navy: 2, black: 2, maroon: 2, green: 1 },
-    'medium': { navy: 2, maroon: 2, beige: 1, white: 1, green: 1, colored: 1 },
-    'morena': { white: 2, beige: 2, gray: 1, maroon: 1, colored: 1 },
+    '1': { vibrant: 2, earth: 2, neutral: 1 },
+    '2': { vibrant: 2, earth: 1, pastel: 1 },
+    '3': { vibrant: 1, earth: 1, neutral: 1, pastel: 1 },
+    '4': { pastel: 2, neutral: 1, vibrant: 1 },
+    '5': { pastel: 2, neutral: 2, vibrant: 1 },
   },
   vibe: {
-    'classic': { white: 2, black: 2, navy: 1 },
-    'modern':  { beige: 2, gray: 2, green: 1, maroon: 1, colored: 2 },
+    classic: { neutral: 2, earth: 1 },
+    modern:  { vibrant: 2, pastel: 1 },
+    minimal: { neutral: 3, pastel: 1 },
+  },
+  // Direct family preference — high weight so it anchors the result.
+  palette: {
+    neutral: { neutral: 4 },
+    vibrant: { vibrant: 4 },
+    pastel:  { pastel:  4 },
+    earth:   { earth:   4 },
   },
 }
 
 const OCCASION_LABEL = {
-  'wedding-groom': 'your wedding day',
-  'wedding-guest': 'attending a wedding',
-  'formal':        'a formal event',
-  'casual':        'everyday wear',
-}
-const SKIN_LABEL = { fair: 'fair', medium: 'medium', morena: 'morena' }
-
-// Current selections (chip groups) + optional motif text.
-let stylistAnswers = { occasion: '', skin: '', vibe: '', motif: '' }
-
-// Map a free-form color string to a canonical key (first synonym hit wins).
-// Matches whole words so e.g. "colored" doesn't match the "red" synonym.
-function canonicalOf(colorStr) {
-  const s = String(colorStr || '').toLowerCase()
-  for (const key in CANONICAL_COLORS) {
-    if (CANONICAL_COLORS[key].syn.some((syn) => {
-      const pattern = '\\b' + syn.replace(/[^a-z]+/g, '\\W?') + '\\b'
-      return new RegExp(pattern).test(s)
-    })) return key
-  }
-  return null
+  wedding:    'a wedding',
+  formal:     'a formal event',
+  graduation: 'a graduation',
+  office:     'the office',
+  casual:     'everyday wear',
 }
 
-// Distinct in-stock colors → { lower: { display, count } }.
-function stockColors() {
+// Current selections (occasion + skin tone + vibe).
+let stylistAnswers = { skin: '', vibe: '', palette: '' }
+
+// A barong's family is whatever the owner tagged it in the dashboard, or null.
+function familyOf(b) {
+  return (b && b.color_family && COLOR_FAMILIES[b.color_family]) ? b.color_family : null
+}
+
+// Distinct in-stock families → Map<familyKey, { count, label }>.
+function stockFamilies() {
   const map = new Map()
   allBarongs.forEach((b) => {
-    const c = (b.color || '').trim()
-    if (!c) return
-    const lc = c.toLowerCase()
-    const entry = map.get(lc) || { display: c, count: 0 }
+    const fam = familyOf(b)
+    if (!fam) return
+    const entry = map.get(fam) || { count: 0, label: COLOR_FAMILIES[fam].label }
     entry.count += 1
-    map.set(lc, entry)
+    map.set(fam, entry)
   })
   return map
 }
 
-// Score the actual in-stock colors against the answers and pick a winner.
-// Returns { ok, display, canon, count, fallback } or { ok:false } when no
-// colored stock exists at all.
+// Score the in-stock families against the answers and pick a winner.
+// Returns { ok, family, label, count, fallback } or { ok:false } when no
+// tagged stock exists at all.
 function scoreColors(answers) {
-  const stock = stockColors()
+  const stock = stockFamilies()
   if (stock.size === 0) return { ok: false }
 
   let best = null
-  stock.forEach((info, lc) => {
-    const canon = canonicalOf(lc)
+  stock.forEach((info, fam) => {
     let score = 0
-    if (canon) {
-      score += (STYLIST_RULES.occasion[answers.occasion] || {})[canon] || 0
-      score += (STYLIST_RULES.skin[answers.skin] || {})[canon] || 0
-      score += (STYLIST_RULES.vibe[answers.vibe] || {})[canon] || 0
-      if (answers.motifCanon) {
-        if (canon === 'white' || canon === 'beige') score += 1   // neutral complements
-        if (canon === answers.motifCanon) score += 1             // tonal match
-      }
-    }
-    // Tie-break by how many pieces are available in that color.
+    score += (STYLIST_RULES.skin[answers.skin] || {})[fam] || 0
+    score += (STYLIST_RULES.vibe[answers.vibe] || {})[fam] || 0
+    score += (STYLIST_RULES.palette[answers.palette] || {})[fam] || 0
+    // Tie-break by how many pieces are available in that family.
     if (!best || score > best.score || (score === best.score && info.count > best.count)) {
-      best = { display: info.display, canon, score, count: info.count }
+      best = { family: fam, label: info.label, score, count: info.count }
     }
   })
 
-  // score 0 = no rule matched stock; still suggest the most-available color.
+  // score 0 = no rule matched stock; still suggest the most-available family.
   return { ok: true, fallback: best.score === 0, ...best }
 }
 
-// Build a short, plain-English reason for the pick.
+// Build a short, natural reason for the pick.
 function stylistReason(answers, rec) {
   if (rec.fallback) {
-    return `This is one of our most-loved colors right now and works for almost any occasion.`
+    return `These are our most-available pieces right now and pair easily with almost any look.`
   }
-  const bits = []
-  if (OCCASION_LABEL[answers.occasion]) bits.push(`great for ${OCCASION_LABEL[answers.occasion]}`)
-  if (SKIN_LABEL[answers.skin]) bits.push(`flattering on ${SKIN_LABEL[answers.skin]} skin`)
-  if (answers.vibe === 'modern') bits.push('with a modern feel')
-  else if (answers.vibe === 'classic') bits.push('with a timeless, classic look')
-  const tail = bits.length ? bits.join(', ') : 'a versatile, easy-to-style choice'
-  return `A ${rec.display.toLowerCase()} barong is ${tail}.`
+  const vibe = answers.vibe === 'modern' ? 'modern, ' : answers.vibe === 'classic' ? 'timeless, ' : answers.vibe === 'minimal' ? 'minimalist, ' : ''
+  return `${rec.label} tones are a flattering, ${vibe}easy-to-wear choice for your skin tone.`
 }
 
 function openStylist() {
@@ -484,25 +470,31 @@ function openStylist() {
 }
 
 function resetStylist() {
-  stylistAnswers = { occasion: '', skin: '', vibe: '', motif: '' }
-  if ($stylistMotif) $stylistMotif.value = ''
+  stylistAnswers = { occasion: '', skin: '', vibe: '' }
   if ($stylistForm) {
     $stylistForm.style.display = 'block'
-    $stylistForm.querySelectorAll('.jk-chip.is-selected').forEach((c) => c.classList.remove('is-selected'))
+    $stylistForm.querySelectorAll('.jk-chip.is-selected, .jk-skin-swatch.is-selected')
+      .forEach((c) => c.classList.remove('is-selected'))
   }
+  if ($stylistSubmit) $stylistSubmit.disabled = true
   if ($stylistResult) { $stylistResult.style.display = 'none'; $stylistResult.innerHTML = '' }
 }
 
+// Return to the form with the current selections still intact.
+function editStylistAnswers() {
+  if ($stylistForm) $stylistForm.style.display = 'block'
+  if ($stylistResult) $stylistResult.style.display = 'none'
+}
+
 function renderStylistResult() {
-  stylistAnswers.motif = ($stylistMotif && $stylistMotif.value || '').trim()
-  const answers = { ...stylistAnswers, motifCanon: stylistAnswers.motif ? canonicalOf(stylistAnswers.motif) : null }
+  const answers = { ...stylistAnswers }
   const rec = scoreColors(answers)
 
   if (!rec.ok) {
-    // No colored stock to recommend — point the shopper to us instead.
+    // No tagged stock to recommend — point the shopper to us instead.
     $stylistResult.innerHTML = `
       <p class="jk-stylist__rec">We're between drops right now.</p>
-      <p class="jk-stylist__reason">Follow along or message us and we'll help you pick the perfect color for your event.</p>
+      <p class="jk-stylist__reason">Follow along or message us and we'll help you pick the perfect barong for your event.</p>
       <div class="jk-stylist__actions">
         <a href="${MESSENGER_URL}" target="_blank" rel="noopener" class="jk-stylist__view">Message us</a>
         <button type="button" class="jk-stylist__restart" data-stylist-restart>Start over</button>
@@ -512,25 +504,35 @@ function renderStylistResult() {
     return
   }
 
-  const swatch = (rec.canon && CANONICAL_COLORS[rec.canon]) ? CANONICAL_COLORS[rec.canon].swatch : '#cccccc'
+  const swatch = COLOR_FAMILIES[rec.family].swatch
   const countLabel = rec.count === 1 ? '1 piece available now' : `${rec.count} pieces available now`
   $stylistResult.innerHTML = `
     <span class="jk-stylist__swatch" style="background:${swatch}" aria-hidden="true"></span>
-    <p class="jk-stylist__rec">We recommend a <strong>${escapeHtml(capitalize(rec.display))}</strong> barong</p>
+    <p class="jk-stylist__rec">We recommend <strong>${escapeHtml(rec.label)}</strong> barongs</p>
     <p class="jk-stylist__reason">${escapeHtml(stylistReason(answers, rec))}</p>
     <p class="jk-stylist__count">${countLabel}</p>
     <div class="jk-stylist__actions">
-      <button type="button" class="jk-stylist__view" data-stylist-view="${escapeHtml(rec.display)}">View these barongs</button>
-      <button type="button" class="jk-stylist__restart" data-stylist-restart>Start over</button>
+      <button type="button" class="jk-stylist__view" data-stylist-view-family="${rec.family}">View these barongs</button>
+      <div class="jk-stylist__actions-secondary">
+        <button type="button" class="jk-stylist__restart" data-stylist-edit>Edit answers</button>
+        <button type="button" class="jk-stylist__restart" data-stylist-restart>Start over</button>
+      </div>
     </div>`
   $stylistForm.style.display = 'none'
   $stylistResult.style.display = 'block'
 }
 
-// Filter the live catalog to the recommended color and scroll to the grid.
-function viewStylistPick(color) {
+// Filter the live catalog to the recommended family and scroll to the grid.
+function viewFamily(family) {
+  const def = COLOR_FAMILIES[family]
   closeOverlay($stylistModal)
-  applySearch(color)
+  searchTerm = ''
+  $searchInputs().forEach((inp) => { inp.value = def ? def.label : '' })
+  filteredBarongs = allBarongs.filter((b) => familyOf(b) === family)
+  loadedCount = 0
+  $grid.innerHTML = ''
+  $pagination.innerHTML = ''
+  renderLoadMore(false)
   const grid = document.getElementById('barong-grid')
   if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -636,16 +638,17 @@ function wireEvents() {
   })
 
   if ($stylistForm) {
-    // Chip selection: one choice per group.
+    // Selection: one choice per group (chips + skin-tone swatches).
     $stylistForm.addEventListener('click', (e) => {
-      const chip = e.target.closest('.jk-chip')
-      if (!chip) return
-      const wrap = chip.closest('[data-group]')
+      const opt = e.target.closest('.jk-chip, .jk-skin-swatch')
+      if (!opt) return
+      const wrap = opt.closest('[data-group]')
       if (!wrap) return
       const group = wrap.dataset.group
-      wrap.querySelectorAll('.jk-chip').forEach((c) => c.classList.remove('is-selected'))
-      chip.classList.add('is-selected')
-      stylistAnswers[group] = chip.dataset.value
+      wrap.querySelectorAll('.jk-chip, .jk-skin-swatch').forEach((c) => c.classList.remove('is-selected'))
+      opt.classList.add('is-selected')
+      stylistAnswers[group] = opt.dataset.value
+      if ($stylistSubmit) $stylistSubmit.disabled = false   // any answer enables submit
     })
   }
 
@@ -653,8 +656,9 @@ function wireEvents() {
 
   if ($stylistResult) {
     $stylistResult.addEventListener('click', (e) => {
-      const view = e.target.closest('[data-stylist-view]')
-      if (view) { viewStylistPick(view.dataset.stylistView); return }
+      const view = e.target.closest('[data-stylist-view-family]')
+      if (view) { viewFamily(view.dataset.stylistViewFamily); return }
+      if (e.target.closest('[data-stylist-edit]')) { editStylistAnswers(); return }
       if (e.target.closest('[data-stylist-restart]')) resetStylist()
     })
   }
