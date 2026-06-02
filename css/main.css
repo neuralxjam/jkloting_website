@@ -1793,6 +1793,22 @@ button:focus {
   color: #ccc;
 }
 
+/* Portfolio "View More on Instagram" CTA */
+.portfolio-cta {
+  margin-top: 38px;
+}
+
+.portfolio-cta-text {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 16px;
+}
+
+.portfolio-cta .btn-common i {
+  font-size: 16px;
+  vertical-align: middle;
+}
+
 /* ==========================================================================
    TESTIMONIALS SECTION
    ========================================================================== */
