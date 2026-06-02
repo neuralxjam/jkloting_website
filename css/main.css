@@ -1797,7 +1797,7 @@ button:focus {
    TESTIMONIALS SECTION
    ========================================================================== */
 .testimonials-section {
-  background: #f8f7f4;
+  background: var(--bg-light);
 }
 
 .testimonial-card {
@@ -5427,7 +5427,7 @@ body.jk-drawer-open { overflow: hidden; }
 
 /* ── Band 2: Founders band ── */
 .about-band--founders {
-  background: #f8f7f4;
+  background: #fff;
   padding: 44px 0 52px;
 }
 
