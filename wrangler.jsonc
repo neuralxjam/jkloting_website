@@ -6,6 +6,9 @@
   "observability": {
     "enabled": true
   },
+  "vars": {
+    "MAILERLITE_GROUP_ID": "189310182965118566"
+  },
   "assets": {
     "directory": ".",
     "binding": "ASSETS"
