@@ -1,0 +1,6 @@
+# Copy this file to ".dev.vars" (gitignored) and fill in real values for local testing.
+# On Cloudflare, set these in your project Settings → Variables & Secrets
+# (MAILERLITE_API_KEY as a Secret, MAILERLITE_GROUP_ID as a plain variable).
+
+MAILERLITE_API_KEY=your_mailerlite_api_token_here
+MAILERLITE_GROUP_ID=your_mailerlite_group_id_here

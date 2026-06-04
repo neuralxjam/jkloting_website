@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="css/magnific-popup.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
     <link rel="stylesheet" href="css/animate.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260602q" />
+    <link rel="stylesheet" href="css/main.css?v=20260604a" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: local clothing store -->
@@ -968,12 +968,14 @@
           <div class="col-lg-3 col-md-6 footer-col">
             <h5 class="footer-col-heading">Stay Updated</h5>
             <p class="footer-newsletter-label">Subscribe to get the latest news and offers.</p>
-            <form class="footer-newsletter-form" onsubmit="return false;">
-              <input type="email" placeholder="Your email" class="footer-newsletter-input" required />
-              <button type="button" class="footer-newsletter-btn">Subscribe</button>
-              <!-- TODO: wire newsletter later -->
+            <form class="footer-newsletter-form" novalidate>
+              <input type="email" name="email" placeholder="Your email" class="footer-newsletter-input" required />
+              <button type="submit" class="footer-newsletter-btn">Subscribe</button>
+              <!-- Honeypot — bots fill this; humans don't see it -->
+              <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;height:0;width:0;opacity:0" />
             </form>
-            <p class="footer-newsletter-note"><i class="lnr lnr-alarm"></i> Coming soon — sign-ups not active yet.</p>
+            <p class="footer-newsletter-msg" role="status" aria-live="polite"></p>
+            <p class="footer-newsletter-fineprint">New drops &amp; offers. Unsubscribe anytime.</p>
             <div class="footer-social">
               <a href="https://www.facebook.com/jklotingofficial" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
               <a href="https://www.instagram.com/jkloting_/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
@@ -1037,6 +1039,7 @@
     <script src="js/form-validator.min.js"></script>
     <script src="js/contact-form-script.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/newsletter.js?v=20260604a"></script>
     <script src="js/logo-switcher.js"></script>
     <script src="js/mobile-drawer.js?v=20260531e"></script>
 

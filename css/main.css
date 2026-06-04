@@ -1711,6 +1711,24 @@ button:focus {
   margin-right: 5px;
 }
 
+/* Inline subscribe feedback */
+.footer-newsletter-msg {
+  font-size: 12px;
+  line-height: 1.5;
+  min-height: 16px;
+  margin: -4px 0 6px;
+}
+
+.footer-newsletter-msg.is-success { color: #6ee7a8; }
+.footer-newsletter-msg.is-error { color: #ff9d9d; }
+
+.footer-newsletter-fineprint {
+  font-size: 11px;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.3px;
+  margin: 0 0 16px;
+}
+
 .footer-social {
   display: flex;
   gap: 10px;
