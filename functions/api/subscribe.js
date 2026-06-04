@@ -1,22 +1,11 @@
-// ============================================================
-// J.Kloting — Worker entry (Cloudflare Static Assets + API)
-// Serves the static site via the ASSETS binding and handles the
-// newsletter subscribe endpoint at POST /api/subscribe.
-// Secrets: MAILERLITE_API_KEY (secret), MAILERLITE_GROUP_ID (var).
-// ============================================================
+// Cloudflare Pages Function — handles POST /api/subscribe
+// Subscribes an email to MailerLite. Double opt-in is honored by the
+// account setting "Double opt-in for API and integrations".
+// Env (set in Pages → Settings → Variables and Secrets):
+//   MAILERLITE_API_KEY  (Secret)
+//   MAILERLITE_GROUP_ID (Text)
 
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
-
-    if (url.pathname === '/api/subscribe') {
-      return handleSubscribe(request, env);
-    }
-
-    // Everything else → static assets (index.html, css, js, img, /barong, …)
-    return env.ASSETS.fetch(request);
-  },
-};
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
@@ -25,12 +14,8 @@ function json(obj, status = 200) {
   });
 }
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-async function handleSubscribe(request, env) {
-  if (request.method !== 'POST') {
-    return json({ ok: false, message: 'Method not allowed.' }, 405);
-  }
+export async function onRequestPost(context) {
+  const { request, env } = context;
 
   let body;
   try {
@@ -75,21 +60,15 @@ async function handleSubscribe(request, env) {
     return json({ ok: false, message: 'Could not reach the newsletter service. Please try again later.' }, 502);
   }
 
-  // 200/201 = created or updated. With double opt-in enabled in MailerLite,
-  // a confirmation email is sent and the subscriber stays "unconfirmed".
+  // 200/201 = created/updated. With API double opt-in on, a confirmation
+  // email is sent and the subscriber stays "unconfirmed" until they confirm.
   if (res.ok) {
-    return json({
-      ok: true,
-      message: 'Almost there — check your inbox to confirm your subscription.',
-    });
+    return json({ ok: true, message: 'Almost there — check your inbox to confirm your subscription.' });
   }
 
   // 422 = validation (e.g. already a subscriber) — treat as soft success.
   if (res.status === 422) {
-    return json({
-      ok: true,
-      message: "You're on the list — check your inbox to confirm.",
-    });
+    return json({ ok: true, message: "You're on the list — check your inbox to confirm." });
   }
 
   return json({ ok: false, message: 'Something went wrong. Please try again later.' }, 502);
