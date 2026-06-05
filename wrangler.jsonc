@@ -9,6 +9,19 @@
   "vars": {
     "MAILERLITE_GROUP_ID": "189310182965118566"
   },
+  // Free WAF rate-limiting rules are no longer available on the Free plan, so we rate-limit
+  // the newsletter endpoint in code via the Workers Rate Limiting binding instead.
+  // namespace_id is an arbitrary account-scoped number; period must be 10 or 60 seconds.
+  "unsafe": {
+    "bindings": [
+      {
+        "name": "SUBSCRIBE_LIMITER",
+        "type": "ratelimit",
+        "namespace_id": "1001",
+        "simple": { "limit": 5, "period": 60 }
+      }
+    ]
+  },
   "assets": {
     "directory": ".",
     "binding": "ASSETS",
