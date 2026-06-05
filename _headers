@@ -1,4 +1,4 @@
-# Cloudflare Pages — security + caching headers
+# Cloudflare Worker with Static Assets — security + caching headers
 
 # Security headers on every route
 /*
@@ -23,8 +23,18 @@
 /img/*
   Cache-Control: public, max-age=0, must-revalidate
 
-# HTML should always revalidate so content updates ship immediately
+# HTML should always revalidate so content updates ship immediately.
+# NOTE: pages are served at CLEAN URLs — "/" (index.html) and "/barong" (barong.html) —
+# which `/*.html` does NOT match, so those need their own rules below or the HTML caches
+# with the browser's guess and shows stale content. (/barong also runs worker-first, so the
+# Worker sets this same header in code — see worker/index.js withHtmlCache().)
 /*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/barong
   Cache-Control: public, max-age=0, must-revalidate
 
 # XML files (sitemap, etc.) must be publicly accessible for Google Search Console

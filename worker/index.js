@@ -5,6 +5,15 @@
 // Secrets: MAILERLITE_API_KEY (secret), MAILERLITE_GROUP_ID (var).
 // ============================================================
 
+// /barong and /api/* run worker-first, so the static `_headers` file does NOT govern them.
+// The Worker must set the HTML revalidation header itself, or those pages cache stale.
+const HTML_CACHE = 'public, max-age=0, must-revalidate';
+function withHtmlCache(res) {
+  const r = new Response(res.body, res);
+  r.headers.set('Cache-Control', HTML_CACHE);
+  return r;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -18,7 +27,12 @@ export default {
       return handleBarongShare(request, env, url);
     }
 
-    // Everything else → static assets (index.html, css, js, img, /barong, …)
+    // /barong (worker-first) → serve the asset but set the cache header in code.
+    if (url.pathname === '/barong') {
+      return withHtmlCache(await env.ASSETS.fetch(request));
+    }
+
+    // Everything else → static assets (index.html, css, js, img, …) governed by _headers.
     return env.ASSETS.fetch(request);
   },
 };
@@ -45,7 +59,7 @@ async function handleBarongShare(request, env, url) {
   const itemId = url.searchParams.get('item');
   // Firestore auto-ids are short alphanumerics — reject anything else.
   if (!itemId || !/^[A-Za-z0-9_-]{1,128}$/.test(itemId)) {
-    return env.ASSETS.fetch(request);
+    return withHtmlCache(await env.ASSETS.fetch(request));
   }
 
   let item = null;
@@ -57,7 +71,7 @@ async function handleBarongShare(request, env, url) {
 
   // Unknown / unavailable / error → serve the page with its generic OG tags.
   if (!item) {
-    return env.ASSETS.fetch(request);
+    return withHtmlCache(await env.ASSETS.fetch(request));
   }
 
   const color = (item.label || '').trim();
@@ -70,7 +84,7 @@ async function handleBarongShare(request, env, url) {
   // Fetch the barong page asset, then rewrite its head tags for this item.
   const assetRes = await env.ASSETS.fetch(new Request(url.origin + '/barong', { method: 'GET' }));
 
-  return new HTMLRewriter()
+  const rewritten = new HTMLRewriter()
     .on('title', new TitleSetter(title))
     .on('meta[property="og:title"]', new AttrSetter(title))
     .on('meta[property="og:description"]', new AttrSetter(desc))
@@ -82,6 +96,9 @@ async function handleBarongShare(request, env, url) {
     .on('meta[name="twitter:description"]', new AttrSetter(desc))
     .on('meta[name="twitter:image"]', new AttrSetter(image))
     .transform(assetRes);
+
+  // Per-item OG is dynamic → always revalidate.
+  return withHtmlCache(rewritten);
 }
 
 async function fetchAvailableBarong(itemId) {
@@ -143,7 +160,10 @@ async function fetchAvailableBarong(itemId) {
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {
     status,
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Cache-Control': 'no-store',
+    },
   });
 }
 
