@@ -65,6 +65,9 @@ const $shareFb     = document.getElementById('jk-share-fb')
 const $shareNative = document.getElementById('jk-share-native')
 const $shareCopy   = document.getElementById('jk-share-copy')
 const SHARE_ORIGIN = 'https://jkloting.store'
+// Web Share API (navigator.share) exists mainly on phones — used to decide whether to
+// render the native-share button on each card.
+const SUPPORTS_SHARE = !!(typeof navigator !== 'undefined' && navigator.share)
 
 // Size guide modal refs
 const $sizeModal = document.getElementById('size-guide-modal')
@@ -155,6 +158,16 @@ function renderCard(barong, globalIndex, posInPage) {
 
   const wowDelay = (0.05 + (posInPage % 4) * 0.08).toFixed(2)
 
+  // Share icons inline with the label (right side). FB + native share only — no copy link.
+  const nativeShareBtn = SUPPORTS_SHARE
+    ? `<button type="button" class="jk-card__share-btn" data-no-modal data-card-share="native" aria-label="Share" title="Share"><i class="fa fa-share-alt"></i></button>`
+    : ''
+  const shareIcons = `
+          <div class="jk-card__share-btns">
+            <button type="button" class="jk-card__share-btn" data-no-modal data-card-share="fb" aria-label="Share on Facebook" title="Share on Facebook"><i class="fa fa-facebook"></i></button>
+            ${nativeShareBtn}
+          </div>`
+
   return `
     <div class="col-lg-3 col-md-4 col-sm-6 col-12 wow fadeInUp" data-wow-delay="${wowDelay}s">
       <article class="jk-card" id="${cardId}" data-index="${globalIndex}" role="button" tabindex="0" aria-label="View details for ${label}">
@@ -165,13 +178,18 @@ function renderCard(barong, globalIndex, posInPage) {
           ${dots}
         </div>
         <div class="jk-card__body">
-          <h4 class="jk-card__title">${label}</h4>
+          <div class="jk-card__title-row">
+            <h4 class="jk-card__title">${label}</h4>
+            ${shareIcons}
+          </div>
           <p class="jk-card__sub">${size ? 'Size ' + size : 'One size'}</p>
           <div class="jk-card__footer">
-            <span class="jk-card__price">${escapeHtml(price)}</span>
-            <a href="${orderUrl}" target="_blank" rel="noopener" class="jk-card__cta" data-no-modal>
-              Reserve <span aria-hidden="true">&rarr;</span>
-            </a>
+            <div class="jk-card__footer-left">
+              <span class="jk-card__price">${escapeHtml(price)}</span>
+              <a href="${orderUrl}" target="_blank" rel="noopener" class="jk-card__cta" data-no-modal>
+                Buy Now
+              </a>
+            </div>
           </div>
         </div>
       </article>
@@ -304,6 +322,50 @@ function wireShareButtons() {
   })
 }
 wireShareButtons()
+
+// Per-card share (grid). Resolves the barong from the card's data-index, then runs the
+// same action as the modal (Facebook popup / native share sheet / copy link).
+function handleCardShare(btn) {
+  const card = btn.closest('.jk-card')
+  if (!card) return
+  const b = allBarongs[Number(card.dataset.index)]
+  if (!b) return
+  const action = btn.dataset.cardShare
+  if (action === 'fb') {
+    const u = encodeURIComponent(shareUrlFor(b))
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + u, '_blank', 'width=600,height=500,noopener')
+  } else if (action === 'native' && navigator.share) {
+    navigator.share({
+      title: 'J.Kloting Barong',
+      text: shareTextFor(b),
+      url: shareUrlFor(b),
+    }).catch(() => { /* user dismissed the share sheet */ })
+  } else if (action === 'copy') {
+    copyTextToClipboard(shareUrlFor(b))
+    btn.classList.add('is-copied')
+    const prevTitle = btn.getAttribute('title')
+    btn.setAttribute('title', 'Copied!')
+    setTimeout(() => {
+      btn.classList.remove('is-copied')
+      if (prevTitle) btn.setAttribute('title', prevTitle)
+    }, 1500)
+  }
+}
+
+// Clipboard write with a legacy execCommand fallback.
+function copyTextToClipboard(text) {
+  try {
+    if (navigator.clipboard) return navigator.clipboard.writeText(text)
+  } catch (_) {}
+  const ta = document.createElement('textarea')
+  ta.value = text
+  ta.style.position = 'fixed'
+  ta.style.opacity = '0'
+  document.body.appendChild(ta)
+  ta.select()
+  try { document.execCommand('copy') } catch (_) {}
+  document.body.removeChild(ta)
+}
 
 // ---- CAROUSEL --------------------------------------------------------------
 function renderCarouselSlide(b, slideIndex) {
@@ -635,6 +697,11 @@ function wireEvents() {
       if (img) img.src = dot.dataset.src
       media.querySelectorAll('.jk-dot').forEach((d) => d.classList.remove('is-active'))
       dot.classList.add('is-active')
+      return
+    }
+    const shareBtn = e.target.closest('[data-card-share]')
+    if (shareBtn) {
+      handleCardShare(shareBtn)
       return
     }
     if (e.target.closest('[data-no-modal]')) return
