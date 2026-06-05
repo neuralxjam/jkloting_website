@@ -174,16 +174,6 @@ async function handleSubscribe(request, env) {
     return json({ ok: false, message: 'Method not allowed.' }, 405);
   }
 
-  // Per-IP rate limit (5 / minute) before doing any work or hitting MailerLite.
-  // Guarded so local dev / missing binding doesn't throw.
-  if (env.SUBSCRIBE_LIMITER) {
-    const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
-    const { success } = await env.SUBSCRIBE_LIMITER.limit({ key: ip });
-    if (!success) {
-      return json({ ok: false, message: 'Too many attempts. Please try again in a minute.' }, 429);
-    }
-  }
-
   let body;
   try {
     body = await request.json();
