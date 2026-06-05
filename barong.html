@@ -39,7 +39,7 @@
     <link rel="stylesheet" href="css/line-icons.css" />
     <link rel="stylesheet" href="css/animate.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260604a" />
+    <link rel="stylesheet" href="css/main.css?v=20260604b" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: breadcrumb -->
@@ -359,6 +359,21 @@
               <i class="fa fa-facebook"></i> Reserve on Messenger
             </a>
             <p class="jk-modal__note">One-of-a-kind · Once it's claimed, it's gone for good.</p>
+
+            <div class="jk-modal__share">
+              <span class="jk-modal__share-label">Share this piece</span>
+              <div class="jk-modal__share-btns">
+                <button type="button" id="jk-share-fb" class="jk-share-btn" aria-label="Share on Facebook" title="Share on Facebook">
+                  <i class="fa fa-facebook"></i>
+                </button>
+                <button type="button" id="jk-share-native" class="jk-share-btn" aria-label="Share" title="Share" hidden>
+                  <i class="fa fa-share-alt"></i>
+                </button>
+                <button type="button" id="jk-share-copy" class="jk-share-btn jk-share-btn--copy" aria-label="Copy link" title="Copy link">
+                  <i class="fa fa-link"></i><span class="jk-share-copy-label">Copy link</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -547,7 +562,7 @@
     <script src="js/mobile-drawer.js?v=20260531e"></script>
 
     <!-- Barong Catalog (Firebase Firestore + dynamic rendering) -->
-    <script type="module" src="js/barong-catalog.js?v=20260602g"></script>
+    <script type="module" src="js/barong-catalog.js?v=20260604b"></script>
 
 
     <!-- Sticky mobile contact bar (visible only on small screens) -->

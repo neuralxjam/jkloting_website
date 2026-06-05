@@ -4490,6 +4490,57 @@ body.jk-modal-open {
   margin: 4px 0 20px;
 }
 
+/* Share this piece */
+.jk-modal__share {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #e5e8ed);
+}
+.jk-modal__share-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: var(--text-light);
+}
+.jk-modal__share-btns {
+  display: flex;
+  gap: 8px;
+}
+.jk-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--border-color, #e5e8ed);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+.jk-share-btn i { font-size: 15px; }
+.jk-share-btn:hover {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.jk-share-btn[hidden] { display: none; }
+.jk-share-copy-label { font-size: 13px; }
+.jk-share-btn--copy.is-copied {
+  background: #1e9e5a;
+  border-color: #1e9e5a;
+  color: #fff;
+}
+
 @media (max-width: 767px) {
   .jk-modal { padding: 84px 0 0; } /* keep top clearance; no side/bottom padding so dialog fills width */
   .jk-modal__dialog {

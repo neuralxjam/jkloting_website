@@ -13,10 +13,132 @@ export default {
       return handleSubscribe(request, env);
     }
 
+    // Per-item share links: /barong?item=<id> → inject that barong's OG preview.
+    if (url.pathname === '/barong' && url.searchParams.has('item')) {
+      return handleBarongShare(request, env, url);
+    }
+
     // Everything else → static assets (index.html, css, js, img, /barong, …)
     return env.ASSETS.fetch(request);
   },
 };
+
+// ── Per-item Open Graph for shared barong links ───────────────────────────────
+
+const FIRESTORE_PROJECT = 'jklothing-inventory';
+// Public Firebase web API key (already public in js/barong-catalog.js).
+const FIRESTORE_KEY = 'AIzaSyCLcgQZofD-rBfYyafEy4HQWz_NTJVAeK8';
+
+class AttrSetter {
+  constructor(value) { this.value = value; }
+  element(el) { el.setAttribute('content', this.value); }
+}
+class TitleSetter {
+  constructor(value) { this.value = value; }
+  element(el) { el.setInnerContent(this.value); }
+}
+class Remover {
+  element(el) { el.remove(); }
+}
+
+async function handleBarongShare(request, env, url) {
+  const itemId = url.searchParams.get('item');
+  // Firestore auto-ids are short alphanumerics — reject anything else.
+  if (!itemId || !/^[A-Za-z0-9_-]{1,128}$/.test(itemId)) {
+    return env.ASSETS.fetch(request);
+  }
+
+  let item = null;
+  try {
+    item = await fetchAvailableBarong(itemId);
+  } catch {
+    item = null;
+  }
+
+  // Unknown / unavailable / error → serve the page with its generic OG tags.
+  if (!item) {
+    return env.ASSETS.fetch(request);
+  }
+
+  const color = (item.label || '').trim();
+  const title = color ? `Modern ${color} Barong — J.Kloting` : 'Modern Barong — J.Kloting';
+  const price = item.price != null ? `₱${Number(item.price).toLocaleString('en-PH')}` : '';
+  const desc = `${price ? price + ' · ' : ''}Limited stock · Reserve yours at J.Kloting.`;
+  const image = item.image || 'https://jkloting.store/img/og-image.jpg';
+  const pageUrl = `https://jkloting.store/barong?item=${encodeURIComponent(itemId)}`;
+
+  // Fetch the barong page asset, then rewrite its head tags for this item.
+  const assetRes = await env.ASSETS.fetch(new Request(url.origin + '/barong', { method: 'GET' }));
+
+  return new HTMLRewriter()
+    .on('title', new TitleSetter(title))
+    .on('meta[property="og:title"]', new AttrSetter(title))
+    .on('meta[property="og:description"]', new AttrSetter(desc))
+    .on('meta[property="og:image"]', new AttrSetter(image))
+    .on('meta[property="og:url"]', new AttrSetter(pageUrl))
+    .on('meta[property="og:image:width"]', new Remover())
+    .on('meta[property="og:image:height"]', new Remover())
+    .on('meta[name="twitter:title"]', new AttrSetter(title))
+    .on('meta[name="twitter:description"]', new AttrSetter(desc))
+    .on('meta[name="twitter:image"]', new AttrSetter(image))
+    .transform(assetRes);
+}
+
+async function fetchAvailableBarong(itemId) {
+  const body = {
+    structuredQuery: {
+      from: [{ collectionId: 'barongs' }],
+      where: {
+        compositeFilter: {
+          op: 'AND',
+          filters: [
+            { fieldFilter: { field: { fieldPath: 'status' }, op: 'EQUAL', value: { stringValue: 'available' } } },
+            {
+              fieldFilter: {
+                field: { fieldPath: '__name__' },
+                op: 'EQUAL',
+                value: { referenceValue: `projects/${FIRESTORE_PROJECT}/databases/(default)/documents/barongs/${itemId}` },
+              },
+            },
+          ],
+        },
+      },
+      limit: 1,
+    },
+  };
+
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 2500);
+  let res;
+  try {
+    res = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${FIRESTORE_PROJECT}/databases/(default)/documents:runQuery?key=${FIRESTORE_KEY}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+        signal: ctrl.signal,
+      }
+    );
+  } finally {
+    clearTimeout(timer);
+  }
+
+  if (!res.ok) return null;
+  const arr = await res.json();
+  const doc = Array.isArray(arr) ? arr.find((x) => x && x.document)?.document : null;
+  if (!doc || !doc.fields) return null;
+
+  const f = doc.fields;
+  const imgs = f.images?.arrayValue?.values || [];
+  const firstImg = imgs.length ? imgs[0].stringValue || '' : '';
+  const price =
+    f.price?.integerValue != null ? Number(f.price.integerValue)
+    : f.price?.doubleValue != null ? Number(f.price.doubleValue)
+    : null;
+
+  return { label: f.label?.stringValue || '', price, image: firstImg };
+}
 
 function json(obj, status = 200) {
   return new Response(JSON.stringify(obj), {

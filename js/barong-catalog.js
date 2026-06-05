@@ -60,6 +60,12 @@ const $modalPrice = document.getElementById('jk-modal-price')
 const $modalSize = document.getElementById('jk-modal-size')
 const $modalCta = document.getElementById('jk-modal-cta')
 
+// Share buttons
+const $shareFb     = document.getElementById('jk-share-fb')
+const $shareNative = document.getElementById('jk-share-native')
+const $shareCopy   = document.getElementById('jk-share-copy')
+const SHARE_ORIGIN = 'https://jkloting.store'
+
 // Size guide modal refs
 const $sizeModal = document.getElementById('size-guide-modal')
 
@@ -75,6 +81,7 @@ let filteredBarongs = []  // active filtered list (default: all)
 let searchTerm = ''
 let loadedCount = 0       // how many cards shown so far (Load More)
 let featuredBarongs = []  // featured:true subset, for carousel
+let currentModalBarong = null // item currently shown in the product modal (for sharing)
 let carouselActive = 0    // index inside featuredBarongs
 let carouselTimer = null
 const CAROUSEL_INTERVAL = 4000
@@ -199,6 +206,7 @@ function initGrid() {
 function openModal(index) {
   const b = allBarongs[index]
   if (!b) return
+  currentModalBarong = b
   const images = imagesOf(b)
   const label = b.label || 'Barong'
   const colorVal = b.color || b.type
@@ -240,6 +248,62 @@ function closeOverlay(el) {
 function openSizeGuide() {
   openOverlay($sizeModal)
 }
+
+// ---- SHARE -----------------------------------------------------------------
+function shareUrlFor(b) {
+  return SHARE_ORIGIN + '/barong?item=' + encodeURIComponent(b.id)
+}
+function shareTextFor(b) {
+  const colorVal = b.color || b.type || b.label
+  const name = colorVal ? 'Modern ' + capitalize(colorVal) + ' Barong' : 'Modern Barong'
+  return name + ' · ' + peso(b.price || 0) + ' — J.Kloting'
+}
+function wireShareButtons() {
+  // Native share only exists on most phones — reveal it only when supported.
+  if ($shareNative && navigator.share) $shareNative.hidden = false
+
+  if ($shareFb) $shareFb.addEventListener('click', () => {
+    if (!currentModalBarong) return
+    const u = encodeURIComponent(shareUrlFor(currentModalBarong))
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + u, '_blank', 'width=600,height=500,noopener')
+  })
+
+  if ($shareNative) $shareNative.addEventListener('click', async () => {
+    if (!currentModalBarong || !navigator.share) return
+    try {
+      await navigator.share({
+        title: 'J.Kloting Barong',
+        text: shareTextFor(currentModalBarong),
+        url: shareUrlFor(currentModalBarong),
+      })
+    } catch (_) { /* user dismissed the share sheet */ }
+  })
+
+  if ($shareCopy) $shareCopy.addEventListener('click', async () => {
+    if (!currentModalBarong) return
+    const url = shareUrlFor(currentModalBarong)
+    try {
+      await navigator.clipboard.writeText(url)
+    } catch (_) {
+      const ta = document.createElement('textarea')
+      ta.value = url
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      try { document.execCommand('copy') } catch (_) {}
+      document.body.removeChild(ta)
+    }
+    const label = $shareCopy.querySelector('.jk-share-copy-label')
+    $shareCopy.classList.add('is-copied')
+    if (label) label.textContent = 'Copied!'
+    setTimeout(() => {
+      $shareCopy.classList.remove('is-copied')
+      if (label) label.textContent = 'Copy link'
+    }, 1500)
+  })
+}
+wireShareButtons()
 
 // ---- CAROUSEL --------------------------------------------------------------
 function renderCarouselSlide(b, slideIndex) {
@@ -742,6 +806,13 @@ async function loadCatalog() {
     wireEvents()
     if (featuredBarongs.length) buildCarousel()
     initGrid()  // Load More on all screens
+
+    // Deep-link: /barong?item=<id> opens that item's modal (e.g. from a shared link)
+    const itemId = new URLSearchParams(location.search).get('item')
+    if (itemId) {
+      const match = allBarongs.find((b) => b.id === itemId)
+      if (match) openModal(match._index)
+    }
   } catch (err) {
     console.error('[barong-catalog] failed to load:', err)
     showError("We couldn't load the catalog right now. Please refresh, or message us on Facebook.")
