@@ -46,7 +46,7 @@
     <link rel="stylesheet" href="css/magnific-popup.css" />
     <link rel="stylesheet" href="css/slicknav.css" />
     <link rel="stylesheet" href="css/animate.css" />
-    <link rel="stylesheet" href="css/main.css?v=20260604b" />
+    <link rel="stylesheet" href="css/main.css?v=20260604f" />
     <link rel="stylesheet" href="css/responsive.css" />
 
     <!-- Structured data: local clothing store -->
@@ -735,52 +735,73 @@
           </p>
         </div>
 
-        <!-- TODO: replace placeholder testimonials with real customer quotes -->
-        <div class="row">
+        <!-- Real customer testimonials. To add more: copy a .testimonial-slide block; the carousel auto-paginates. -->
+        <div id="testimonials-carousel" class="owl-carousel owl-theme">
 
-          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.1s">
+          <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-stars" aria-label="5 out of 5 stars">
                 <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
               </div>
-              <p class="testimonial-quote">"We ordered corporate polos in bulk for our company and J.Kloting delivered ahead of schedule. The print quality and stitching were excellent — exactly the mockup they sent us."</p>
+              <p class="testimonial-quote">"Thank you sa service, sir. Good yung quality and finished product. Madali and mabilis lang ang transaction. Will be ordering for another batch next time!!"</p>
               <div class="testimonial-author">
-                <h5>Maria Santos</h5>
-                <span>HR Officer · Bulacan</span>
+                <h5>Cris</h5>
+                <span>Org Vice President · Manila City</span>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
+          <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-stars" aria-label="5 out of 5 stars">
                 <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
               </div>
-              <p class="testimonial-quote">"Full-sublimation jerseys for our whole team came out vibrant and didn't fade after washes. Smooth communication from quote to delivery. Highly recommended for sports teams."</p>
+              <p class="testimonial-quote">"We ordered customized T-shirts for our small business. The quality of the cloth was nice and structured. The print was also clean and lasted a long time without flaking. The boxy fit of the shirts is also good quality. They were also very accommodating with my questions and clarifications. Very good customized T-shirt supplier. Would definitely order again and recommend to others!!"</p>
               <div class="testimonial-author">
-                <h5>Marvin Dela Cruz</h5>
-                <span>Team Manager · Sportswear Order</span>
+                <h5>Zach</h5>
+                <span>Business Owner · Manila, Philippines</span>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.5s">
+          <div class="testimonial-slide">
             <div class="testimonial-card">
               <div class="testimonial-stars" aria-label="5 out of 5 stars">
                 <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i>
               </div>
-              <p class="testimonial-quote">"Got modern polo barongs for our wedding entourage. The fit was perfect and the custom embroidery looked premium. Everyone kept asking where we had them made!"</p>
+              <p class="testimonial-quote">"Their service is reliable, turnaround time is fast, and the quality of their shirt prints is excellent. The prints come out clean, vibrant, and durable, making them a great choice for custom shirts and merch productions. Highly recommended for anyone looking for quality shirt and printing services."</p>
               <div class="testimonial-author">
-                <h5>Anna Reyes</h5>
-                <span>Bride · Meycauayan</span>
+                <h5>Christian Dave</h5>
+                <span>Clothing Brand Owner</span>
               </div>
             </div>
           </div>
 
         </div>
+
+        <div class="shopee-reviews-cta text-center wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="0.3s">
+          <p class="shopee-reviews-text">See what verified buyers say on our Shopee store.</p>
+          <a href="https://shopee.ph/jkloting" target="_blank" rel="noopener" class="btn-shopee">
+            <i class="lnr lnr-star"></i>&nbsp; See All Reviews on Shopee
+          </a>
+        </div>
       </div>
     </section>
     <!-- Testimonials Section End -->
+
+    <!-- Testimonial pop-out modal -->
+    <div class="testimonial-modal" id="testimonial-modal" aria-hidden="true">
+      <div class="testimonial-modal__overlay" data-tm-close></div>
+      <div class="testimonial-modal__dialog" role="dialog" aria-modal="true" aria-label="Customer testimonial">
+        <button type="button" class="testimonial-modal__close" data-tm-close aria-label="Close">&times;</button>
+        <div class="testimonial-modal__stars" aria-hidden="true"></div>
+        <p class="testimonial-modal__quote"></p>
+        <div class="testimonial-modal__author">
+          <h5></h5>
+          <span></span>
+        </div>
+      </div>
+    </div>
 
     <!-- Contact Section Start -->
     <section id="contact" class="section barong-order-section">
@@ -936,6 +957,12 @@
               <div class="footer-seals">
                 <img src="img/seals/bir-seal.png" alt="BIR Registered" class="footer-seal" loading="lazy" />
                 <img src="img/seals/dti-seal.png" alt="DTI Registered" class="footer-seal" loading="lazy" />
+              </div>
+              <div class="footer-shops">
+                <span class="footer-shops-label">Also shop on</span>
+                <a href="https://shopee.ph/jkloting" target="_blank" rel="noopener" class="btn-shopee" aria-label="Shop J.Kloting on Shopee">
+                  <i class="lnr lnr-store"></i>&nbsp; Shopee
+                </a>
               </div>
             </div>
           </div>
