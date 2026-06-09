@@ -1881,7 +1881,9 @@ button:focus {
    TESTIMONIALS SECTION
    ========================================================================== */
 .testimonials-section {
-  background: var(--bg-light);
+  /* White band (inherited from the old Pricing section) so it stands out
+     between the light-gray Portfolio and How It Works sections. */
+  background: #fff;
 }
 
 .testimonial-card {
