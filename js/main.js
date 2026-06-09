@@ -99,6 +99,16 @@
             btn.parentNode.removeChild(btn);
           }
         });
+        equalizeCardHeights();
+      }
+
+      // Make all cards in the same Owl page the same height as the tallest one.
+      function equalizeCardHeights() {
+        var cards = $('#testimonials-carousel .testimonial-card');
+        cards.css('height', '');           // reset so we measure natural height
+        var maxH = 0;
+        cards.each(function () { maxH = Math.max(maxH, $(this).outerHeight()); });
+        if (maxH > 0) cards.css('height', maxH + 'px');
       }
 
       $('#testimonials-carousel').owlCarousel({
