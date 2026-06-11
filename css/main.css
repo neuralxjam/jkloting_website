@@ -4804,7 +4804,7 @@ body.jk-modal-open {
   .jk-card__media img[data-main-img] { height: 200px; }
 }
 
-/* --- 21b. Load More button (mobile only) ------------------------------ */
+/* --- 21b. Load More button (all screens) ------------------------------ */
 .barong-load-more-wrap {
   display: none; /* JS controls visibility; flex when shown */
   justify-content: center;
@@ -4827,14 +4827,10 @@ body.jk-modal-open {
   transform: translateY(-2px);
 }
 
-/* On desktop: pagination visible, load-more wrap always hidden */
-@media (min-width: 768px) {
-  .barong-load-more-wrap { display: none !important; }
-}
-/* On mobile: pagination hidden (JS renders nothing into it) */
-@media (max-width: 767px) {
-  .barong-pagination { display: none !important; }
-}
+/* Numbered pagination is no longer used — the catalog renders "Load More" on
+   all screens (desktop + mobile). Keep the always-empty pagination container
+   hidden so it never adds vertical space. */
+.barong-pagination { display: none !important; }
 
 /* --- 22. Barong — Dark featured band ---------------------------------- */
 .jk-featured-band {
