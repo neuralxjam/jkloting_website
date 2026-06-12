@@ -1624,6 +1624,38 @@ button:focus {
   text-transform: uppercase;
   color: rgba(255,255,255,0.5);
 }
+/* Shop logos as small circular icons (Shopee, TikTok) — same chrome as
+   .footer-social a. Logos are black PNGs, so invert them to white on the dark
+   footer and flip back to black on the white hover fill. */
+.footer-shop-icons {
+  display: flex;
+  gap: 10px;
+}
+.footer-shop-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50%;
+  background: transparent;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.footer-shop-icon img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: invert(1);
+}
+.footer-shop-icon:hover {
+  border-color: #fff;
+  background: #fff;
+  transform: translateY(-2px);
+}
+.footer-shop-icon:hover img {
+  filter: none;
+}
 /* Column headings */
 .footer-col-heading {
   font-family: var(--font-display);
@@ -5204,7 +5236,16 @@ body.jk-modal-open {
 }
 .jk-drawer__social {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+}
+/* Shop logos (Shopee, TikTok) are black PNGs — invert to white so they read on
+   the dark icon circle, matching the white Font Awesome glyphs. */
+.jk-drawer__social img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: invert(1);
 }
 .jk-drawer__social a {
   width: 38px;
